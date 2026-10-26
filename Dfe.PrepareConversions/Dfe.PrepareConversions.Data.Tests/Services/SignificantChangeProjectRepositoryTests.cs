@@ -360,33 +360,6 @@ public class SignificantChangeProjectRepositoryTests
 
    [Theory]
    [AutoMoqData]
-   public async Task SetStakeholderConsultation_WhenApiCallSucceeds_ShouldPutToExpectedPath(
-      [Frozen] Mock<IHttpClientService> httpClientService,
-      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
-      SignificantChangeProjectRepository sut)
-   {
-      const int id = 77;
-      string expectedPath = string.Format(PathFor.SetSignificantChangeStakeholderConsultation, id);
-      HttpClient httpClient = new();
-      SetSignificantChangeStakeholderConsultationCommand command = new(false, "Consultation is scheduled next week");
-
-      httpClientFactory
-         .Setup(x => x.CreateAcademisationClient())
-         .Returns(httpClient);
-
-      httpClientService
-         .Setup(x => x.Put<SetSignificantChangeStakeholderConsultationCommand, object>(httpClient, expectedPath, command))
-         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
-
-      await sut.SetStakeholderConsultation(id, command);
-
-      httpClientService.Verify(
-         x => x.Put<SetSignificantChangeStakeholderConsultationCommand, object>(httpClient, expectedPath, command),
-         Times.Once);
-   }
-
-   [Theory]
-   [AutoMoqData]
    public async Task RecordDecision_ShouldThrow_WhenApiCallFails(
       [Frozen] Mock<IHttpClientService> httpClientService,
       [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
@@ -404,25 +377,6 @@ public class SignificantChangeProjectRepositoryTests
 
       await sut.Invoking(s => s.RecordDecision(decision))
          .Should().ThrowAsync<ApiResponseException>();
-   }
-
-   [Theory]
-   [AutoMoqData]
-   public async Task SetStakeholderConsultation_WhenApiCallFails_ShouldThrowApiResponseException(
-      [Frozen] Mock<IHttpClientService> httpClientService,
-      SignificantChangeProjectRepository sut)
-   {
-      const int id = 77;
-      string expectedPath = string.Format(PathFor.SetSignificantChangeStakeholderConsultation, id);
-      SetSignificantChangeStakeholderConsultationCommand command = new(false, "Reason");
-
-      httpClientService
-         .Setup(x => x.Put<SetSignificantChangeStakeholderConsultationCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
-         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
-
-      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetStakeholderConsultation(id, command));
-
-      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
    }
 
    [Theory]
@@ -481,7 +435,14 @@ public class SignificantChangeProjectRepositoryTests
       const int id = 78;
       string expectedPath = string.Format(PathFor.SetSignificantChangeReligiousBodyConsultation, id);
       HttpClient httpClient = new();
-      SetSignificantChangeReligiousBodyConsultationCommand command = new(false, "Further evidence is being gathered");
+      SetSignificantChangeReligiousBodyConsultationCommand command = new(
+         YesNoNotApplicableAnswer.No,
+         "Further evidence is being gathered",
+         YesNoNotApplicableAnswer.Yes,
+         null,
+         YesNoNotApplicableAnswer.NotApplicable,
+         null,
+         "https://example.test/evidence");
 
       httpClientFactory
          .Setup(x => x.CreateAcademisationClient())
@@ -506,7 +467,14 @@ public class SignificantChangeProjectRepositoryTests
    {
       const int id = 78;
       string expectedPath = string.Format(PathFor.SetSignificantChangeReligiousBodyConsultation, id);
-      SetSignificantChangeReligiousBodyConsultationCommand command = new(false, "Reason");
+      SetSignificantChangeReligiousBodyConsultationCommand command = new(
+         YesNoNotApplicableAnswer.No,
+         "Reason",
+         YesNoNotApplicableAnswer.Yes,
+         null,
+         YesNoNotApplicableAnswer.NotApplicable,
+         null,
+         string.Empty);
 
       httpClientService
          .Setup(x => x.Put<SetSignificantChangeReligiousBodyConsultationCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
@@ -519,50 +487,60 @@ public class SignificantChangeProjectRepositoryTests
 
       [Theory]
    [AutoMoqData]
-   public async Task SetStakeholderObjections_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+   public async Task SetOtherStakeholderEngagement_WhenApiCallSucceeds_ShouldPutToExpectedPath(
       [Frozen] Mock<IHttpClientService> httpClientService,
       [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
       SignificantChangeProjectRepository sut)
    {
       const int id = 88;
-      string expectedPath = string.Format(PathFor.SetSignificantChangeStakeholderObjections, id);
+      string expectedPath = string.Format(PathFor.SetSignificantChangeOtherStakeholderEngagement, id);
       HttpClient httpClient = new();
-      SetSignificantChangeStakeholderObjectionsCommand command = new(
-         SignificantChangeStakeholderObjection.YesNoFurtherInformationProvided,
-         "Additional information was provided");
+      SetSignificantChangeOtherStakeholderEngagementCommand command = new(
+         false,
+         "Consultation details",
+         true,
+         "Objection details",
+         YesNoNotApplicableAnswer.No,
+         "Notification details",
+         "https://example.test/evidence");
 
       httpClientFactory
          .Setup(x => x.CreateAcademisationClient())
          .Returns(httpClient);
 
       httpClientService
-         .Setup(x => x.Put<SetSignificantChangeStakeholderObjectionsCommand, object>(httpClient, expectedPath, command))
+         .Setup(x => x.Put<SetSignificantChangeOtherStakeholderEngagementCommand, object>(httpClient, expectedPath, command))
          .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
 
-      await sut.SetStakeholderObjections(id, command);
+      await sut.SetOtherStakeholderEngagement(id, command);
 
       httpClientService.Verify(
-         x => x.Put<SetSignificantChangeStakeholderObjectionsCommand, object>(httpClient, expectedPath, command),
+         x => x.Put<SetSignificantChangeOtherStakeholderEngagementCommand, object>(httpClient, expectedPath, command),
          Times.Once);
    }
 
    [Theory]
    [AutoMoqData]
-   public async Task SetStakeholderObjections_WhenApiCallFails_ShouldThrowApiResponseException(
+   public async Task SetOtherStakeholderEngagement_WhenApiCallFails_ShouldThrowApiResponseException(
       [Frozen] Mock<IHttpClientService> httpClientService,
       SignificantChangeProjectRepository sut)
    {
       const int id = 88;
-      string expectedPath = string.Format(PathFor.SetSignificantChangeStakeholderObjections, id);
-      SetSignificantChangeStakeholderObjectionsCommand command = new(
-         SignificantChangeStakeholderObjection.YesNoFurtherInformationProvided,
-         "Reason");
+      string expectedPath = string.Format(PathFor.SetSignificantChangeOtherStakeholderEngagement, id);
+      SetSignificantChangeOtherStakeholderEngagementCommand command = new(
+         false,
+         "Consultation details",
+         true,
+         "Objection details",
+         YesNoNotApplicableAnswer.No,
+         "Notification details",
+         "https://example.test/evidence");
 
       httpClientService
-         .Setup(x => x.Put<SetSignificantChangeStakeholderObjectionsCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .Setup(x => x.Put<SetSignificantChangeOtherStakeholderEngagementCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
          .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
 
-      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetStakeholderObjections(id, command));
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetOtherStakeholderEngagement(id, command));
 
       exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
    }
@@ -818,52 +796,6 @@ public class SignificantChangeProjectRepositoryTests
          .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
 
       ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetPlanningPermission(id, command));
-
-      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
-   }
-  
-    [Theory]
-   [AutoMoqData]
-   public async Task SetAdmissionVariationConsultation_WhenApiCallSucceeds_ShouldPutToExpectedPath(
-      [Frozen] Mock<IHttpClientService> httpClientService,
-      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
-      SignificantChangeProjectRepository sut)
-   {
-      const int id = 78;
-      string expectedPath = string.Format(PathFor.SetAdmissionVariationConsultation, id);
-      HttpClient httpClient = new();
-      SetSignificantChangeAdmissionVariationConsultationCommand command = new(false, "Consultation did not include admission variation details");
-
-      httpClientFactory
-         .Setup(x => x.CreateAcademisationClient())
-         .Returns(httpClient);
-
-      httpClientService
-         .Setup(x => x.Put<SetSignificantChangeAdmissionVariationConsultationCommand, object>(httpClient, expectedPath, command))
-         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
-
-      await sut.SetAdmissionVariationConsultation(id, command);
-
-      httpClientService.Verify(
-         x => x.Put<SetSignificantChangeAdmissionVariationConsultationCommand, object>(httpClient, expectedPath, command),
-         Times.Once);
-   }
-
-   [Theory]
-   [AutoMoqData]
-   public async Task SetAdmissionVariationConsultation_WhenApiCallFails_ShouldThrowApiResponseException(
-      [Frozen] Mock<IHttpClientService> httpClientService,
-      SignificantChangeProjectRepository sut)
-   {
-      const int id = 78;
-      string expectedPath = string.Format(PathFor.SetAdmissionVariationConsultation, id);
-      SetSignificantChangeAdmissionVariationConsultationCommand command = new(false, "Reason");
-
-      httpClientService
-         .Setup(x => x.Put<SetSignificantChangeAdmissionVariationConsultationCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
-         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
-
-      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetAdmissionVariationConsultation(id, command));
 
       exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
    }

@@ -17,7 +17,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
    [BindProperty]
    public string ConsultationDurationNotMetReason { get; set; }
 
-   protected override string TaskTitle => "Consultation duration";
+   protected override string TaskTitle => "Consultation";
 
    public override async Task<IActionResult> OnGetAsync(int id)
    {

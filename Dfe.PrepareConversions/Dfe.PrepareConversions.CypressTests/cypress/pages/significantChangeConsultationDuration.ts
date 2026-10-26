@@ -2,12 +2,12 @@
 import BasePage from './basePage';
 
 class SignificantChangeConsultationDuration extends BasePage {
-    public path = 'consultation-duration';
+    public path = 'consultation';
 
     public verifyPageLoaded(): this {
         cy.checkPath(this.path);
-        this.verifyHeading('Consultation duration');
-        cy.contains('legend', 'Was this for a minimum 3 weeks during term time?').should('be.visible');
+        this.verifyHeading('Consultation');
+        cy.contains('legend', 'Has a 3 week consultation been completed?').should('be.visible');
         return this;
     }
 

@@ -1,4 +1,4 @@
-@page "/significant-change/task-list/{id:int}/consultation-duration"
+@page "/significant-change/task-list/{id:int}/consultation"
 @using Dfe.PrepareConversions.Data.Models.SignificantChange
 @model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.ConsultationDuration.IndexModel
 @{
@@ -14,7 +14,7 @@
 <div class="govuk-form-group">
    <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-         Was this for a minimum 3 weeks during term time?
+         Has a 3 week consultation been completed?
       </legend>
       <inline-error for="@nameof(Model.ConsultationLastedMinimumThreeWeeks)" />
 

@@ -12,12 +12,27 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
    private readonly ErrorService _errorService = errorService;
 
    [BindProperty]
-   public SignificantChangeStakeholderObjection? StakeholderObjections { get; set; }
+   public bool? TrustConsultedStakeholders { get; set; }
 
    [BindProperty]
-   public string StakeholderObjectionsComment { get; set; }
-   
-   protected override string TaskTitle => "Stakeholder objections";
+   public string TrustConsultedStakeholdersNotConsultedReason { get; set; }
+
+   [BindProperty]
+   public bool? WereThereAnyObjectionsRaised { get; set; }
+
+   [BindProperty]
+   public string StakeholderObjectionsDetails { get; set; }
+
+   [BindProperty]
+   public YesNoNotApplicableAnswer? RelevantStakeholdersNotifiedOfAdmissionsChanges { get; set; }
+
+   [BindProperty]
+   public string RelevantStakeholdersNotifiedOfAdmissionsChangesReason { get; set; }
+
+   [BindProperty]
+   public string SupportingEvidence { get; set; }
+
+   protected override string TaskTitle => "Other stakeholder engagement";
 
    public override async Task<IActionResult> OnGetAsync(int id)
    {
@@ -28,8 +43,13 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
          return result;
       }
 
-      StakeholderObjections = Project.StakeholderObjections;
-      StakeholderObjectionsComment = Project.StakeholderObjectionsComment;
+      TrustConsultedStakeholders = Project.OtherStakeholderEngagementTrustConsultedStakeholders;
+      TrustConsultedStakeholdersNotConsultedReason = Project.OtherStakeholderEngagementTrustConsultedStakeholdersNotConsultedReason;
+      WereThereAnyObjectionsRaised = Project.WereThereAnyObjectionsRaised;
+      StakeholderObjectionsDetails = Project.StakeholderObjectionsDetails;
+      RelevantStakeholdersNotifiedOfAdmissionsChanges = Project.RelevantStakeholdersNotifiedOfAdmissionsChanges;
+      RelevantStakeholdersNotifiedOfAdmissionsChangesReason = Project.RelevantStakeholdersNotifiedOfAdmissionsChangesReason;
+      SupportingEvidence = Project.OtherStakeholderEngagementSupportingEvidence;
 
       return Page();
    }
@@ -48,31 +68,54 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
       if (!ModelState.IsValid)
       {
          _errorService.AddErrors(
-            [nameof(StakeholderObjections), nameof(StakeholderObjectionsComment)],
+            [
+               nameof(TrustConsultedStakeholders),
+               nameof(TrustConsultedStakeholdersNotConsultedReason),
+               nameof(WereThereAnyObjectionsRaised),
+               nameof(StakeholderObjectionsDetails),
+               nameof(RelevantStakeholdersNotifiedOfAdmissionsChanges),
+               nameof(RelevantStakeholdersNotifiedOfAdmissionsChangesReason)
+            ],
             ModelState);
 
          return Page();
       }
 
-      SetSignificantChangeStakeholderObjectionsCommand command = new(
-         StakeholderObjections!.Value,
-         StakeholderObjectionsComment);
+      SetSignificantChangeOtherStakeholderEngagementCommand command = new(
+         TrustConsultedStakeholders,
+         TrustConsultedStakeholders == false ? TrustConsultedStakeholdersNotConsultedReason : null,
+         WereThereAnyObjectionsRaised,
+         WereThereAnyObjectionsRaised == true ? StakeholderObjectionsDetails : null,
+         RelevantStakeholdersNotifiedOfAdmissionsChanges,
+         RelevantStakeholdersNotifiedOfAdmissionsChanges == YesNoNotApplicableAnswer.No
+            ? RelevantStakeholdersNotifiedOfAdmissionsChangesReason
+            : null,
+         SupportingEvidence);
 
-        await _repository.SetStakeholderObjections(id, command);
+      await _repository.SetOtherStakeholderEngagement(id, command);
 
-        return RedirectToTaskList(id);
-    }
+      return RedirectToTaskList(id);
+   }
 
-    public void Validate()
-    {
-        if (StakeholderObjections is null)
-        {
-            ModelState.AddModelError(nameof(StakeholderObjections), "Select whether there are any stakeholder objections");
-        }
+   private void Validate()
+   {
+      if (!TrustConsultedStakeholders.HasValue)
+         ModelState.AddModelError(nameof(TrustConsultedStakeholders), "Select an option");
 
-        if (StakeholderObjections == SignificantChangeStakeholderObjection.YesNoFurtherInformationProvided && string.IsNullOrWhiteSpace(StakeholderObjectionsComment))
-        {
-            ModelState.AddModelError(nameof(StakeholderObjectionsComment), "Enter the additional information provided");
-        }
-    }
+      if (TrustConsultedStakeholders == false && string.IsNullOrWhiteSpace(TrustConsultedStakeholdersNotConsultedReason))
+         ModelState.AddModelError(nameof(TrustConsultedStakeholdersNotConsultedReason), "Add a reason");
+
+      if (!WereThereAnyObjectionsRaised.HasValue)
+         ModelState.AddModelError(nameof(WereThereAnyObjectionsRaised), "Select an option");
+
+      if (WereThereAnyObjectionsRaised == true && string.IsNullOrWhiteSpace(StakeholderObjectionsDetails))
+         ModelState.AddModelError(nameof(StakeholderObjectionsDetails), "Add details");
+
+      if (!RelevantStakeholdersNotifiedOfAdmissionsChanges.HasValue)
+         ModelState.AddModelError(nameof(RelevantStakeholdersNotifiedOfAdmissionsChanges), "Select an option");
+
+      if (RelevantStakeholdersNotifiedOfAdmissionsChanges == YesNoNotApplicableAnswer.No
+          && string.IsNullOrWhiteSpace(RelevantStakeholdersNotifiedOfAdmissionsChangesReason))
+         ModelState.AddModelError(nameof(RelevantStakeholdersNotifiedOfAdmissionsChangesReason), "Add a reason");
+   }
 }

@@ -1,4 +1,5 @@
-@page "/significant-change/task-list/{id:int}/religious-body-consultation"
+@page "/significant-change/task-list/{id:int}/religious-bodies"
+@using Dfe.PrepareConversions.Data.Models.SignificantChange
 @model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.ReligiousBodyConsultation.IndexModel
 @{
    Layout = "_SignificantChangeTaskLayout";
@@ -13,42 +14,113 @@
 <div class="govuk-form-group">
    <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-         Has the relevant religious body been consulted?
+         Have any relevant religious bodies been consulted about this significant change?
       </legend>
-
       <inline-error for="@nameof(Model.TrustConsultedReligiousBody)" />
-
-      <div class="govuk-radios" data-module="govuk-radios" id="trust-consulted-religious-body-options">
+      <div class="govuk-radios" data-module="govuk-radios">
          <div class="govuk-radios__item">
-            <input asp-for="@Model.TrustConsultedReligiousBody" class="govuk-radios__input"
-                   id="trust-consulted-religious-body-yes" type="radio" value="true"
-                   data-test="trust-consulted-religious-body-yes" />
-            <label class="govuk-label govuk-radios__label" for="trust-consulted-religious-body-yes">
-               Yes
-            </label>
+            <input asp-for="TrustConsultedReligiousBody" class="govuk-radios__input" id="religious-bodies-consulted-yes"
+                   type="radio" value="@nameof(YesNoNotApplicableAnswer.Yes)" data-test="religious-bodies-consulted-yes" />
+            <label class="govuk-label govuk-radios__label" for="religious-bodies-consulted-yes">Yes</label>
          </div>
-
          <div class="govuk-radios__item">
-            <input asp-for="@Model.TrustConsultedReligiousBody" class="govuk-radios__input"
-                   id="trust-consulted-religious-body-no" type="radio" value="false"
-                   aria-controls="conditional-trust-consulted-religious-body-no"
-                   data-test="trust-consulted-religious-body-no" />
-            <label class="govuk-label govuk-radios__label" for="trust-consulted-religious-body-no">
-               No
-            </label>
+            <input asp-for="TrustConsultedReligiousBody" class="govuk-radios__input" id="religious-bodies-consulted-no"
+                   type="radio" value="@nameof(YesNoNotApplicableAnswer.No)"
+                   aria-controls="conditional-religious-bodies-consulted-no" data-test="religious-bodies-consulted-no" />
+            <label class="govuk-label govuk-radios__label" for="religious-bodies-consulted-no">No</label>
          </div>
-
-         <div class="govuk-radios__conditional" id="conditional-trust-consulted-religious-body-no">
+         <div class="govuk-radios__item">
+            <input asp-for="TrustConsultedReligiousBody" class="govuk-radios__input" id="religious-bodies-consulted-not-applicable"
+                   type="radio" value="@nameof(YesNoNotApplicableAnswer.NotApplicable)" data-test="religious-bodies-consulted-not-applicable" />
+            <label class="govuk-label govuk-radios__label" for="religious-bodies-consulted-not-applicable">Not applicable</label>
+         </div>
+         <div class="govuk-radios__conditional" id="conditional-religious-bodies-consulted-no">
             <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
-               <label class="govuk-label" for="TrustConsultedReligiousBodyNotConsultedReason">
-                  Use this area for additional information relating to mitigations, actions and further investigations.
-               </label>
+               <label class="govuk-label" for="TrustConsultedReligiousBodyNotConsultedReason">Add details</label>
                <inline-error for="@nameof(Model.TrustConsultedReligiousBodyNotConsultedReason)" />
-               <textarea asp-for="@Model.TrustConsultedReligiousBodyNotConsultedReason"
+               <textarea asp-for="TrustConsultedReligiousBodyNotConsultedReason"
                          class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.TrustConsultedReligiousBodyNotConsultedReason))"
-                         rows="5" data-test="trust-consulted-religious-body-not-consulted-reason"></textarea>
+                         rows="5" data-test="religious-bodies-consulted-reason"></textarea>
             </div>
          </div>
       </div>
    </fieldset>
+</div>
+
+<div class="govuk-form-group">
+   <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+         Has a religious body raised an objection to this significant change?
+      </legend>
+      <inline-error for="@nameof(Model.ReligiousBodyRaisedObjection)" />
+      <div class="govuk-radios" data-module="govuk-radios">
+         <div class="govuk-radios__item">
+            <input asp-for="ReligiousBodyRaisedObjection" class="govuk-radios__input" id="religious-body-objection-yes"
+                   type="radio" value="@nameof(YesNoNotApplicableAnswer.Yes)" data-test="religious-body-objection-yes" />
+            <label class="govuk-label govuk-radios__label" for="religious-body-objection-yes">Yes</label>
+         </div>
+         <div class="govuk-radios__item">
+            <input asp-for="ReligiousBodyRaisedObjection" class="govuk-radios__input" id="religious-body-objection-no"
+                   type="radio" value="@nameof(YesNoNotApplicableAnswer.No)"
+                   aria-controls="conditional-religious-body-objection-no" data-test="religious-body-objection-no" />
+            <label class="govuk-label govuk-radios__label" for="religious-body-objection-no">No</label>
+         </div>
+         <div class="govuk-radios__item">
+            <input asp-for="ReligiousBodyRaisedObjection" class="govuk-radios__input" id="religious-body-objection-not-applicable"
+                   type="radio" value="@nameof(YesNoNotApplicableAnswer.NotApplicable)" data-test="religious-body-objection-not-applicable" />
+            <label class="govuk-label govuk-radios__label" for="religious-body-objection-not-applicable">Not applicable</label>
+         </div>
+         <div class="govuk-radios__conditional" id="conditional-religious-body-objection-no">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+               <label class="govuk-label" for="ReligiousBodyRaisedObjectionReason">Add details</label>
+               <inline-error for="@nameof(Model.ReligiousBodyRaisedObjectionReason)" />
+               <textarea asp-for="ReligiousBodyRaisedObjectionReason"
+                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.ReligiousBodyRaisedObjectionReason))"
+                         rows="5" data-test="religious-body-objection-reason"></textarea>
+            </div>
+         </div>
+      </div>
+   </fieldset>
+</div>
+
+<div class="govuk-form-group">
+   <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+         Has consent been granted by relevant religious bodies?
+      </legend>
+      <inline-error for="@nameof(Model.ReligiousBodyConsentGranted)" />
+      <div class="govuk-radios" data-module="govuk-radios">
+         <div class="govuk-radios__item">
+            <input asp-for="ReligiousBodyConsentGranted" class="govuk-radios__input" id="religious-body-consent-yes"
+                   type="radio" value="@nameof(YesNoNotApplicableAnswer.Yes)" data-test="religious-body-consent-yes" />
+            <label class="govuk-label govuk-radios__label" for="religious-body-consent-yes">Yes</label>
+         </div>
+         <div class="govuk-radios__item">
+            <input asp-for="ReligiousBodyConsentGranted" class="govuk-radios__input" id="religious-body-consent-no"
+                   type="radio" value="@nameof(YesNoNotApplicableAnswer.No)"
+                   aria-controls="conditional-religious-body-consent-no" data-test="religious-body-consent-no" />
+            <label class="govuk-label govuk-radios__label" for="religious-body-consent-no">No</label>
+         </div>
+         <div class="govuk-radios__item">
+            <input asp-for="ReligiousBodyConsentGranted" class="govuk-radios__input" id="religious-body-consent-not-applicable"
+                   type="radio" value="@nameof(YesNoNotApplicableAnswer.NotApplicable)" data-test="religious-body-consent-not-applicable" />
+            <label class="govuk-label govuk-radios__label" for="religious-body-consent-not-applicable">Not applicable</label>
+         </div>
+         <div class="govuk-radios__conditional" id="conditional-religious-body-consent-no">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+               <label class="govuk-label" for="ReligiousBodyConsentNotGrantedReason">Add details</label>
+               <inline-error for="@nameof(Model.ReligiousBodyConsentNotGrantedReason)" />
+               <textarea asp-for="ReligiousBodyConsentNotGrantedReason"
+                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.ReligiousBodyConsentNotGrantedReason))"
+                         rows="5" data-test="religious-body-consent-reason"></textarea>
+            </div>
+         </div>
+      </div>
+   </fieldset>
+</div>
+
+<div class="govuk-form-group">
+   <label class="govuk-label govuk-label--m" for="SupportingEvidence">Supporting evidence</label>
+   <div class="govuk-hint">Add a link to supporting evidence.</div>
+   <input asp-for="SupportingEvidence" class="govuk-input" type="text" data-test="religious-bodies-supporting-evidence" />
 </div>

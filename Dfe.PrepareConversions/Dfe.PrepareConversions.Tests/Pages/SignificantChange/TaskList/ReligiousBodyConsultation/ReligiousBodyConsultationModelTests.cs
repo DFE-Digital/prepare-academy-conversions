@@ -22,101 +22,74 @@ namespace Dfe.PrepareConversions.Tests.Pages.SignificantChange.TaskList.Religiou
 public class ReligiousBodyConsultationModelTests
 {
    [Fact]
-   public async Task OnGetAsync_WhenProjectExists_ShouldPopulateValuesAndReturnPage()
+   public async Task OnGetAsync_Populates_all_religious_body_answers_and_evidence()
    {
       const int id = 601;
       SignificantChangeProjectResponse project = BuildProject(id);
-      project.ReligiousBodyConsultation.TrustConsultedReligiousBody = false;
-      project.ReligiousBodyConsultation.TrustConsultedReligiousBodyNotConsultedReason = "Awaiting written response";
-
-      Mock<ISignificantChangeProjectRepository> repository = new();
-      repository
-         .Setup(x => x.GetProjectById(id))
-         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, project));
-
+      project.ReligiousBodyConsultation = new SignificantChangeReligiousBodyConsultationResponse
+      {
+         TrustConsultedReligiousBody = YesNoNotApplicableAnswer.No,
+         TrustConsultedReligiousBodyNotConsultedReason = "Consultation is planned",
+         ReligiousBodyRaisedObjection = YesNoNotApplicableAnswer.Yes,
+         ReligiousBodyConsentGranted = YesNoNotApplicableAnswer.NotApplicable,
+         SupportingEvidence = "https://example.test/evidence"
+      };
+      Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, project);
       IndexModel sut = BuildModel(repository.Object);
 
       IActionResult result = await sut.OnGetAsync(id);
 
       result.Should().BeOfType<PageResult>();
-      sut.TrustConsultedReligiousBody.Should().BeFalse();
-      sut.TrustConsultedReligiousBodyNotConsultedReason.Should().Be("Awaiting written response");
-      repository.Verify(x => x.GetProjectById(id), Times.Once);
+      sut.TrustConsultedReligiousBody.Should().Be(YesNoNotApplicableAnswer.No);
+      sut.TrustConsultedReligiousBodyNotConsultedReason.Should().Be("Consultation is planned");
+      sut.ReligiousBodyRaisedObjection.Should().Be(YesNoNotApplicableAnswer.Yes);
+      sut.ReligiousBodyConsentGranted.Should().Be(YesNoNotApplicableAnswer.NotApplicable);
+      sut.SupportingEvidence.Should().Be("https://example.test/evidence");
    }
 
    [Fact]
-   public async Task OnPostAsync_WhenAnswerIsYes_ShouldSaveAndRedirect()
+   public async Task OnPostAsync_Saves_all_answers_in_one_request_and_redirects()
    {
       const int id = 602;
-
-      Mock<ISignificantChangeProjectRepository> repository = new();
-      repository
-         .Setup(x => x.GetProjectById(id))
-         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, BuildProject(id)));
+      Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id));
       repository
          .Setup(x => x.SetReligiousBodyConsultation(id, It.IsAny<SetSignificantChangeReligiousBodyConsultationCommand>()))
          .Returns(Task.CompletedTask);
-
       IndexModel sut = BuildModel(repository.Object);
-      sut.TrustConsultedReligiousBody = true;
-      sut.TrustConsultedReligiousBodyNotConsultedReason = "This should be cleared";
+      sut.TrustConsultedReligiousBody = YesNoNotApplicableAnswer.No;
+      sut.TrustConsultedReligiousBodyNotConsultedReason = "Consultation will be scheduled";
+      sut.ReligiousBodyRaisedObjection = YesNoNotApplicableAnswer.Yes;
+      sut.ReligiousBodyRaisedObjectionReason = "Cleared";
+      sut.ReligiousBodyConsentGranted = YesNoNotApplicableAnswer.NotApplicable;
+      sut.ReligiousBodyConsentNotGrantedReason = "Discarded";
+      sut.SupportingEvidence = "https://example.test/evidence";
 
       IActionResult result = await sut.OnPostAsync(id);
 
       RedirectToPageResult redirect = Assert.IsType<RedirectToPageResult>(result);
       redirect.PageName.Should().Be(Links.SignificantChange.SignificantChangeTaskList.Page);
-      redirect.RouteValues.Should().ContainKey("id").WhoseValue.Should().Be(id);
-
       repository.Verify(x => x.SetReligiousBodyConsultation(
          id,
          It.Is<SetSignificantChangeReligiousBodyConsultationCommand>(command =>
-            command.TrustConsultedReligiousBody == true
-            && command.TrustConsultedReligiousBodyNotConsultedReason == null)), Times.Once);
+            command.TrustConsultedReligiousBody == YesNoNotApplicableAnswer.No
+            && command.TrustConsultedReligiousBodyNotConsultedReason == "Consultation will be scheduled"
+            && command.ReligiousBodyRaisedObjection == YesNoNotApplicableAnswer.Yes
+            && command.ReligiousBodyRaisedObjectionReason == null
+            && command.ReligiousBodyConsentGranted == YesNoNotApplicableAnswer.NotApplicable
+            && command.ReligiousBodyConsentNotGrantedReason == null
+            && command.SupportingEvidence == "https://example.test/evidence")), Times.Once);
    }
 
    [Fact]
-   public async Task OnPostAsync_WhenAnswerIsNoWithReason_ShouldSaveAndRedirect()
+   public async Task OnPostAsync_Requires_reason_when_no_is_selected()
    {
       const int id = 603;
-
-      Mock<ISignificantChangeProjectRepository> repository = new();
-      repository
-         .Setup(x => x.GetProjectById(id))
-         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, BuildProject(id)));
-      repository
-         .Setup(x => x.SetReligiousBodyConsultation(id, It.IsAny<SetSignificantChangeReligiousBodyConsultationCommand>()))
-         .Returns(Task.CompletedTask);
-
+      Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id));
       IndexModel sut = BuildModel(repository.Object);
-      sut.TrustConsultedReligiousBody = false;
-      sut.TrustConsultedReligiousBodyNotConsultedReason = "Trust will provide mitigation details after next meeting";
-
-      IActionResult result = await sut.OnPostAsync(id);
-
-      RedirectToPageResult redirect = Assert.IsType<RedirectToPageResult>(result);
-      redirect.PageName.Should().Be(Links.SignificantChange.SignificantChangeTaskList.Page);
-      redirect.RouteValues.Should().ContainKey("id").WhoseValue.Should().Be(id);
-
-      repository.Verify(x => x.SetReligiousBodyConsultation(
-         id,
-         It.Is<SetSignificantChangeReligiousBodyConsultationCommand>(command =>
-            command.TrustConsultedReligiousBody == false
-            && command.TrustConsultedReligiousBodyNotConsultedReason == "Trust will provide mitigation details after next meeting")), Times.Once);
-   }
-
-   [Fact]
-   public async Task OnPostAsync_WhenAnswerIsNoWithoutReason_ShouldReturnPageWithValidationError()
-   {
-      const int id = 605;
-
-      Mock<ISignificantChangeProjectRepository> repository = new();
-      repository
-         .Setup(x => x.GetProjectById(id))
-         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, BuildProject(id)));
-
-      IndexModel sut = BuildModel(repository.Object);
-      sut.TrustConsultedReligiousBody = false;
+      sut.TrustConsultedReligiousBody = YesNoNotApplicableAnswer.No;
       sut.TrustConsultedReligiousBodyNotConsultedReason = " ";
+      sut.ReligiousBodyRaisedObjection = YesNoNotApplicableAnswer.Yes;
+      sut.ReligiousBodyConsentGranted = YesNoNotApplicableAnswer.Yes;
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -125,24 +98,12 @@ public class ReligiousBodyConsultationModelTests
       repository.Verify(x => x.SetReligiousBodyConsultation(id, It.IsAny<SetSignificantChangeReligiousBodyConsultationCommand>()), Times.Never);
    }
 
-   [Fact]
-   public async Task OnPostAsync_WhenNoSelectionIsMade_ShouldReturnPageWithValidationError()
+   private static Mock<ISignificantChangeProjectRepository> BuildRepository(int id, SignificantChangeProjectResponse project)
    {
-      const int id = 606;
-
       Mock<ISignificantChangeProjectRepository> repository = new();
-      repository
-         .Setup(x => x.GetProjectById(id))
-         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, BuildProject(id)));
-
-      IndexModel sut = BuildModel(repository.Object);
-      sut.TrustConsultedReligiousBody = null;
-
-      IActionResult result = await sut.OnPostAsync(id);
-
-      result.Should().BeOfType<PageResult>();
-      sut.ModelState.ContainsKey(nameof(IndexModel.TrustConsultedReligiousBody)).Should().BeTrue();
-      repository.Verify(x => x.SetReligiousBodyConsultation(id, It.IsAny<SetSignificantChangeReligiousBodyConsultationCommand>()), Times.Never);
+      repository.Setup(x => x.GetProjectById(id))
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, project));
+      return repository;
    }
 
    private static IndexModel BuildModel(ISignificantChangeProjectRepository repository)
@@ -154,16 +115,11 @@ public class ReligiousBodyConsultationModelTests
       {
          ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), modelState)
       };
-
-      return new IndexModel(repository, new ErrorService())
-      {
-         PageContext = pageContext
-      };
+      return new IndexModel(repository, new ErrorService()) { PageContext = pageContext };
    }
 
-   private static SignificantChangeProjectResponse BuildProject(int id)
-   {
-      return new SignificantChangeProjectResponse
+   private static SignificantChangeProjectResponse BuildProject(int id) =>
+      new()
       {
          Id = id,
          Urn = 10000000 + id,
@@ -175,9 +131,6 @@ public class ReligiousBodyConsultationModelTests
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
          Status = "pre decision",
-         LocalAuthorityName = "Test local authority",
-         StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse(),
-         ReligiousBodyConsultation = new SignificantChangeReligiousBodyConsultationResponse()
+         LocalAuthorityName = "Test local authority"
       };
-   }
 }

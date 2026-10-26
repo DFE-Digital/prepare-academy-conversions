@@ -34,13 +34,11 @@ public interface ISignificantChangeProjectRepository
    Task UpdateDecision(SignificantChangeDecision decision);
    Task<ApiResponse<SignificantChangeDecision>> GetDecision(int id);
    Task SetConsultationDuration(int id, SetSignificantChangeConsultationDurationCommand command);
-   Task SetStakeholderConsultation(int id, SetSignificantChangeStakeholderConsultationCommand command);
    Task SetEqualitiesImpactAssessment(int id, SetSignificantChangeEqualitiesImpactAssessmentCommand command);
    Task SetReligiousBodyConsultation(int id, SetSignificantChangeReligiousBodyConsultationCommand command);
    Task SetProjectDates(int id, SetSignificantChangeProjectDatesCommand command);
    Task SetPlanningPermission(int id, SetSignificantChangePlanningPermissionCommand command);
-   Task SetStakeholderObjections(int id, SetSignificantChangeStakeholderObjectionsCommand command);
-   Task SetAdmissionVariationConsultation(int id, SetSignificantChangeAdmissionVariationConsultationCommand command);
+   Task SetOtherStakeholderEngagement(int id, SetSignificantChangeOtherStakeholderEngagementCommand command);
    Task SetFunding(int id, SetSignificantChangeFundingCommand command);
    Task SetRecommendation(int id, SetSignificantChangeRecommendationCommand command);
    Task SetHQTFConsideration(int id, SetSignificantChangeHqtfConsiderationCommand command);

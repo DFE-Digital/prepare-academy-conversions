@@ -235,7 +235,6 @@ public class ConfirmProjectDatesModelTests
          ApplicationReference = "APP_REF_123",
          Status = "pre decision",
          LocalAuthorityName = "Test local authority",
-         StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse(),
          ProjectDates = new SignificantChangeProjectDatesResponse()
       };
    }

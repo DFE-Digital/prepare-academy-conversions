@@ -1,4 +1,5 @@
-@page "/significant-change/task-list/{id:int}/stakeholder-objections"
+@page "/significant-change/task-list/{id:int}/other-stakeholder-engagement"
+@using Dfe.PrepareConversions.Data.Models.SignificantChange
 @model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.StakeholderObjections.IndexModel
 @{
    Layout = "_SignificantChangeTaskLayout";
@@ -10,53 +11,101 @@
       class="govuk-back-link">Back</a>
 }
 
-<div class="govuk-form-group" data-test="stakeholder-objections-form-group">
+<div class="govuk-form-group">
    <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-        Were there any objections raised by stakeholders?
+         Has the trust consulted stakeholders about the planned significant change?
       </legend>
-      <inline-error for="@nameof(Model.StakeholderObjections)" data-test="@nameof(Model.StakeholderObjections)-error" />
-
+      <inline-error for="@nameof(Model.TrustConsultedStakeholders)" />
       <div class="govuk-radios" data-module="govuk-radios">
          <div class="govuk-radios__item">
-            <input asp-for="@Model.StakeholderObjections" class="govuk-radios__input"
-                   id="stakeholder-objections-no" type="radio" value="No"
-                   data-test="stakeholder-objections-no" />
-            <label class="govuk-label govuk-radios__label" for="stakeholder-objections-no">
-               No
-            </label>
+            <input asp-for="TrustConsultedStakeholders" class="govuk-radios__input" id="trust-consulted-stakeholders-yes"
+                   type="radio" value="true" data-test="trust-consulted-stakeholders-yes" />
+            <label class="govuk-label govuk-radios__label" for="trust-consulted-stakeholders-yes">Yes</label>
          </div>
-
          <div class="govuk-radios__item">
-            <input asp-for="@Model.StakeholderObjections" class="govuk-radios__input"
-                   id="stakeholder-objections-YesAllObjectionsAddressed" type="radio" value="YesAllObjectionsAddressed"
-                   data-test="stakeholder-objections-YesAllObjectionsAddressed" />
-            <label class="govuk-label govuk-radios__label" for="stakeholder-objections-YesAllObjectionsAddressed">
-                Yes - all objections have been addressed
-            </label>
+            <input asp-for="TrustConsultedStakeholders" class="govuk-radios__input" id="trust-consulted-stakeholders-no"
+                   type="radio" value="false" aria-controls="conditional-trust-consulted-stakeholders-no"
+                   data-test="trust-consulted-stakeholders-no" />
+            <label class="govuk-label govuk-radios__label" for="trust-consulted-stakeholders-no">No</label>
          </div>
-
-           <div class="govuk-radios__item">
-            <input asp-for="@Model.StakeholderObjections" class="govuk-radios__input"
-                   id="stakeholder-objections-YesNoFurtherInformationProvided" type="radio" value="YesNoFurtherInformationProvided"
-                   aria-controls="conditional-stakeholder-objections-YesNoFurtherInformationProvided"
-                   data-test="stakeholder-objections-YesNoFurtherInformationProvided" />
-            <label class="govuk-label govuk-radios__label" for="stakeholder-objections-YesNoFurtherInformationProvided">
-                Yes - no further information provided
-            </label>
-         </div>
-
-         <div class="govuk-radios__conditional" id="conditional-stakeholder-objections-YesNoFurtherInformationProvided">
+         <div class="govuk-radios__conditional" id="conditional-trust-consulted-stakeholders-no">
             <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
-               <label class="govuk-label" for="stakeholder-objections-additional-comments">
-                  Use this area for additional Comments relating to objections raised by stakeholders.
-               </label>
-               <inline-error for="@nameof(Model.StakeholderObjectionsComment)" />
-               <textarea asp-for="@Model.StakeholderObjectionsComment" id="stakeholder-objections-additional-comments"
-                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.StakeholderObjectionsComment))"
-                         rows="5" data-test="stakeholder-objections-additional-comments"></textarea>
+               <label class="govuk-label" for="TrustConsultedStakeholdersNotConsultedReason">Add details</label>
+               <inline-error for="@nameof(Model.TrustConsultedStakeholdersNotConsultedReason)" />
+               <textarea asp-for="TrustConsultedStakeholdersNotConsultedReason"
+                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.TrustConsultedStakeholdersNotConsultedReason))"
+                         rows="5" data-test="trust-consulted-stakeholders-not-consulted-reason"></textarea>
             </div>
          </div>
       </div>
    </fieldset>
+</div>
+
+<div class="govuk-form-group">
+   <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Were there any objections raised?</legend>
+      <inline-error for="@nameof(Model.WereThereAnyObjectionsRaised)" />
+      <div class="govuk-radios" data-module="govuk-radios">
+         <div class="govuk-radios__item">
+            <input asp-for="WereThereAnyObjectionsRaised" class="govuk-radios__input" id="objections-raised-no"
+                   type="radio" value="false" data-test="objections-raised-no" />
+            <label class="govuk-label govuk-radios__label" for="objections-raised-no">No</label>
+         </div>
+         <div class="govuk-radios__item">
+            <input asp-for="WereThereAnyObjectionsRaised" class="govuk-radios__input" id="objections-raised-yes"
+                   type="radio" value="true" aria-controls="conditional-objections-raised-yes"
+                   data-test="objections-raised-yes" />
+            <label class="govuk-label govuk-radios__label" for="objections-raised-yes">Yes</label>
+         </div>
+         <div class="govuk-radios__conditional" id="conditional-objections-raised-yes">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+               <label class="govuk-label" for="StakeholderObjectionsDetails">Add details</label>
+               <inline-error for="@nameof(Model.StakeholderObjectionsDetails)" />
+               <textarea asp-for="StakeholderObjectionsDetails"
+                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.StakeholderObjectionsDetails))"
+                         rows="5" data-test="stakeholder-objections-details"></textarea>
+            </div>
+         </div>
+      </div>
+   </fieldset>
+</div>
+
+<div class="govuk-form-group">
+   <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+         Have the relevant stakeholders been notified of the admissions changes?
+      </legend>
+      <inline-error for="@nameof(Model.RelevantStakeholdersNotifiedOfAdmissionsChanges)" />
+      <div class="govuk-radios" data-module="govuk-radios">
+         @foreach (YesNoNotApplicableAnswer answer in Enum.GetValues<YesNoNotApplicableAnswer>())
+         {
+            var answerId = $"stakeholders-notified-{answer}";
+            <div class="govuk-radios__item">
+               <input asp-for="RelevantStakeholdersNotifiedOfAdmissionsChanges" class="govuk-radios__input"
+                      id="@answerId" type="radio" value="@answer"
+                      aria-controls="@(answer == YesNoNotApplicableAnswer.No ? "conditional-stakeholders-notified-no" : null)"
+                      data-test="@answerId" />
+               <label class="govuk-label govuk-radios__label" for="@answerId">
+                  @(answer == YesNoNotApplicableAnswer.NotApplicable ? "Not applicable" : answer.ToString())
+               </label>
+            </div>
+         }
+         <div class="govuk-radios__conditional" id="conditional-stakeholders-notified-no">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+               <label class="govuk-label" for="RelevantStakeholdersNotifiedOfAdmissionsChangesReason">Add details</label>
+               <inline-error for="@nameof(Model.RelevantStakeholdersNotifiedOfAdmissionsChangesReason)" />
+               <textarea asp-for="RelevantStakeholdersNotifiedOfAdmissionsChangesReason"
+                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.RelevantStakeholdersNotifiedOfAdmissionsChangesReason))"
+                         rows="5" data-test="stakeholders-notified-reason"></textarea>
+            </div>
+         </div>
+      </div>
+   </fieldset>
+</div>
+
+<div class="govuk-form-group">
+   <label class="govuk-label govuk-label--m" for="SupportingEvidence">Supporting evidence</label>
+   <div class="govuk-hint">Add a link to supporting evidence.</div>
+   <input asp-for="SupportingEvidence" class="govuk-input" type="text" data-test="other-stakeholder-supporting-evidence" />
 </div>

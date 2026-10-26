@@ -3,7 +3,7 @@ import significantChangeTaskList from '../../pages/significantChangeTaskList';
 import significantChangeConsultationDuration from '../../pages/significantChangeConsultationDuration';
 import { Logger } from '../../support/logger';
 
-describe('Significant change - consultation duration', () => {
+describe('Significant change - consultation', () => {
     beforeEach(() => {
         cy.login();
         Logger.log('Visit the homepage before each test');
@@ -11,9 +11,7 @@ describe('Significant change - consultation duration', () => {
         cy.acceptCookies();
     });
 
-    // The task is only revealed once stakeholders have been consulted, so every test
-    // has to establish that precondition through the UI first.
-    const openTaskListAndConsultStakeholders = (then: () => void) => {
+    const openTaskListAndContinue = (then: () => void) => {
         cy.visit('/significant-change/project-list');
 
         cy.getByDataCy('select-projectlist-filter-count')
@@ -31,16 +29,12 @@ describe('Significant change - consultation duration', () => {
                 cy.getById('school-name-0').click();
                 cy.url().should('match', /\/significant-change\/task-list\/\d+(\?.*)?$/);
 
-                significantChangeTaskList.openStakeholderConsultationTask();
-                cy.getByDataTest('trust-consulted-stakeholders-yes').check();
-                cy.getById('save-and-continue-button').click();
-
                 then();
             });
     };
 
     it('Should show all three options and hide the comment box until No is selected', () => {
-        openTaskListAndConsultStakeholders(() => {
+        openTaskListAndContinue(() => {
             significantChangeTaskList.openConsultationDurationTask();
 
             significantChangeConsultationDuration
@@ -57,7 +51,7 @@ describe('Significant change - consultation duration', () => {
     });
 
     it('Should require a reason when No is selected, then save and return to the task list', () => {
-        openTaskListAndConsultStakeholders(() => {
+        openTaskListAndContinue(() => {
             significantChangeTaskList.openConsultationDurationTask();
 
             significantChangeConsultationDuration.selectNo().save();
@@ -74,7 +68,7 @@ describe('Significant change - consultation duration', () => {
     });
 
     it('Should save the satisfactory consultation answer without a comment', () => {
-        openTaskListAndConsultStakeholders(() => {
+        openTaskListAndContinue(() => {
             significantChangeTaskList.openConsultationDurationTask();
 
             significantChangeConsultationDuration.selectNoSatisfactory().save();
