@@ -45,7 +45,14 @@ public static class SignificantChangeTaskListBuilder
          "admissions-variation",
          "Admissions variation",
          displayOrder,
-         []
+         [
+            new SignificantChangeTaskDefinition(
+               "admissions-variation-details",
+               "Admissions variation details",
+               1,
+               Links.SignificantChange.AdmissionsVariationDetails,
+               project => GetTaskStatus(project.AdmissionsVariationStatus))
+         ]
       );
    }
 
@@ -159,7 +166,14 @@ public static class SignificantChangeTaskListBuilder
          "high-quality-trust-framework",
          "High Quality Trust Framework",
          displayOrder,
-         []
+         [
+            new SignificantChangeTaskDefinition(
+               "hqtf-consideration",
+               "High Quality Trust Framework (HQTF) consideration",
+               1,
+               Links.SignificantChange.HqtfConsideration,
+               project => GetTaskStatus(project.HQTFConsiderationStatus))
+         ]
       );
    }
 
@@ -171,9 +185,15 @@ public static class SignificantChangeTaskListBuilder
          displayOrder,
          [
             new SignificantChangeTaskDefinition(
+               "significant-change-recommendation",
+               "Significant change recommendation",
+               1,
+               Links.SignificantChange.SignificantChangeRecommendation,
+               project => GetTaskStatus(project.RecommendationStatus)),
+            new SignificantChangeTaskDefinition(
                "admissions-variation-recommendation",
                "Admission Variation recommendation",
-               1,
+               2,
                Links.SignificantChange.AdmissionsVariationRecommendation,
                project => GetTaskStatus(project.AdmissionsVariationRecommendationStatus))
          ]

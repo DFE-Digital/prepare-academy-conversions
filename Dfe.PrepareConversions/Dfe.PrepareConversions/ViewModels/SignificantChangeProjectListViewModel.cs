@@ -32,14 +32,26 @@ public class SignificantChangeProjectViewBaseModel
    public string ConsultationNoAdmissionVariationReason { get; set; } = string.Empty;
    public SignificantChangeTaskStatus EqualitiesImpactAssessmentStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public bool? EqualitiesImpactAssessmentCompleted { get; set; }
+   public string EqualitiesImpactAssessmentNoReason { get; set; } = string.Empty;
    public EqualitiesImpact? EqualitiesImpactIdentified { get; set; }
-   public string EqualitiesImpactIdentifiedMitigation { get; set; } = string.Empty;
+   public string EqualitiesLikelyDetails { get; set; } = string.Empty;
+   public string EqualitiesSomeImpactDetails { get; set; } = string.Empty;
+   public string EqualitiesImpactSupportingEvidence { get; set; } = string.Empty;
    public SignificantChangeTaskStatus ReligiousBodyConsultationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public bool? ReligiousBodyConsultationTrustConsultedReligiousBody { get; set; }
    public string ReligiousBodyConsultationTrustConsultedReligiousBodyNotConsultedReason { get; set; } = string.Empty;
    public SignificantChangeTaskStatus ProjectDatesStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public DateTime? ProposedDecisionDate { get; set; }
    public DateTime? ProposedChangeDate { get; set; }
+   public SignificantChangeTaskStatus AdmissionsVariationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public bool? AdmissionsVariationRequired { get; set; }
+   public string AdmissionsVariationSupportingEvidence { get; set; } = string.Empty;
+   public bool? AdmissionsVariationLocalAuthoritySupportive { get; set; }
+   public bool? AdmissionsVariationPupilPlacePlanningTeamSupportive { get; set; }
+   public bool? AdmissionsVariationAdmissionsTeamSupportive { get; set; }
+   public string? AdmissionsVariationLocalAuthoritySupportiveAdditionalInformation { get; set; }
+   public string? AdmissionsVariationPupilPlacePlanningSupportiveAdditionalInformation { get; set; }
+   public string? AdmissionsVariationAdmissionsTeamSupportiveAdditionalInformation { get; set; }
    public SignificantChangeTaskStatus FundingStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public FundingAnswer? FundingAnswer { get; set; }
    public string FundingAdditionalInformation { get; set; } = string.Empty;
@@ -50,4 +62,14 @@ public class SignificantChangeProjectViewBaseModel
    public string PlanningPermissionSupportingEvidence { get; set; } = string.Empty;
    public SignificantChangeTaskStatus AdmissionsVariationRecommendationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public AdmissionsVariationRecommendationAnswer? AdmissionsVariationRecommendationAnswer { get; set; }
+   public SignificantChangeTaskStatus RecommendationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public SignificantChangeRecommendation? Recommendation { get; set; }
+   public string RecommendationMoreInformation { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus HQTFConsiderationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public HqtfConsiderationAnswer? HQTFConsiderationAnswer { get; set; }
+   public string HQTFConsiderationAdditionalInformation { get; set; } = string.Empty;
+   public string HQTFConsiderationSupportingEvidence { get; set; } = string.Empty;
+   public SignificantChangeDecisions? Decision { get; set; }
+   public DateTime? DecisionDate { get; set; }
+   public bool IsReadOnly => Decision == SignificantChangeDecisions.Approved;
 }
