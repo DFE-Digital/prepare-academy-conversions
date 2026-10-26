@@ -236,7 +236,7 @@ public class SignificantChangeTaskListBuilderTests
 
    [Theory]
    [MemberData(nameof(StatusCases))]
-   public void Build_maps_recommendation_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
+   public void Build_maps_admissions_variations_recommendation_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
    {
       const string sectionKey = "recommendation-on-how-to-proceed";
       const string taskKey = "admissions-variation-recommendation";
