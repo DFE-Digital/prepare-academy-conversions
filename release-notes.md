@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-10-26.1292...main)
 
 NOTE: remember to update unreleased link when making a new release
+
+---
+## [1.31.0][1.31.0] - 2026-10-26
 ### Added
 - [296559](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_boards/board/t/Significant%20changes/Stories?workitem=296559) - Add religious body consultation task for significant change
 - [296556](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/296556) - Add Task - Consultation duration
@@ -39,9 +42,9 @@ NOTE: remember to update unreleased link when making a new release
 - [290429](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/290429) - Sig Record a decision
 - [296558](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/296558) - Sig Add -Task - stakeholder objections
 - [302674](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/302674) - Sig Add -Task - Task - admissions variation
+
 ---
 
-### Added
 ## [1.30.0][1.30.0] - 2026-08-26
 
 ### Added
