@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). To see an example from a mature product in the program [see the Complete products changelog that follows the same methodology](https://github.com/DFE-Digital/dfe-complete-conversions-transfers-and-changes/blob/main/CHANGELOG.md).
 
 
-## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-08-26.1192...main)
+## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-10-26.1292...main)
 
 NOTE: remember to update unreleased link when making a new release
 ### Added
@@ -38,6 +38,7 @@ NOTE: remember to update unreleased link when making a new release
 - [301449](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/301449) - Sig Change Project List display
 - [290429](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/290429) - Sig Record a decision
 - [296558](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/296558) - Sig Add -Task - stakeholder objections
+- [302674](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/302674) - Sig Add -Task - Task - admissions variation
 ---
 
 ### Added
