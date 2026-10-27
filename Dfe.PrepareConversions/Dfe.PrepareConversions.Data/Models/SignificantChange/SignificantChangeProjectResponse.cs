@@ -11,8 +11,10 @@ public class SignificantChangeProjectResponse : SignificantChangeProjectSearchRe
    public SignificantChangeEqualitiesImpactAssessmentResponse EqualitiesImpactAssessment { get; set; } = new();
    public SignificantChangeReligiousBodyConsultationResponse ReligiousBodyConsultation { get; set; } = new();
    public SignificantChangeProjectDatesResponse ProjectDates { get; set; } = new();
+   public SignificantChangeAdmissionsVariationResponse AdmissionsVariation { get; set; } = new();
    public SignificantChangeFundingResponse Funding { get; set; } = new();
    public SignificantChangePlanningPermissionResponse PlanningPermission { get; set; } = new();
+   public SignificantChangeAdmissionsVariationRecommendationResponse AdmissionsVariationRecommendation { get; set; } = new();
    public SignificantChangeRecommendationResponse Recommendation { get; set; } = new();
    public SignificantChangeHqtfConsiderationResponse HQTFConsideration { get; set; } = new();
    public SignificantChangeFhaRisksOrIssuesRaisedResponse FHARisksOrIssuesRaised { get; set; } = new();
