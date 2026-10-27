@@ -148,6 +148,13 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       fundingStatusTag.Should().NotBeNull();
       fundingStatusTag.TextContent.Should().Contain("Not started");
 
+      var recommendationLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Admission Variation recommendation"));
+
+      recommendationLink.Should().NotBeNull();
+      recommendationLink!.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/admissions-variation-recommendation");
+
+      Document.QuerySelector("#task-status-admissions-variation-recommendation")!.TextContent.Should().Contain("Not started");
       var recommendationStatusTag = Document.QuerySelector("#task-status-significant-change-recommendation");
       recommendationStatusTag.Should().NotBeNull();
       recommendationStatusTag.TextContent.Should().Contain("Not started");
@@ -178,6 +185,24 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}");
 
       var statusTag = Document.QuerySelector("#task-status-stakeholder-consultation");
+      statusTag.Should().NotBeNull();
+      statusTag.TextContent.Should().Contain("Completed");
+   }
+
+   [Fact]
+   public async Task Should_show_admissions_variation_recommendation_task_as_completed_when_status_is_completed()
+   {
+      SignificantChangeProjectResponse project = BuildProject(
+         id: 106,
+         status: "pre decision",
+         assignedUser: null,
+         admissionsVariationRecommendationStatus: SignificantChangeTaskStatus.Completed);
+
+      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
+
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}");
+
+      var statusTag = Document.QuerySelector("#task-status-admissions-variation-recommendation");
       statusTag.Should().NotBeNull();
       statusTag.TextContent.Should().Contain("Completed");
    }
@@ -213,7 +238,8 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       SignificantChangeTaskStatus stakeholderConsultationStatus = SignificantChangeTaskStatus.NotStarted,
       bool? trustConsultedStakeholders = null,
       string trustConsultedStakeholdersNotConsultedReason = null,
-      SignificantChangeTaskStatus consultationDurationStatus = SignificantChangeTaskStatus.NotStarted)
+      SignificantChangeTaskStatus consultationDurationStatus = SignificantChangeTaskStatus.NotStarted,
+      SignificantChangeTaskStatus admissionsVariationRecommendationStatus = SignificantChangeTaskStatus.NotStarted)
    {
       return new SignificantChangeProjectResponse
       {
@@ -238,6 +264,11 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
          ReligiousBodyConsultation = new SignificantChangeReligiousBodyConsultationResponse
          {
             Status = SignificantChangeTaskStatus.NotStarted
+         },
+         AdmissionsVariationRecommendation = new SignificantChangeAdmissionsVariationRecommendationResponse
+         {
+            Status = admissionsVariationRecommendationStatus,
+            AdmissionsVariationRecommendationAnswer = AdmissionsVariationRecommendationAnswer.Approve
          }
       };
    }

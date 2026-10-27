@@ -112,6 +112,7 @@ public static class Links
       public static readonly LinkItem AdmissionsVariationDetails = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/AdmissionsVariationDetails/Index");
       public static readonly LinkItem Funding = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/Funding/Index");
       public static readonly LinkItem PlanningPermission = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/PlanningPermission/Index");
+      public static readonly LinkItem AdmissionsVariationRecommendation = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/AdmissionsVariationRecommendation/Index");
       public static readonly LinkItem SignificantChangeRecommendation = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/Recommendation/Index");
       public static readonly LinkItem HqtfConsideration = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/HqtfConsideration/Index");
    }

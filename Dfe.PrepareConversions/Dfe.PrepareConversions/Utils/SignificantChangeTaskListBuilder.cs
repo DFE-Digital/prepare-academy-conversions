@@ -189,7 +189,13 @@ public static class SignificantChangeTaskListBuilder
                "Significant change recommendation",
                1,
                Links.SignificantChange.SignificantChangeRecommendation,
-               project => GetTaskStatus(project.RecommendationStatus))
+               project => GetTaskStatus(project.RecommendationStatus)),
+            new SignificantChangeTaskDefinition(
+               "admissions-variation-recommendation",
+               "Admission Variation recommendation",
+               2,
+               Links.SignificantChange.AdmissionsVariationRecommendation,
+               project => GetTaskStatus(project.AdmissionsVariationRecommendationStatus))
          ]
       );
    }
