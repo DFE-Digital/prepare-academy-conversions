@@ -71,7 +71,12 @@ public static class SignificantChangeProjectHelper
          HQTFConsiderationAdditionalInformation = significantChangeProject.HQTFConsideration?.AdditionalInformation ?? string.Empty,
          HQTFConsiderationSupportingEvidence = significantChangeProject.HQTFConsideration?.SupportingEvidence ?? string.Empty,
          Decision = significantChangeProject.Decision,
-         DecisionDate = significantChangeProject.DecisionDate
+         DecisionDate = significantChangeProject.DecisionDate,
+         OfstedInspectionDate = significantChangeProject.OfstedInspection?.InspectionDate,
+         MeetsOfstedStandards = significantChangeProject.OfstedInspection?.MeetsOfstedStandards,
+         OfstedInspectionStatus = significantChangeProject.OfstedInspection?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         OfstedInspectionAdditionalInformation = significantChangeProject.OfstedInspection?.AdditionalInformation ?? string.Empty,
+         OfstedSuportingEvidence = significantChangeProject.OfstedInspection?.SupportingEvidence ?? string.Empty
       };
    }
 }
