@@ -73,7 +73,7 @@ public class SignificantChangeProjectListModelTests
             It.IsAny<ISignificantChangeProjectRepository.SignificantChangeFilterOptions>()))
          .Callback<int, int, ISignificantChangeProjectRepository.SignificantChangeFilterOptions>((_, _, options) =>
             capturedFilterOptions = options)
-         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(HttpStatusCode.OK, null));
+         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(HttpStatusCode.OK, null));
 
       IndexModel sut = BuildPageModel(repository.Object, "Smith, Ste", "?SelectedLocalAuthorities=Kent&SelectedRegions=London");
 
@@ -94,7 +94,7 @@ public class SignificantChangeProjectListModelTests
          .Setup(x => x.GetAllProjects(
             It.IsAny<int>(), It.IsAny<int>(),
             It.IsAny<ISignificantChangeProjectRepository.SignificantChangeFilterOptions>()))
-         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
+         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(
             HttpStatusCode.OK, null));
 
       repository

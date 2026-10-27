@@ -45,7 +45,14 @@ public static class SignificantChangeTaskListBuilder
          "admissions-variation",
          "Admissions variation",
          displayOrder,
-         []
+         [
+            new SignificantChangeTaskDefinition(
+               "admissions-variation-details",
+               "Admissions variation details",
+               1,
+               Links.SignificantChange.AdmissionsVariationDetails,
+               project => GetTaskStatus(project.AdmissionsVariationStatus))
+         ]
       );
    }
 
@@ -183,7 +190,14 @@ public static class SignificantChangeTaskListBuilder
          "recommendation-on-how-to-proceed",
          "Recommendation on how to proceed",
          displayOrder,
-         []
+         [
+            new SignificantChangeTaskDefinition(
+               "significant-change-recommendation",
+               "Significant change recommendation",
+               1,
+               Links.SignificantChange.SignificantChangeRecommendation,
+               project => GetTaskStatus(project.RecommendationStatus))
+         ]
       );
    }
 

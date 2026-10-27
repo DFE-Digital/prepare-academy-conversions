@@ -123,6 +123,15 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       confirmProjectDatesLink.Should().NotBeNull();
       confirmProjectDatesLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/confirm-project-dates");
 
+      var admissionsVariationLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Admissions variation details"));
+
+      admissionsVariationLink.Should().NotBeNull();
+      admissionsVariationLink.GetAttribute("href").Should()
+         .Contain($"/significant-change/task-list/{project.Id}/admissions-variation-details");
+      Document.QuerySelector("#task-status-admissions-variation-details")?.TextContent
+         .Should().Contain("Not started");
+
       Document.QuerySelectorAll("a").Any(a => a.TextContent != null && a.TextContent.Contains("Gather trust feedback"))
          .Should().BeFalse();
 
@@ -145,6 +154,10 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       var fundingStatusTag = Document.QuerySelector("#task-status-funding");
       fundingStatusTag.Should().NotBeNull();
       fundingStatusTag.TextContent.Should().Contain("Not started");
+
+      var recommendationStatusTag = Document.QuerySelector("#task-status-significant-change-recommendation");
+      recommendationStatusTag.Should().NotBeNull();
+      recommendationStatusTag.TextContent.Should().Contain("Not started");
 
       var hqtfConsiderationLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("High Quality Trust Framework (HQTF) consideration"));

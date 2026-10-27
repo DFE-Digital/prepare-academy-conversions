@@ -95,11 +95,11 @@ public class SignificantChangeProjectRepositoryTests
       const int count = 15;
       GetSignificantProjectsQuery expectedQuery = new(page, count);
 
-      ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>> expectedBody = new()
+      ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>> expectedBody = new()
       {
          Data =
          [
-            new SignificantChangeProjectResponse
+            new SignificantChangeProjectSearchResponse
             {
                Id = 99,
                Urn = 123456,
@@ -118,18 +118,18 @@ public class SignificantChangeProjectRepositoryTests
       };
 
       httpClientService
-         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
+         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(
             It.IsAny<HttpClient>(),
             PathFor.GetAllSignificantChangeProjects,
             expectedQuery))
-         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(HttpStatusCode.OK, expectedBody));
+         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(HttpStatusCode.OK, expectedBody));
 
-      ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>> response = await sut.GetAllProjects(page, count);
+      ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>> response = await sut.GetAllProjects(page, count);
 
       response.StatusCode.Should().Be(HttpStatusCode.OK);
       response.Body.Should().BeSameAs(expectedBody);
 
-      httpClientService.Verify(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
+      httpClientService.Verify(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(
          It.IsAny<HttpClient>(),
          PathFor.GetAllSignificantChangeProjects,
          expectedQuery), Times.Once);
@@ -146,13 +146,13 @@ public class SignificantChangeProjectRepositoryTests
       GetSignificantProjectsQuery expectedQuery = new(page, count);
 
       httpClientService
-         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
+         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(
             It.IsAny<HttpClient>(),
             PathFor.GetAllSignificantChangeProjects,
             expectedQuery))
-         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(HttpStatusCode.BadRequest, null));
+         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(HttpStatusCode.BadRequest, null));
 
-      ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>> response = await sut.GetAllProjects(page, count);
+      ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>> response = await sut.GetAllProjects(page, count);
 
       response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
       response.Body.Should().NotBeNull();
@@ -576,12 +576,12 @@ public class SignificantChangeProjectRepositoryTests
       GetSignificantProjectsQuery capturedQuery = null;
 
       httpClientService
-         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
+         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(
             It.IsAny<HttpClient>(),
             PathFor.GetAllSignificantChangeProjects,
             It.IsAny<GetSignificantProjectsQuery>()))
          .Callback<HttpClient, string, GetSignificantProjectsQuery>((_, _, query) => capturedQuery = query)
-         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(HttpStatusCode.OK, null));
+         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(HttpStatusCode.OK, null));
 
       await sut.GetAllProjects(1, 10);
 
@@ -604,12 +604,12 @@ public class SignificantChangeProjectRepositoryTests
       GetSignificantProjectsQuery capturedQuery = null;
 
       httpClientService
-         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
+         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(
             It.IsAny<HttpClient>(),
             PathFor.GetAllSignificantChangeProjects,
             It.IsAny<GetSignificantProjectsQuery>()))
          .Callback<HttpClient, string, GetSignificantProjectsQuery>((_, _, query) => capturedQuery = query)
-         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(HttpStatusCode.OK, null));
+         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(HttpStatusCode.OK, null));
 
       // Empty arrays and a whitespace-only keyword must not become empty lists — record equality on
       // List<T> is reference equality, so an empty list breaks request-body matching downstream.
@@ -643,12 +643,12 @@ public class SignificantChangeProjectRepositoryTests
       GetSignificantProjectsQuery capturedQuery = null;
 
       httpClientService
-         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
+         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(
             It.IsAny<HttpClient>(),
             PathFor.GetAllSignificantChangeProjects,
             It.IsAny<GetSignificantProjectsQuery>()))
          .Callback<HttpClient, string, GetSignificantProjectsQuery>((_, _, query) => capturedQuery = query)
-         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(HttpStatusCode.OK, null));
+         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(HttpStatusCode.OK, null));
 
       await sut.GetAllProjects(
          2,
@@ -1052,6 +1052,53 @@ public class SignificantChangeProjectRepositoryTests
          .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
 
       ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetHQTFConsideration(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetAdmissionsVariation_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 81;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeAdmissionsVariation, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeAdmissionsVariationCommand command = new(true, "Admissions policy", true, false, true, null, null, null);
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeAdmissionsVariationCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetAdmissionsVariation(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeAdmissionsVariationCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetAdmissionsVariation_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 81;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeAdmissionsVariation, id);
+      SetSignificantChangeAdmissionsVariationCommand command = new(true, "Admissions policy", true, false, true, null, null, null);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeAdmissionsVariationCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(
+         () => sut.SetAdmissionsVariation(id, command));
 
       exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
    }

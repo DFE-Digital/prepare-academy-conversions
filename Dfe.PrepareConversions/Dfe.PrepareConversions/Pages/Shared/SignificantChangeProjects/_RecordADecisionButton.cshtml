@@ -1,0 +1,13 @@
+@model Dfe.PrepareConversions.ViewModels.SignificantChangeProjectViewBaseModel
+
+@if (!Model.IsReadOnly)
+{
+    var buttonText = Model.DecisionDate.HasValue
+        ? "Change decision"
+        : "Record a decision";
+
+    <a asp-page="@Links.SignificantChangeDecision.RecordDecision.Page" asp-route-id="@Model.Id"
+       class="govuk-button" data-cy="significant_change_record_decision_menu">
+        @buttonText
+    </a>
+}

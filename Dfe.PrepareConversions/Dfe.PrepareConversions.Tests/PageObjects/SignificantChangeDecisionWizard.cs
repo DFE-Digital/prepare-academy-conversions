@@ -7,6 +7,8 @@ using DocumentFormat.OpenXml.Office2010.Excel;
 using System;
 using System.Threading.Tasks;
 
+using SignificantChangeDecisionMadeBy = Dfe.PrepareConversions.Data.Models.SignificantChange.DecisionMadeBy;
+
 namespace Dfe.PrepareConversions.Tests.PageObjects;
 
 public class SignificantChangeDecisionWizard
@@ -37,6 +39,12 @@ public class SignificantChangeDecisionWizard
 
    public async Task SetDecisionToAndContinue(SignificantChangeDecisions decision)
    {
+      // Uncheck all radios first to ensure only the desired radio is checked
+      foreach (var radio in Document.QuerySelectorAll("#SignificantChangeDecision input[type=radio]"))
+      {
+         ((IHtmlInputElement)radio).IsChecked = false;
+      }
+
       Document.QuerySelector<IHtmlInputElement>($"#{decision.ToString().ToLowerInvariant()}-radio").IsChecked = true;
       await ClickSubmitButton();
    }
@@ -54,7 +62,7 @@ public class SignificantChangeDecisionWizard
       await ClickSubmitButton();
    }
 
-   public async Task SetDecisionByAndContinue(DecisionMadeBy decisionMadeBy)
+   public async Task SetDecisionByAndContinue(SignificantChangeDecisionMadeBy decisionMadeBy)
    {
       Document.QuerySelector<IHtmlInputElement>($"#{decisionMadeBy.ToString().ToLowerInvariant()}-radio")!.IsChecked = true;
       await ClickSubmitButton();

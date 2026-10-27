@@ -59,6 +59,14 @@ class SignificantChangeTaskList extends BasePage {
         return this;
     }
 
+    public openAdmissionsVariationDetailsTask(): this {
+        cy.contains('h3.app-task-list__section', 'Admissions variation')
+            .next('.app-task-list')
+            .contains('a', 'Admissions variation details')
+            .click();
+        return this;
+    }
+
     public openPlanningPermissionTask(): this {
         cy.contains('h3.app-task-list__section', 'Land transaction application and planning permission')
             .next('.app-task-list')
@@ -80,6 +88,17 @@ class SignificantChangeTaskList extends BasePage {
 
     public openFundingTask(): this {
         cy.contains('a', 'Funding').click();
+        return this;
+    }
+
+    public verifyRecommendationTaskVisible(): this {
+        cy.contains('a', 'Significant change recommendation').should('be.visible');
+        cy.getById('task-status-significant-change-recommendation').should('be.visible');
+        return this;
+    }
+
+    public openRecommendationTask(): this {
+        cy.contains('a', 'Significant change recommendation').click();
         return this;
     }
 
@@ -115,10 +134,7 @@ class SignificantChangeTaskList extends BasePage {
     }
 
     public openHqtfConsiderationTask(): this {
-        cy.contains('h3.app-task-list__section', 'High Quality Trust Framework')
-            .next('.app-task-list')
-            .contains('a', 'High Quality Trust Framework (HQTF) consideration')
-            .click();
+        cy.contains('h3.app-task-list__section', 'High Quality Trust Framework').next('.app-task-list').click();
         return this;
     }
 }
