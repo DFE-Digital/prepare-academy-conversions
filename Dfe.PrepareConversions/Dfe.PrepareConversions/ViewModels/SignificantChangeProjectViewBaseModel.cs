@@ -73,6 +73,10 @@ public class SignificantChangeProjectViewBaseModel
    public HqtfConsiderationAnswer? HQTFConsiderationAnswer { get; set; }
    public string HQTFConsiderationAdditionalInformation { get; set; } = string.Empty;
    public string HQTFConsiderationSupportingEvidence { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus FHARisksOrIssuesRaisedStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public bool? FHARisksOrIssuesRaised { get; set; }
+   public string FHARisksOrIssuesRaisedAdditionalInformation { get; set; } = string.Empty;
+   public string FHARisksOrIssuesRaisedSupportingEvidence { get; set; } = string.Empty;
    public SignificantChangeDecisions? Decision { get; set; }
    public DateTime? DecisionDate { get; set; }
    public bool IsReadOnly => Decision == SignificantChangeDecisions.Approved;
