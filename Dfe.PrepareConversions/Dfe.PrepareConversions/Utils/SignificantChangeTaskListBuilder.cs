@@ -105,7 +105,14 @@ public static class SignificantChangeTaskListBuilder
          "academy-performance",
          "Academy performance",
          displayOrder,
-         []
+         [
+            new SignificantChangeTaskDefinition(
+               "ofsted",
+               "Ofsted",
+               1,
+               Links.SignificantChange.OfstedInspection,
+               project => GetTaskStatus(project.OfstedInspectionStatus))
+         ]
       );
    }
 

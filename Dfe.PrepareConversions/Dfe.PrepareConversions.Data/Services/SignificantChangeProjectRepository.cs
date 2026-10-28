@@ -335,6 +335,22 @@ public class SignificantChangeProjectRepository(
       }
    }
 
+   public async Task SetOfstedInspection(int id, SetSignificantChangeOfstedInspectionCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeOfstedInspection, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeOfstedInspectionCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
    public async Task SetHQTFConsideration(int id, SetSignificantChangeHqtfConsiderationCommand command)
    {
       HttpClient httpClient = httpClientFactory.CreateAcademisationClient();

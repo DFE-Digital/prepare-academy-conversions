@@ -78,6 +78,11 @@ public static class SignificantChangeProjectHelper
          DecisionDate = significantChangeProject.DecisionDate,
          AdmissionsVariationRecommendationAnswer = significantChangeProject.AdmissionsVariationRecommendation?.AdmissionsVariationRecommendationAnswer,
          AdmissionsVariationRecommendationStatus = significantChangeProject.AdmissionsVariationRecommendation?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         OfstedInspectionDate = significantChangeProject.OfstedInspection?.InspectionDate,
+         MeetsOfstedStandards = significantChangeProject.OfstedInspection?.MeetsOfstedStandards,
+         OfstedInspectionStatus = significantChangeProject.OfstedInspection?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         OfstedInspectionAdditionalInformation = significantChangeProject.OfstedInspection?.AdditionalInformation ?? string.Empty,
+         OfstedSuportingEvidence = significantChangeProject.OfstedInspection?.SupportingEvidence ?? string.Empty
       };
    }
 }

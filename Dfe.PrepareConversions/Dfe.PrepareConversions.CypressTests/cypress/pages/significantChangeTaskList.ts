@@ -113,6 +113,20 @@ class SignificantChangeTaskList extends BasePage {
         return this;
     }
 
+    public openOfstedTask(): this {
+        cy.contains('h3.app-task-list__section', 'Academy performance')
+            .next('.app-task-list')
+            .contains('a', 'Ofsted')
+            .click();
+        return this;
+    }
+
+    public verifyOfstedTaskVisible(): this {
+        cy.contains('a', 'Ofsted').should('be.visible');
+        cy.getById('task-status-ofsted').should('be.visible');
+        return this;
+    }
+
     public verifyPublicSectorEqualityDutyTaskVisible(): this {
         cy.contains('a', 'Public Sector Equality Duty').should('be.visible');
         cy.getById('task-status-public-sector-equality-duty').should('be.visible');

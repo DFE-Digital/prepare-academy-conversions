@@ -60,6 +60,11 @@ public class SignificantChangeProjectViewBaseModel
    public PlanningPermissionAnswer? PlanningPermissionAnswer { get; set; }
    public string PlanningPermissionAdditionalInformation { get; set; } = string.Empty;
    public string PlanningPermissionSupportingEvidence { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus OfstedInspectionStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public DateTime? OfstedInspectionDate { get; set; }
+   public bool? MeetsOfstedStandards { get; set; }
+   public string OfstedInspectionAdditionalInformation { get; set; } = string.Empty;
+   public string OfstedSuportingEvidence { get; set; } = string.Empty;
    public SignificantChangeTaskStatus AdmissionsVariationRecommendationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public AdmissionsVariationRecommendationAnswer? AdmissionsVariationRecommendationAnswer { get; set; }
    public SignificantChangeTaskStatus RecommendationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
