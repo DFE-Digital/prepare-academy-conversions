@@ -99,9 +99,10 @@ public class StakeholderObjectionsIntegrationTests(IntegrationTestingWebApplicat
 
       var inputs = Document.QuerySelectorAll<IHtmlInputElement>($"input[name='{field}']");
       inputs.Should().HaveCount(expectedOptions.Length);
-      for (int i = 0; i < expectedOptions.Length; i++)
+      int i = 0;
+      foreach (IHtmlInputElement input in inputs)
       {
-         inputs[i].Value.Should().Be(expectedOptions[i]);
+         input.Value.Should().Be(expectedOptions[i++]);
       }
 
       IHtmlInputElement trigger = Document.QuerySelector<IHtmlInputElement>($"#{triggerId}")!;
