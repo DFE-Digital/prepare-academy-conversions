@@ -1,0 +1,499 @@
+@page "/significant-change/preview/{id:int}"
+@model Dfe.PrepareConversions.Pages.SignificantChange.Preview.IndexModel
+@using Dfe.Academisation.ExtensionMethods
+@using Dfe.PrepareConversions.Data.Models.SignificantChange
+@using Dfe.PrepareTransfers.Web.Helpers.TagHelpers
+@{
+    ViewData["Title"] = "Preview";
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <span class="govuk-caption-m">@Model.Project.SchoolName</span>
+                <h1 class="govuk-heading-xl">Preview</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full-width">
+        <div class="govuk-grid-column-one-quarter">
+            <nav aria-label="Jump to section">
+                <h2 class="govuk-heading-s govuk-!-margin-bottom-3">Jump to section</h2>
+                <ul class="govuk-list">
+                    <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#overview">Overview</a></li>
+                    <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#key-project-dates">Key project dates</a></li>
+                    <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#admissions-variation">Admissions variation</a></li>
+                    <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#consultation">Consultation</a></li>
+                    <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#academy-performance">Academy performance</a></li>
+                    <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#public-sector-equality-duty">Public Sector Equality Duty</a></li>
+                    <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#land-transaction-application-and-planning-permission">Land transaction application and planning permission</a></li>
+                    <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#financial-details">Financial details</a></li>
+                    <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#high-quality-trust-framework">High Quality Trust Framework</a></li>
+                    <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#recommendation-and-clearance">Recommendation and clearance</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="govuk-grid-column-three-quarters">
+        <section aria-labelledby="overview">
+            <h2 class="govuk-heading-l" id="overview">Overview</h2>
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">URN</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@Model.Project.Urn"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions"></dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Significant change type</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@Model.Project.TypeOfSignificantChange"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions"></dd>
+                </div>
+            </dl>
+        </section>
+
+        <section aria-labelledby="key-project-dates">
+            <h2 class="govuk-heading-l govuk-!-margin-top-8" id="key-project-dates">Key project dates</h2>
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Proposed decision date</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@(Model.Project.ProposedDecisionDate?.ToString("d MMMM yyyy"))"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.ConfirmProjectDates.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> proposed decision date</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Proposed implementation date</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@(Model.Project.ProposedChangeDate?.ToString("d MMMM yyyy"))"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.ConfirmProjectDates.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> proposed implementation date</span>
+                        </a>
+                    </dd>
+                </div>
+            </dl>
+        </section>
+
+        <section aria-labelledby="admissions-variation">
+            <h2 class="govuk-heading-l govuk-!-margin-top-8" id="admissions-variation">Admissions variation</h2>
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Is an admissions variation required for this significant change?</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@(Model.Project.ConsultationIncludeAdmissionVariation == true ? "Yes" : Model.Project.ConsultationIncludeAdmissionVariation == false ? "No" : null)"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.AdmissionVariationConsultation.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> whether an admissions variation is required</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Additional information</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@Model.Project.ConsultationNoAdmissionVariationReason"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.AdmissionVariationConsultation.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> admissions variation additional information</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Supporting evidence</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value=""></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.AdmissionVariationConsultation.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> admissions variation supporting evidence</span>
+                        </a>
+                    </dd>
+                </div>
+            </dl>
+        </section>
+
+        <section aria-labelledby="consultation">
+            <h2 class="govuk-heading-l govuk-!-margin-top-8" id="consultation">Consultation</h2>
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Has a 3 week consultation been completed?</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@(Model.Project.ConsultationLastedMinimumThreeWeeks?.ToDescription() ?? string.Empty)"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.ConsultationDuration.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> consultation duration</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Reason consultation was shorter than 3 weeks</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@Model.Project.ConsultationDurationNotMetReason"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.ConsultationDuration.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> consultation duration additional information</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Supporting evidence</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value=""></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.ConsultationDuration.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> consultation supporting evidence</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Has the trust consulted stakeholders about the planned significant change?</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@(Model.Project.StakeholderConsultationTrustConsultedStakeholders == true ? "Yes" : Model.Project.StakeholderConsultationTrustConsultedStakeholders == false ? "No" : null)"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.StakeholderConsultation.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> stakeholder consultation</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Reason stakeholders were not consulted</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@Model.Project.StakeholderConsultationTrustConsultedStakeholdersNotConsultedReason"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.StakeholderConsultation.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> stakeholder consultation additional information</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Were there any objections raised by stakeholders?</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@(Model.Project.StakeholderObjections?.ToDescription() ?? string.Empty)"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.StakeholderObjections.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> stakeholder objections</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Additional information about stakeholder objections</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@Model.Project.StakeholderObjectionsComment"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.StakeholderObjections.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> stakeholder objection details</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Have the relevant stakeholders been notified of the admissions changes?</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@(Model.Project.ConsultationIncludeAdmissionVariation == true ? "Yes" : Model.Project.ConsultationIncludeAdmissionVariation == false ? "No" : null)"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.AdmissionVariationConsultation.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> admissions variation consultation</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Admissions variation supporting evidence</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value=""></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.AdmissionVariationConsultation.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> admissions variation supporting evidence</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Has a local authority raised any objections to the significant change?</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value=""></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.StakeholderObjections.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> local authority objections</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Local authority objections supporting evidence</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value=""></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.StakeholderObjections.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> local authority objections supporting evidence</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Have any relevant religious bodies been consulted about this significant change?</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@(Model.Project.ReligiousBodyConsultationTrustConsultedReligiousBody == true ? "Yes" : Model.Project.ReligiousBodyConsultationTrustConsultedReligiousBody == false ? "No" : null)"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.ReligiousBodyConsultation.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> religious body consultation</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Has a religious body raised an objection to this significant change?</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value=""></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.ReligiousBodyConsultation.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> religious body objections</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Has consent been granted by relevant religious bodies?</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value=""></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.ReligiousBodyConsultation.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> religious body consent</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Religious body supporting evidence</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value=""></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.ReligiousBodyConsultation.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> religious body supporting evidence</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Reason the religious body was not consulted</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@Model.Project.ReligiousBodyConsultationTrustConsultedReligiousBodyNotConsultedReason"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.ReligiousBodyConsultation.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> religious body consultation additional information</span>
+                        </a>
+                    </dd>
+                </div>
+            </dl>
+        </section>
+
+        <section aria-labelledby="academy-performance">
+            <h2 class="govuk-heading-l govuk-!-margin-top-8" id="academy-performance">Academy performance</h2>
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Date of most recent Ofsted inspection</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value=""></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions"></dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Supporting evidence</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value=""></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions"></dd>
+                </div>
+            </dl>
+        </section>
+
+        <section aria-labelledby="public-sector-equality-duty">
+            <h2 class="govuk-heading-l govuk-!-margin-top-8" id="public-sector-equality-duty">Public Sector Equality Duty</h2>
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Has the Public Sector Equality Duty been considered and an Equalities Impact Assessment been completed?</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@(Model.Project.EqualitiesImpactAssessmentCompleted == true ? "Yes" : Model.Project.EqualitiesImpactAssessmentCompleted == false ? "No" : null)"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.PublicSectorEqualityDuty.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> Equalities Impact Assessment completion</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Reason the assessment was not completed</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@Model.Project.EqualitiesImpactAssessmentNoReason"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.PublicSectorEqualityDuty.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> reason the assessment was not completed</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Is the decision likely to disproportionately affect any particular person or group who share protected characteristics?</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@(Model.Project.EqualitiesImpactIdentified?.ToDescription() ?? string.Empty)"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.PublicSectorEqualityDuty.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> equality impact</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Details of likely impact</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@Model.Project.EqualitiesLikelyDetails"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.PublicSectorEqualityDuty.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> details of likely equality impact</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Details of some impact</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@Model.Project.EqualitiesSomeImpactDetails"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.PublicSectorEqualityDuty.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> details of some equality impact</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Supporting evidence</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@Model.Project.EqualitiesImpactSupportingEvidence"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.PublicSectorEqualityDuty.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> equality impact supporting evidence</span>
+                        </a>
+                    </dd>
+                </div>
+            </dl>
+        </section>
+
+        <section aria-labelledby="land-transaction-application-and-planning-permission">
+            <h2 class="govuk-heading-l govuk-!-margin-top-8" id="land-transaction-application-and-planning-permission">Land transaction application and planning permission</h2>
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Has the landowner submitted a land transaction application?</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value=""></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions"></dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Have the Land Transaction Team consented to the change?</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value=""></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions"></dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Land transaction supporting evidence</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value=""></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions"></dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Has planning permission been secured?</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@(Model.Project.PlanningPermissionAnswer?.ToDescription() ?? string.Empty)"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.PlanningPermission.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> planning permission</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Additional information</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@Model.Project.PlanningPermissionAdditionalInformation"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.PlanningPermission.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> planning permission additional information</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Planning permission supporting evidence</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@Model.Project.PlanningPermissionSupportingEvidence"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.PlanningPermission.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> planning permission supporting evidence</span>
+                        </a>
+                    </dd>
+                </div>
+            </dl>
+        </section>
+
+        <section aria-labelledby="financial-details">
+            <h2 class="govuk-heading-l govuk-!-margin-top-8" id="financial-details">Financial details</h2>
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Has funding been secured?</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@(Model.Project.FundingAnswer?.ToDescription() ?? string.Empty)"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.Funding.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> funding</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Additional information</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@Model.Project.FundingAdditionalInformation"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.Funding.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> funding additional information</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Funding supporting evidence</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@Model.Project.FundingSupportingEvidence"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.Funding.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> funding supporting evidence</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Can you provide an overview of your commission?</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value=""></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions"></dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Have there been any risks or issues raised in the FHA?</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value=""></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions"></dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">FHA supporting evidence</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value=""></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions"></dd>
+                </div>
+            </dl>
+        </section>
+
+        <section aria-labelledby="high-quality-trust-framework">
+            <h2 class="govuk-heading-l govuk-!-margin-top-8" id="high-quality-trust-framework">High Quality Trust Framework</h2>
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Have any issues or risks been identified with regards to the HQTF pillars?</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@(Model.Project.HQTFConsiderationAnswer?.ToDescription() ?? string.Empty)"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.HqtfConsideration.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> HQTF consideration</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Additional information</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@Model.Project.HQTFConsiderationAdditionalInformation"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.HqtfConsideration.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> HQTF additional information</span>
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Supporting evidence</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value="@Model.Project.HQTFConsiderationSupportingEvidence"></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.SignificantChange.HqtfConsideration.Page" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="true">
+                            Change<span class="govuk-visually-hidden"> HQTF supporting evidence</span>
+                        </a>
+                    </dd>
+                </div>
+            </dl>
+        </section>
+
+        <section aria-labelledby="recommendation-and-clearance">
+            <h2 class="govuk-heading-l govuk-!-margin-top-8" id="recommendation-and-clearance">Recommendation and clearance</h2>
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Significant change recommendation</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value=""></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions"></dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Admissions variation recommendation</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value=""></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions"></dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Enter who cleared the significant change in Regions Group</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value=""></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions"></dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Enter who cleared the significant change from Trust Regulation (formerly known as SFSO)</dt>
+                    <dd class="govuk-summary-list__value"><stringsummary value=""></stringsummary></dd>
+                    <dd class="govuk-summary-list__actions"></dd>
+                </div>
+            </dl>
+        </section>
+
+        <partial name="Shared/SignificantChangeProjects/_RecordADecisionButton" model="@Model.Project" />
+        </div>
+    </div>
+</div>

@@ -13,6 +13,9 @@ public abstract class BaseSignificantChangeTaskPageModel(ISignificantChangeProje
 {
    public SignificantChangeProjectViewBaseModel Project { get; private set; }
 
+   [BindProperty(SupportsGet = true)]
+   public bool ReturnToPreview { get; set; }
+
    protected abstract string TaskTitle { get; }
 
    public virtual async Task<IActionResult> OnGetAsync(int id)
@@ -38,6 +41,9 @@ public abstract class BaseSignificantChangeTaskPageModel(ISignificantChangeProje
 
    protected IActionResult RedirectToTaskList(int id)
    {
+      if (ReturnToPreview)
+         return RedirectToPage(Links.SignificantChangePreview.Index.Page, new { id });
+
       return RedirectToPage(Links.SignificantChange.SignificantChangeTaskList.Page, new { id });
    }
 }

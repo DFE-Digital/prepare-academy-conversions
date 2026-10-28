@@ -118,7 +118,12 @@ public static class Links
       public static readonly LinkItem FhaRisksOrIssuesRaised = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/FhaRisksOrIssuesRaised/Index");
    }
 
-    public static class SignificantChangeDecision
+   public static class SignificantChangePreview
+   {
+      public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/SignificantChange/Preview/Index");
+   }
+
+   public static class SignificantChangeDecision
    {
       public static readonly LinkItem RecordDecision = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/RecordDecision");
       public static readonly LinkItem AnyConditions = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/AnyConditions");
