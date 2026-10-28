@@ -351,6 +351,22 @@ public class SignificantChangeProjectRepository(
       }
    }
 
+   public async Task SetFhaRisksOrIssuesRaised(int id, SetSignificantChangeFhaRisksOrIssuesRaisedCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeFhaRisksOrIssuesRaised, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeFhaRisksOrIssuesRaisedCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
    public async Task SetAdmissionsVariation(int id, SetSignificantChangeAdmissionsVariationCommand command)
    {
       HttpClient httpClient = httpClientFactory.CreateAcademisationClient();

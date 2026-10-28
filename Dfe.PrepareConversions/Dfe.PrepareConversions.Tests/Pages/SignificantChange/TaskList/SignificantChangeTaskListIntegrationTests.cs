@@ -148,13 +148,23 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       fundingStatusTag.Should().NotBeNull();
       fundingStatusTag.TextContent.Should().Contain("Not started");
 
+      var fhaRisksOrIssuesRaisedLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Financial Health Assessment (FHA) outcomes"));
+
+      fhaRisksOrIssuesRaisedLink.Should().NotBeNull();
+      fhaRisksOrIssuesRaisedLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/fha-risks-or-issues-raised");
+
+      var fhaRisksOrIssuesRaisedStatusTag = Document.QuerySelector("#task-status-fha-risks-or-issues-raised");
+      fhaRisksOrIssuesRaisedStatusTag.Should().NotBeNull();
+      fhaRisksOrIssuesRaisedStatusTag.TextContent.Should().Contain("Not started");
+
       var recommendationLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Admission Variation recommendation"));
 
       recommendationLink.Should().NotBeNull();
-      recommendationLink!.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/admissions-variation-recommendation");
+      recommendationLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/admissions-variation-recommendation");
 
-      Document.QuerySelector("#task-status-admissions-variation-recommendation")!.TextContent.Should().Contain("Not started");
+      Document.QuerySelector("#task-status-admissions-variation-recommendation").TextContent.Should().Contain("Not started");
       var recommendationStatusTag = Document.QuerySelector("#task-status-significant-change-recommendation");
       recommendationStatusTag.Should().NotBeNull();
       recommendationStatusTag.TextContent.Should().Contain("Not started");

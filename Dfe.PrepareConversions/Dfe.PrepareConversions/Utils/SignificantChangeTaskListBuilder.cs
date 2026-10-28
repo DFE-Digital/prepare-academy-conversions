@@ -155,7 +155,13 @@ public static class SignificantChangeTaskListBuilder
                "Funding",
                1,
                Links.SignificantChange.Funding,
-               project => GetTaskStatus(project.FundingStatus))
+               project => GetTaskStatus(project.FundingStatus)),
+            new SignificantChangeTaskDefinition(
+               "fha-risks-or-issues-raised",
+               "Financial Health Assessment (FHA) outcomes",
+               2,
+               Links.SignificantChange.FhaRisksOrIssuesRaised,
+               project => GetTaskStatus(project.FHARisksOrIssuesRaisedStatus))
          ]
       );
    }
