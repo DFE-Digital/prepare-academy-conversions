@@ -17,7 +17,7 @@ public class SignificantChangeTaskListBuilderTests
    [InlineData(1, "key-project-dates", "Key project dates", new[] { "confirm-project-dates" })]
    [InlineData(2, "admissions-variation", "Admissions variation", new[] { "admissions-variation-details" })]
    [InlineData(3, "consultation-details", "Consultation details", new[] { "consultation", "religious-bodies", "other-stakeholder-engagement" })]
-   [InlineData(4, "academy-performance", "Academy performance", new string[0])]
+   [InlineData(4, "academy-performance", "Academy performance", new[] { "ofsted" })]
    [InlineData(5, "public-sector-equality-duty", "Public Sector Equality Duty", new[] { "public-sector-equality-duty" })]
    [InlineData(6, "land-transaction-application-and-planning-permission", "Land transaction application and planning permission", new[] { "planning-permission" })]
    [InlineData(7, "financial-details", "Financial details", new[] { "funding", "fha-risks-or-issues-raised" })]
@@ -143,6 +143,22 @@ public class SignificantChangeTaskListBuilderTests
 
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.PlanningPermissionTaskStatus = TaskStatus);
 
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
+      var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
+
+      task.Status.Status.Should().Be(expectedTaskStatus);
+   }
+
+   [Theory]
+   [MemberData(nameof(StatusCases))]
+   public void Build_maps_ofsted_inspection_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
+   {
+      const string sectionKey = "academy-performance";
+      const string taskKey = "ofsted";
+
+      SignificantChangeProjectViewBaseModel project = BuildProject(p => p.OfstedInspectionStatus = TaskStatus);
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
       var section = Assert.Single(result.Sections, s => s.Key == sectionKey);

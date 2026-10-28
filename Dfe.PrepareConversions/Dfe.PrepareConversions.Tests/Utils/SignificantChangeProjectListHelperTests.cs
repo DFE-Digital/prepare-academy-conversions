@@ -2,7 +2,6 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using Dfe.PrepareConversions.Utils;
 using FluentAssertions;
-using System;
 using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Utils;

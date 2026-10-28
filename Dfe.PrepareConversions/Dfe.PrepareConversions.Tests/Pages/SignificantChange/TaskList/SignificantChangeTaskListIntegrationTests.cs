@@ -111,6 +111,13 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       planningPermissionLink.Should().NotBeNull();
       planningPermissionLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/planning-permission");
 
+      var ofstedLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Trim() == "Ofsted");
+
+      ofstedLink.Should().NotBeNull();
+      ofstedLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/ofsted");
+      Document.QuerySelector("#task-status-ofsted")!.TextContent.Should().Contain("Not started");
+
       var publicSectorEqualityDutyLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Public Sector Equality Duty"));
 
