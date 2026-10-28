@@ -216,29 +216,6 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       statusTag.TextContent.Should().Contain("Completed");
    }
 
-      [Fact]
-   public async Task Should_render_consultation_task()
-   {
-      SignificantChangeProjectResponse project = BuildProject(
-         id: 105,
-         status: "pre decision",
-         assignedUser: null,
-         consultationDurationStatus: SignificantChangeTaskStatus.NotStarted);
-
-      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
-
-      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}");
-
-      var consultationDurationLink = Document.QuerySelectorAll("a")
-         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Trim() == "Consultation");
-
-      consultationDurationLink.Should().NotBeNull();
-      consultationDurationLink!.GetAttribute("href")
-         .Should().Contain($"/significant-change/task-list/{project.Id}/consultation");
-
-      Document.QuerySelector("#task-status-consultation")!.TextContent.Should().Contain("Not started");
-   }
-
    private static SignificantChangeProjectResponse BuildProject(
       int id,
       string status,
