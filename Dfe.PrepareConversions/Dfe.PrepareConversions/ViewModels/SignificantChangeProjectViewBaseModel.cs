@@ -65,6 +65,8 @@ public class SignificantChangeProjectViewBaseModel
    public bool? MeetsOfstedStandards { get; set; }
    public string OfstedInspectionAdditionalInformation { get; set; } = string.Empty;
    public string OfstedSuportingEvidence { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus AdmissionsVariationRecommendationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public AdmissionsVariationRecommendationAnswer? AdmissionsVariationRecommendationAnswer { get; set; }
    public SignificantChangeTaskStatus RecommendationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public SignificantChangeRecommendation? Recommendation { get; set; }
    public string RecommendationMoreInformation { get; set; } = string.Empty;
@@ -72,6 +74,10 @@ public class SignificantChangeProjectViewBaseModel
    public HqtfConsiderationAnswer? HQTFConsiderationAnswer { get; set; }
    public string HQTFConsiderationAdditionalInformation { get; set; } = string.Empty;
    public string HQTFConsiderationSupportingEvidence { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus FHARisksOrIssuesRaisedStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public bool? FHARisksOrIssuesRaised { get; set; }
+   public string FHARisksOrIssuesRaisedAdditionalInformation { get; set; } = string.Empty;
+   public string FHARisksOrIssuesRaisedSupportingEvidence { get; set; } = string.Empty;
    public SignificantChangeDecisions? Decision { get; set; }
    public DateTime? DecisionDate { get; set; }
    public bool IsReadOnly => Decision == SignificantChangeDecisions.Approved;

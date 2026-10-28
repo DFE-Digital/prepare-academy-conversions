@@ -91,6 +91,17 @@ class SignificantChangeTaskList extends BasePage {
         return this;
     }
 
+    public verifyFhaRisksOrIssuesRaisedTaskVisible(): this {
+        cy.contains('a', 'Financial health assessment (FHA) risks or issues raised').should('be.visible');
+        cy.getById('task-status-fha-risks-or-issues-raised').should('be.visible');
+        return this;
+    }
+
+    public openFhaRisksOrIssuesRaisedTask(): this {
+        cy.contains('a', 'Financial health assessment (FHA) risks or issues raised').click();
+        return this;
+    }
+
     public verifyRecommendationTaskVisible(): this {
         cy.contains('a', 'Significant change recommendation').should('be.visible');
         cy.getById('task-status-significant-change-recommendation').should('be.visible');
@@ -135,6 +146,23 @@ class SignificantChangeTaskList extends BasePage {
 
     public openHqtfConsiderationTask(): this {
         cy.contains('h3.app-task-list__section', 'High Quality Trust Framework').next('.app-task-list').click();
+        return this;
+    }
+
+    public verifyAdmissionsVariationRecommendationTaskVisible(): this {
+        cy.contains('h3.app-task-list__section', 'Recommendation on how to proceed')
+            .next('.app-task-list')
+            .contains('a', 'Recommendation')
+            .should('be.visible');
+        cy.getById('task-status-admissions-variation-recommendation').should('be.visible');
+        return this;
+    }
+
+    public openAdmissionsVariationRecommendationTask(): this {
+        cy.contains('h3.app-task-list__section', 'Recommendation on how to proceed')
+            .next('.app-task-list')
+            .contains('a', 'Recommendation')
+            .click();
         return this;
     }
 }

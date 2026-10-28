@@ -14,9 +14,11 @@ public class SignificantChangeProjectResponse : SignificantChangeProjectSearchRe
    public SignificantChangeAdmissionsVariationResponse AdmissionsVariation { get; set; } = new();
    public SignificantChangeFundingResponse Funding { get; set; } = new();
    public SignificantChangePlanningPermissionResponse PlanningPermission { get; set; } = new();
+   public SignificantChangeAdmissionsVariationRecommendationResponse AdmissionsVariationRecommendation { get; set; } = new();
    public SignificantChangeRecommendationResponse Recommendation { get; set; } = new();
    public SignificantChangeHqtfConsiderationResponse HQTFConsideration { get; set; } = new();
    public SignificantChangeOfstedInspectionResponse OfstedInspection { get; set; } = new();
+   public SignificantChangeFhaRisksOrIssuesRaisedResponse FHARisksOrIssuesRaised { get; set; } = new();
    public SignificantChangeDecisions? Decision { get; set; }
    public DateTime? DecisionDate { get; set; }
 }
