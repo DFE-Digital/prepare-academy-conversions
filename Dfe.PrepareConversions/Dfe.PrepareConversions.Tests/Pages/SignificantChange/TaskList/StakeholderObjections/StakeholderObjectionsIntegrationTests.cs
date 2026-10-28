@@ -85,6 +85,31 @@ public class StakeholderObjectionsIntegrationTests(IntegrationTestingWebApplicat
       Document.QuerySelector<IHtmlElement>("#StakeholderObjectionsDetails-error")!.TextContent.Should().Contain("Add details");
    }
 
+   [Theory]
+   [InlineData("TrustConsultedStakeholders", "trust-consulted-stakeholders-no", "conditional-trust-consulted-stakeholders-no", "true", "false")]
+   [InlineData("WereThereAnyObjectionsRaised", "objections-raised-yes", "conditional-objections-raised-yes", "true", "false")]
+   [InlineData("RelevantStakeholdersNotifiedOfAdmissionsChanges", "stakeholders-notified-No", "conditional-stakeholders-notified-no", "Yes", "No", "NotApplicable")]
+   public async Task Should_display_expected_options_and_attach_details_to_the_correct_answer(
+      string field, string triggerId, string panelId, params string[] expectedOptions)
+   {
+      SignificantChangeProjectResponse project = BuildProject(604);
+      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
+
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/other-stakeholder-engagement");
+
+      var inputs = Document.QuerySelectorAll<IHtmlInputElement>($"input[name='{field}']");
+      inputs.Should().HaveCount(expectedOptions.Length);
+      for (int i = 0; i < expectedOptions.Length; i++)
+      {
+         inputs[i].Value.Should().Be(expectedOptions[i]);
+      }
+
+      IHtmlInputElement trigger = Document.QuerySelector<IHtmlInputElement>($"#{triggerId}")!;
+      trigger.GetAttribute("aria-controls").Should().Be(panelId);
+      trigger.ParentElement!.NextElementSibling!.Id.Should().Be(panelId);
+      Document.QuerySelectorAll($"input[name='{field}'][aria-controls]").Should().ContainSingle();
+   }
+
    private static SignificantChangeProjectResponse BuildProject(int id) =>
       new()
       {

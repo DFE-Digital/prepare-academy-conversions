@@ -85,7 +85,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
          TrustConsultedReligiousBody,
          TrustConsultedReligiousBody == YesNoNotApplicableAnswer.No ? TrustConsultedReligiousBodyNotConsultedReason : null,
          ReligiousBodyRaisedObjection,
-         ReligiousBodyRaisedObjection == YesNoNotApplicableAnswer.No ? ReligiousBodyRaisedObjectionReason : null,
+         ReligiousBodyRaisedObjection == YesNoNotApplicableAnswer.Yes ? ReligiousBodyRaisedObjectionReason : null,
          ReligiousBodyConsentGranted,
          ReligiousBodyConsentGranted == YesNoNotApplicableAnswer.No ? ReligiousBodyConsentNotGrantedReason : null,
          SupportingEvidence);
@@ -97,17 +97,25 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
    private void Validate()
    {
-      ValidateAnswer(TrustConsultedReligiousBody, nameof(TrustConsultedReligiousBody), TrustConsultedReligiousBodyNotConsultedReason, nameof(TrustConsultedReligiousBodyNotConsultedReason));
-      ValidateAnswer(ReligiousBodyRaisedObjection, nameof(ReligiousBodyRaisedObjection), ReligiousBodyRaisedObjectionReason, nameof(ReligiousBodyRaisedObjectionReason));
-      ValidateAnswer(ReligiousBodyConsentGranted, nameof(ReligiousBodyConsentGranted), ReligiousBodyConsentNotGrantedReason, nameof(ReligiousBodyConsentNotGrantedReason));
-   }
+      if (!TrustConsultedReligiousBody.HasValue)
+         ModelState.AddModelError(nameof(TrustConsultedReligiousBody), "Select an option");
 
-   private void ValidateAnswer(YesNoNotApplicableAnswer? answer, string answerField, string reason, string reasonField)
-   {
-      if (!answer.HasValue)
-         ModelState.AddModelError(answerField, "Select an option");
+      if (TrustConsultedReligiousBody == YesNoNotApplicableAnswer.No
+          && string.IsNullOrWhiteSpace(TrustConsultedReligiousBodyNotConsultedReason))
+         ModelState.AddModelError(nameof(TrustConsultedReligiousBodyNotConsultedReason), "Add a reason");
 
-      if (answer == YesNoNotApplicableAnswer.No && string.IsNullOrWhiteSpace(reason))
-         ModelState.AddModelError(reasonField, "Add a reason");
+      if (!ReligiousBodyRaisedObjection.HasValue)
+         ModelState.AddModelError(nameof(ReligiousBodyRaisedObjection), "Select an option");
+
+      if (ReligiousBodyRaisedObjection == YesNoNotApplicableAnswer.Yes
+          && string.IsNullOrWhiteSpace(ReligiousBodyRaisedObjectionReason))
+         ModelState.AddModelError(nameof(ReligiousBodyRaisedObjectionReason), "Add details");
+
+      if (!ReligiousBodyConsentGranted.HasValue)
+         ModelState.AddModelError(nameof(ReligiousBodyConsentGranted), "Select an option");
+
+      if (ReligiousBodyConsentGranted == YesNoNotApplicableAnswer.No
+          && string.IsNullOrWhiteSpace(ReligiousBodyConsentNotGrantedReason))
+         ModelState.AddModelError(nameof(ReligiousBodyConsentNotGrantedReason), "Add a reason");
    }
 }

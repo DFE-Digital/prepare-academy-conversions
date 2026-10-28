@@ -31,7 +31,9 @@ public class ReligiousBodyConsultationModelTests
          TrustConsultedReligiousBody = YesNoNotApplicableAnswer.No,
          TrustConsultedReligiousBodyNotConsultedReason = "Consultation is planned",
          ReligiousBodyRaisedObjection = YesNoNotApplicableAnswer.Yes,
-         ReligiousBodyConsentGranted = YesNoNotApplicableAnswer.NotApplicable,
+         ReligiousBodyRaisedObjectionReason = "Objection details",
+         ReligiousBodyConsentGranted = YesNoNotApplicableAnswer.No,
+         ReligiousBodyConsentNotGrantedReason = "Consent is pending",
          SupportingEvidence = "https://example.test/evidence"
       };
       Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, project);
@@ -43,7 +45,9 @@ public class ReligiousBodyConsultationModelTests
       sut.TrustConsultedReligiousBody.Should().Be(YesNoNotApplicableAnswer.No);
       sut.TrustConsultedReligiousBodyNotConsultedReason.Should().Be("Consultation is planned");
       sut.ReligiousBodyRaisedObjection.Should().Be(YesNoNotApplicableAnswer.Yes);
-      sut.ReligiousBodyConsentGranted.Should().Be(YesNoNotApplicableAnswer.NotApplicable);
+      sut.ReligiousBodyRaisedObjectionReason.Should().Be("Objection details");
+      sut.ReligiousBodyConsentGranted.Should().Be(YesNoNotApplicableAnswer.No);
+      sut.ReligiousBodyConsentNotGrantedReason.Should().Be("Consent is pending");
       sut.SupportingEvidence.Should().Be("https://example.test/evidence");
    }
 
@@ -74,27 +78,94 @@ public class ReligiousBodyConsultationModelTests
             command.TrustConsultedReligiousBody == YesNoNotApplicableAnswer.No
             && command.TrustConsultedReligiousBodyNotConsultedReason == "Consultation will be scheduled"
             && command.ReligiousBodyRaisedObjection == YesNoNotApplicableAnswer.Yes
-            && command.ReligiousBodyRaisedObjectionReason == null
+            && command.ReligiousBodyRaisedObjectionReason == "Cleared"
             && command.ReligiousBodyConsentGranted == YesNoNotApplicableAnswer.NotApplicable
             && command.ReligiousBodyConsentNotGrantedReason == null
             && command.SupportingEvidence == "https://example.test/evidence")), Times.Once);
    }
 
-   [Fact]
-   public async Task OnPostAsync_Requires_reason_when_no_is_selected()
+   [Theory]
+   [InlineData(nameof(IndexModel.TrustConsultedReligiousBodyNotConsultedReason), null)]
+   [InlineData(nameof(IndexModel.TrustConsultedReligiousBodyNotConsultedReason), " ")]
+   [InlineData(nameof(IndexModel.ReligiousBodyRaisedObjectionReason), null)]
+   [InlineData(nameof(IndexModel.ReligiousBodyRaisedObjectionReason), " ")]
+   [InlineData(nameof(IndexModel.ReligiousBodyConsentNotGrantedReason), null)]
+   [InlineData(nameof(IndexModel.ReligiousBodyConsentNotGrantedReason), " ")]
+   public async Task OnPostAsync_Requires_details_for_the_triggering_answer(string field, string details)
    {
       const int id = 603;
       Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id));
       IndexModel sut = BuildModel(repository.Object);
       sut.TrustConsultedReligiousBody = YesNoNotApplicableAnswer.No;
-      sut.TrustConsultedReligiousBodyNotConsultedReason = " ";
+      sut.TrustConsultedReligiousBodyNotConsultedReason =
+         field == nameof(IndexModel.TrustConsultedReligiousBodyNotConsultedReason) ? details : "Consultation planned";
       sut.ReligiousBodyRaisedObjection = YesNoNotApplicableAnswer.Yes;
-      sut.ReligiousBodyConsentGranted = YesNoNotApplicableAnswer.Yes;
+      sut.ReligiousBodyRaisedObjectionReason =
+         field == nameof(IndexModel.ReligiousBodyRaisedObjectionReason) ? details : "Objection details";
+      sut.ReligiousBodyConsentGranted = YesNoNotApplicableAnswer.No;
+      sut.ReligiousBodyConsentNotGrantedReason =
+         field == nameof(IndexModel.ReligiousBodyConsentNotGrantedReason) ? details : "Consent pending";
 
       IActionResult result = await sut.OnPostAsync(id);
 
       result.Should().BeOfType<PageResult>();
-      sut.ModelState.ContainsKey(nameof(IndexModel.TrustConsultedReligiousBodyNotConsultedReason)).Should().BeTrue();
+      sut.ModelState.ErrorCount.Should().Be(1);
+      sut.ModelState[field]!.Errors.Should().ContainSingle();
+      repository.Verify(x => x.SetReligiousBodyConsultation(id, It.IsAny<SetSignificantChangeReligiousBodyConsultationCommand>()), Times.Never);
+   }
+
+   [Theory]
+   [InlineData(YesNoNotApplicableAnswer.Yes, YesNoNotApplicableAnswer.No, YesNoNotApplicableAnswer.Yes)]
+   [InlineData(YesNoNotApplicableAnswer.NotApplicable, YesNoNotApplicableAnswer.NotApplicable, YesNoNotApplicableAnswer.NotApplicable)]
+   public async Task OnPostAsync_Does_not_require_or_send_hidden_details(
+      YesNoNotApplicableAnswer consulted,
+      YesNoNotApplicableAnswer objections,
+      YesNoNotApplicableAnswer consent)
+   {
+      const int id = 604;
+      Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id));
+      repository.Setup(x => x.SetReligiousBodyConsultation(id, It.IsAny<SetSignificantChangeReligiousBodyConsultationCommand>()))
+         .Returns(Task.CompletedTask);
+      IndexModel sut = BuildModel(repository.Object);
+      sut.TrustConsultedReligiousBody = consulted;
+      sut.TrustConsultedReligiousBodyNotConsultedReason = "Discarded";
+      sut.ReligiousBodyRaisedObjection = objections;
+      sut.ReligiousBodyRaisedObjectionReason = " ";
+      sut.ReligiousBodyConsentGranted = consent;
+      sut.ReligiousBodyConsentNotGrantedReason = null;
+
+      IActionResult result = await sut.OnPostAsync(id);
+
+      result.Should().BeOfType<RedirectToPageResult>();
+      sut.ModelState.IsValid.Should().BeTrue();
+      repository.Verify(x => x.SetReligiousBodyConsultation(id,
+         It.Is<SetSignificantChangeReligiousBodyConsultationCommand>(command =>
+            command.TrustConsultedReligiousBody == consulted
+            && command.TrustConsultedReligiousBodyNotConsultedReason == null
+            && command.ReligiousBodyRaisedObjection == objections
+            && command.ReligiousBodyRaisedObjectionReason == null
+            && command.ReligiousBodyConsentGranted == consent
+            && command.ReligiousBodyConsentNotGrantedReason == null)), Times.Once);
+   }
+
+   [Theory]
+   [InlineData(nameof(IndexModel.TrustConsultedReligiousBody))]
+   [InlineData(nameof(IndexModel.ReligiousBodyRaisedObjection))]
+   [InlineData(nameof(IndexModel.ReligiousBodyConsentGranted))]
+   public async Task OnPostAsync_Requires_each_answer(string field)
+   {
+      const int id = 605;
+      Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id));
+      IndexModel sut = BuildModel(repository.Object);
+      sut.TrustConsultedReligiousBody = field == nameof(IndexModel.TrustConsultedReligiousBody) ? null : YesNoNotApplicableAnswer.Yes;
+      sut.ReligiousBodyRaisedObjection = field == nameof(IndexModel.ReligiousBodyRaisedObjection) ? null : YesNoNotApplicableAnswer.No;
+      sut.ReligiousBodyConsentGranted = field == nameof(IndexModel.ReligiousBodyConsentGranted) ? null : YesNoNotApplicableAnswer.Yes;
+
+      IActionResult result = await sut.OnPostAsync(id);
+
+      result.Should().BeOfType<PageResult>();
+      sut.ModelState.ErrorCount.Should().Be(1);
+      sut.ModelState[field]!.Errors.Should().ContainSingle().Which.ErrorMessage.Should().Be("Select an option");
       repository.Verify(x => x.SetReligiousBodyConsultation(id, It.IsAny<SetSignificantChangeReligiousBodyConsultationCommand>()), Times.Never);
    }
 

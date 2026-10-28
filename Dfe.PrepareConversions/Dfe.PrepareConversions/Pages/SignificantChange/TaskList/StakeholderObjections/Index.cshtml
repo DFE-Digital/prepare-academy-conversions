@@ -47,6 +47,12 @@
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Were there any objections raised?</legend>
       <inline-error for="@nameof(Model.WereThereAnyObjectionsRaised)" />
       <div class="govuk-radios" data-module="govuk-radios">
+         <div class="govuk-radios__item">
+            <input asp-for="WereThereAnyObjectionsRaised" class="govuk-radios__input" id="objections-raised-yes"
+                   type="radio" value="true" aria-controls="conditional-objections-raised-yes"
+                   data-test="objections-raised-yes" />
+            <label class="govuk-label govuk-radios__label" for="objections-raised-yes">Yes</label>
+         </div>
          <div class="govuk-radios__conditional" id="conditional-objections-raised-yes">
             <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
                <label class="govuk-label" for="StakeholderObjectionsDetails">Add details</label>
@@ -60,12 +66,6 @@
             <input asp-for="WereThereAnyObjectionsRaised" class="govuk-radios__input" id="objections-raised-no"
                    type="radio" value="false" data-test="objections-raised-no" />
             <label class="govuk-label govuk-radios__label" for="objections-raised-no">No</label>
-         </div>
-         <div class="govuk-radios__item">
-            <input asp-for="WereThereAnyObjectionsRaised" class="govuk-radios__input" id="objections-raised-yes"
-                   type="radio" value="true" aria-controls="conditional-objections-raised-yes"
-                   data-test="objections-raised-yes" />
-            <label class="govuk-label govuk-radios__label" for="objections-raised-yes">Yes</label>
          </div>
       </div>
    </fieldset>
@@ -90,16 +90,19 @@
                   @(answer == YesNoNotApplicableAnswer.NotApplicable ? "Not applicable" : answer.ToString())
                </label>
             </div>
+            @if (answer == YesNoNotApplicableAnswer.No)
+            {
+               <div class="govuk-radios__conditional" id="conditional-stakeholders-notified-no">
+                  <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+                     <label class="govuk-label" for="RelevantStakeholdersNotifiedOfAdmissionsChangesReason">Add details</label>
+                     <inline-error for="@nameof(Model.RelevantStakeholdersNotifiedOfAdmissionsChangesReason)" />
+                     <textarea asp-for="RelevantStakeholdersNotifiedOfAdmissionsChangesReason"
+                               class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.RelevantStakeholdersNotifiedOfAdmissionsChangesReason))"
+                               rows="5" data-test="stakeholders-notified-reason"></textarea>
+                  </div>
+               </div>
+            }
          }
-         <div class="govuk-radios__conditional" id="conditional-stakeholders-notified-no">
-            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
-               <label class="govuk-label" for="RelevantStakeholdersNotifiedOfAdmissionsChangesReason">Add details</label>
-               <inline-error for="@nameof(Model.RelevantStakeholdersNotifiedOfAdmissionsChangesReason)" />
-               <textarea asp-for="RelevantStakeholdersNotifiedOfAdmissionsChangesReason"
-                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.RelevantStakeholdersNotifiedOfAdmissionsChangesReason))"
-                         rows="5" data-test="stakeholders-notified-reason"></textarea>
-            </div>
-         </div>
       </div>
    </fieldset>
 </div>

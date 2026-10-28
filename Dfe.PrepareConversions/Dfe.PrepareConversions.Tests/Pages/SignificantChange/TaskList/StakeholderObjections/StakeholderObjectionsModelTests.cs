@@ -85,10 +85,10 @@ public class StakeholderObjectionsModelTests
    }
 
    [Theory]
-   [InlineData("consultation")]
-   [InlineData("objections")]
-   [InlineData("notifications")]
-   public async Task OnPostAsync_Requires_conditional_details(string missingDetails)
+   [InlineData("consultation", nameof(IndexModel.TrustConsultedStakeholdersNotConsultedReason))]
+   [InlineData("objections", nameof(IndexModel.StakeholderObjectionsDetails))]
+   [InlineData("notifications", nameof(IndexModel.RelevantStakeholdersNotifiedOfAdmissionsChangesReason))]
+   public async Task OnPostAsync_Requires_conditional_details(string missingDetails, string field)
    {
       const int id = 403;
       Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id));
@@ -113,7 +113,61 @@ public class StakeholderObjectionsModelTests
       IActionResult result = await sut.OnPostAsync(id);
 
       result.Should().BeOfType<PageResult>();
-      sut.ModelState.ErrorCount.Should().BeGreaterThan(0);
+      sut.ModelState.ErrorCount.Should().Be(1);
+      sut.ModelState[field]!.Errors.Should().ContainSingle();
+      repository.Verify(x => x.SetOtherStakeholderEngagement(id, It.IsAny<SetSignificantChangeOtherStakeholderEngagementCommand>()), Times.Never);
+   }
+
+   [Theory]
+   [InlineData(YesNoNotApplicableAnswer.Yes)]
+   [InlineData(YesNoNotApplicableAnswer.NotApplicable)]
+   public async Task OnPostAsync_Does_not_require_or_send_hidden_details(YesNoNotApplicableAnswer notified)
+   {
+      const int id = 404;
+      Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id));
+      repository.Setup(x => x.SetOtherStakeholderEngagement(id, It.IsAny<SetSignificantChangeOtherStakeholderEngagementCommand>()))
+         .Returns(Task.CompletedTask);
+      IndexModel sut = BuildModel(repository.Object);
+      sut.TrustConsultedStakeholders = true;
+      sut.TrustConsultedStakeholdersNotConsultedReason = "Discarded";
+      sut.WereThereAnyObjectionsRaised = false;
+      sut.StakeholderObjectionsDetails = " ";
+      sut.RelevantStakeholdersNotifiedOfAdmissionsChanges = notified;
+      sut.RelevantStakeholdersNotifiedOfAdmissionsChangesReason = null;
+
+      IActionResult result = await sut.OnPostAsync(id);
+
+      result.Should().BeOfType<RedirectToPageResult>();
+      sut.ModelState.IsValid.Should().BeTrue();
+      repository.Verify(x => x.SetOtherStakeholderEngagement(id,
+         It.Is<SetSignificantChangeOtherStakeholderEngagementCommand>(command =>
+            command.TrustConsultedStakeholders == true
+            && command.TrustConsultedStakeholdersNotConsultedReason == null
+            && command.WereThereAnyObjectionsRaised == false
+            && command.StakeholderObjectionsDetails == null
+            && command.RelevantStakeholdersNotifiedOfAdmissionsChanges == notified
+            && command.RelevantStakeholdersNotifiedOfAdmissionsChangesReason == null)), Times.Once);
+   }
+
+   [Theory]
+   [InlineData(nameof(IndexModel.TrustConsultedStakeholders))]
+   [InlineData(nameof(IndexModel.WereThereAnyObjectionsRaised))]
+   [InlineData(nameof(IndexModel.RelevantStakeholdersNotifiedOfAdmissionsChanges))]
+   public async Task OnPostAsync_Requires_each_answer(string field)
+   {
+      const int id = 405;
+      Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id));
+      IndexModel sut = BuildModel(repository.Object);
+      sut.TrustConsultedStakeholders = field == nameof(IndexModel.TrustConsultedStakeholders) ? null : true;
+      sut.WereThereAnyObjectionsRaised = field == nameof(IndexModel.WereThereAnyObjectionsRaised) ? null : false;
+      sut.RelevantStakeholdersNotifiedOfAdmissionsChanges =
+         field == nameof(IndexModel.RelevantStakeholdersNotifiedOfAdmissionsChanges) ? null : YesNoNotApplicableAnswer.Yes;
+
+      IActionResult result = await sut.OnPostAsync(id);
+
+      result.Should().BeOfType<PageResult>();
+      sut.ModelState.ErrorCount.Should().Be(1);
+      sut.ModelState[field]!.Errors.Should().ContainSingle().Which.ErrorMessage.Should().Be("Select an option");
       repository.Verify(x => x.SetOtherStakeholderEngagement(id, It.IsAny<SetSignificantChangeOtherStakeholderEngagementCommand>()), Times.Never);
    }
 

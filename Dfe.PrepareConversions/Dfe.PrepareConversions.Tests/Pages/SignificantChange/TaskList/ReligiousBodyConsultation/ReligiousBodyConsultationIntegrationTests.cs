@@ -48,7 +48,7 @@ public class ReligiousBodyConsultationIntegrationTests(IntegrationTestingWebAppl
          new SetSignificantChangeReligiousBodyConsultationCommand(
             YesNoNotApplicableAnswer.Yes,
             null,
-            YesNoNotApplicableAnswer.No,
+            YesNoNotApplicableAnswer.Yes,
             reason,
             YesNoNotApplicableAnswer.No,
             reason,
@@ -57,7 +57,7 @@ public class ReligiousBodyConsultationIntegrationTests(IntegrationTestingWebAppl
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/religious-bodies");
       Document.QuerySelector<IHtmlInputElement>("#religious-bodies-consulted-yes")!.IsChecked = true;
-      Document.QuerySelector<IHtmlInputElement>("#religious-body-objection-no")!.IsChecked = true;
+      Document.QuerySelector<IHtmlInputElement>("#religious-body-objection-yes")!.IsChecked = true;
       Document.QuerySelector<IHtmlInputElement>("#religious-body-consent-no")!.IsChecked = true;
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='religious-body-objection-reason']")!.Value = reason;
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='religious-body-consent-reason']")!.Value = reason;
@@ -65,6 +65,29 @@ public class ReligiousBodyConsultationIntegrationTests(IntegrationTestingWebAppl
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}");
+   }
+
+   [Theory]
+   [InlineData("TrustConsultedReligiousBody", "religious-bodies-consulted-no", "conditional-religious-bodies-consulted-no")]
+   [InlineData("ReligiousBodyRaisedObjection", "religious-body-objection-yes", "conditional-religious-body-objection-yes")]
+   [InlineData("ReligiousBodyConsentGranted", "religious-body-consent-no", "conditional-religious-body-consent-no")]
+   public async Task Should_display_three_options_and_attach_details_to_the_correct_answer(
+      string field, string triggerId, string panelId)
+   {
+      SignificantChangeProjectResponse project = BuildProject(703);
+      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
+
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/religious-bodies");
+
+      Document.QuerySelectorAll<IHtmlInputElement>($"input[name='{field}']")
+         .Should().HaveCount(3).And.SatisfyRespectively(
+            input => input.Value.Should().Be("Yes"),
+            input => input.Value.Should().Be("No"),
+            input => input.Value.Should().Be("NotApplicable"));
+      IHtmlInputElement trigger = Document.QuerySelector<IHtmlInputElement>($"#{triggerId}")!;
+      trigger.GetAttribute("aria-controls").Should().Be(panelId);
+      trigger.ParentElement!.NextElementSibling!.Id.Should().Be(panelId);
+      Document.QuerySelectorAll($"input[name='{field}'][aria-controls]").Should().ContainSingle();
    }
 
    private static SignificantChangeProjectResponse BuildProject(int id) =>
