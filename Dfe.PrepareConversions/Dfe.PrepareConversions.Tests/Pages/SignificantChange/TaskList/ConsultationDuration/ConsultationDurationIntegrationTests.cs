@@ -21,9 +21,9 @@ public class ConsultationDurationIntegrationTests(IntegrationTestingWebApplicati
 
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
-      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/consultation-duration");
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/consultation");
 
-      Document.QuerySelector<IHtmlHeadingElement>("h1")!.TextContent.Trim().Should().Be("Consultation duration");
+      Document.QuerySelector<IHtmlHeadingElement>("h1")!.TextContent.Trim().Should().Be("Consultation");
       Document.QuerySelector<IHtmlInputElement>("#consultation-duration-no")!.IsChecked.Should().BeTrue();
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='consultation-duration-not-met-reason']")!.Value
          .Should().Be("Consultation ran for two weeks only");
@@ -40,7 +40,7 @@ public class ConsultationDurationIntegrationTests(IntegrationTestingWebApplicati
          new SetSignificantChangeConsultationDurationCommand(ConsultationDurationAnswer.Yes, null),
          new object());
 
-      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/consultation-duration");
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/consultation");
 
       Document.QuerySelector<IHtmlInputElement>("#consultation-duration-yes")!.IsChecked = true;
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
@@ -59,7 +59,7 @@ public class ConsultationDurationIntegrationTests(IntegrationTestingWebApplicati
          new SetSignificantChangeConsultationDurationCommand(ConsultationDurationAnswer.NoSatisfactoryConsultationCarriedOut, null),
          new object());
 
-      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/consultation-duration");
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/consultation");
 
       Document.QuerySelector<IHtmlInputElement>("#consultation-duration-no-satisfactory")!.IsChecked = true;
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
@@ -79,7 +79,7 @@ public class ConsultationDurationIntegrationTests(IntegrationTestingWebApplicati
          new SetSignificantChangeConsultationDurationCommand(ConsultationDurationAnswer.No, reason),
          new object());
 
-      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/consultation-duration");
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/consultation");
 
       Document.QuerySelector<IHtmlInputElement>("#consultation-duration-no")!.IsChecked = true;
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='consultation-duration-not-met-reason']")!.Value = reason;
@@ -94,18 +94,18 @@ public class ConsultationDurationIntegrationTests(IntegrationTestingWebApplicati
       SignificantChangeProjectResponse project = BuildProject(id: 705);
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
-      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/consultation-duration");
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/consultation");
 
       Document.QuerySelector<IHtmlInputElement>("#consultation-duration-no")!.IsChecked = true;
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='consultation-duration-not-met-reason']")!.Value = "";
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}/consultation-duration");
+      Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}/consultation");
       Document.QuerySelector<IHtmlElement>("#ConsultationDurationNotMetReason-error")!
          .TextContent.Should().Contain("Add a reason");
    }
 
-   private static SignificantChangeProjectResponse BuildProject(int id, bool? trustConsultedStakeholders = true)
+   private static SignificantChangeProjectResponse BuildProject(int id)
    {
       return new SignificantChangeProjectResponse
       {
@@ -121,10 +121,6 @@ public class ConsultationDurationIntegrationTests(IntegrationTestingWebApplicati
          ApplicationReference = "APP_REF_123",
          Status = "pre decision",
          LocalAuthorityName = "Test local authority",
-         StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse
-         {
-            TrustConsultedStakeholders = trustConsultedStakeholders
-         },
          ConsultationDuration = new SignificantChangeConsultationDurationResponse()
       };
    }

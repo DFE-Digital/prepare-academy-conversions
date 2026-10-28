@@ -39,23 +39,18 @@ class SignificantChangeTaskList extends BasePage {
     }
 
     public verifyConsultationDurationTaskVisible(): this {
-        cy.contains('a', 'Consultation duration').should('be.visible');
-        cy.getById('task-status-consultation-duration').should('be.visible');
+        cy.contains('a', 'Consultation').should('be.visible');
+        cy.getById('task-status-consultation').should('be.visible');
         return this;
     }
 
     public verifyConsultationDurationTaskHidden(): this {
-        cy.contains('a', 'Consultation duration').should('not.exist');
+        cy.contains('a', 'Consultation').should('not.exist');
         return this;
     }
 
     public openConsultationDurationTask(): this {
-        cy.contains('a', 'Consultation duration').click();
-        return this;
-    }
-
-    public openStakeholderConsultationTask(): this {
-        cy.contains('a', 'Stakeholder consultation').click();
+        cy.contains('a', 'Consultation').click();
         return this;
     }
 
