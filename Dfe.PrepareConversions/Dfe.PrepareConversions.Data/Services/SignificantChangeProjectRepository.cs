@@ -34,7 +34,7 @@ public class SignificantChangeProjectRepository(
       return new ApiResponse<SignificantChangeProjectResponse>(result.StatusCode, result.Body);
    }
 
-   public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>> GetAllProjects(
+   public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>> GetAllProjects(
       int page,
       int count,
       ISignificantChangeProjectRepository.SignificantChangeFilterOptions? filterOptions = null)
@@ -56,22 +56,22 @@ public class SignificantChangeProjectRepository(
          filterOptions?.LocalAuthorities?.Length > 0 ? [.. filterOptions.LocalAuthorities] : null,
          filterOptions?.Regions?.Length > 0 ? [.. filterOptions.Regions] : null);
 
-      ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>> result =
-         await httpClientService.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
+      ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>> result =
+         await httpClientService.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(
             httpClient,
             PathFor.GetAllSignificantChangeProjects,
             query);
 
       if (result.Success)
       {
-         return new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(result.StatusCode, result.Body);
+         return new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(result.StatusCode, result.Body);
       }
 
-      return new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
+      return new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(
          result.StatusCode,
-         new ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>
+         new ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>
          {
-            Data = Enumerable.Empty<SignificantChangeProjectResponse>(),
+            Data = Enumerable.Empty<SignificantChangeProjectSearchResponse>(),
             Paging = new ApiV2PagingInfo
             {
                Page = page,
@@ -337,12 +337,92 @@ public class SignificantChangeProjectRepository(
       }
    }
 
+   public async Task SetRecommendation(int id, SetSignificantChangeRecommendationCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeRecommendation, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeRecommendationCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
+   public async Task SetOfstedInspection(int id, SetSignificantChangeOfstedInspectionCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeOfstedInspection, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeOfstedInspectionCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
    public async Task SetHQTFConsideration(int id, SetSignificantChangeHqtfConsiderationCommand command)
    {
       HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
       string path = string.Format(PathFor.SetSignificantChangeHqtfConsideration, id);
 
       var result = await httpClientService.Put<SetSignificantChangeHqtfConsiderationCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
+   public async Task SetFhaRisksOrIssuesRaised(int id, SetSignificantChangeFhaRisksOrIssuesRaisedCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeFhaRisksOrIssuesRaised, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeFhaRisksOrIssuesRaisedCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
+   public async Task SetAdmissionsVariation(int id, SetSignificantChangeAdmissionsVariationCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeAdmissionsVariation, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeAdmissionsVariationCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
+   public async Task SetAdmissionsVariationRecommendation(int id, SetAdmissionsVariationRecommendationCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.AdmissionsVariationRecommendation, id);
+
+      var result = await httpClientService.Put<SetAdmissionsVariationRecommendationCommand, object>(
          httpClient,
          path,
          command);

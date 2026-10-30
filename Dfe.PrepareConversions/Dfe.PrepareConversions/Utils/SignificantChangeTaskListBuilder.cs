@@ -45,7 +45,14 @@ public static class SignificantChangeTaskListBuilder
          "admissions-variation",
          "Admissions variation",
          displayOrder,
-         []
+         [
+            new SignificantChangeTaskDefinition(
+               "admissions-variation-details",
+               "Admissions variation details",
+               1,
+               Links.SignificantChange.AdmissionsVariationDetails,
+               project => GetTaskStatus(project.AdmissionsVariationStatus))
+         ]
       );
    }
 
@@ -98,7 +105,14 @@ public static class SignificantChangeTaskListBuilder
          "academy-performance",
          "Academy performance",
          displayOrder,
-         []
+         [
+            new SignificantChangeTaskDefinition(
+               "ofsted",
+               "Ofsted",
+               1,
+               Links.SignificantChange.OfstedInspection,
+               project => GetTaskStatus(project.OfstedInspectionStatus))
+         ]
       );
    }
 
@@ -154,7 +168,13 @@ public static class SignificantChangeTaskListBuilder
                "Funding",
                1,
                Links.SignificantChange.Funding,
-               project => GetTaskStatus(project.FundingStatus))
+               project => GetTaskStatus(project.FundingStatus)),
+            new SignificantChangeTaskDefinition(
+               "fha-risks-or-issues-raised",
+               "Financial Health Assessment (FHA) outcomes",
+               2,
+               Links.SignificantChange.FhaRisksOrIssuesRaised,
+               project => GetTaskStatus(project.FHARisksOrIssuesRaisedStatus))
          ]
       );
    }
@@ -182,7 +202,20 @@ public static class SignificantChangeTaskListBuilder
          "recommendation-on-how-to-proceed",
          "Recommendation on how to proceed",
          displayOrder,
-         []
+         [
+            new SignificantChangeTaskDefinition(
+               "significant-change-recommendation",
+               "Significant change recommendation",
+               1,
+               Links.SignificantChange.SignificantChangeRecommendation,
+               project => GetTaskStatus(project.RecommendationStatus)),
+            new SignificantChangeTaskDefinition(
+               "admissions-variation-recommendation",
+               "Admission Variation recommendation",
+               2,
+               Links.SignificantChange.AdmissionsVariationRecommendation,
+               project => GetTaskStatus(project.AdmissionsVariationRecommendationStatus))
+         ]
       );
    }
 

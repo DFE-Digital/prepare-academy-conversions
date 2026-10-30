@@ -59,6 +59,14 @@ class SignificantChangeTaskList extends BasePage {
         return this;
     }
 
+    public openAdmissionsVariationDetailsTask(): this {
+        cy.contains('h3.app-task-list__section', 'Admissions variation')
+            .next('.app-task-list')
+            .contains('a', 'Admissions variation details')
+            .click();
+        return this;
+    }
+
     public openPlanningPermissionTask(): this {
         cy.contains('h3.app-task-list__section', 'Land transaction application and planning permission')
             .next('.app-task-list')
@@ -83,6 +91,42 @@ class SignificantChangeTaskList extends BasePage {
         return this;
     }
 
+    public verifyFhaRisksOrIssuesRaisedTaskVisible(): this {
+        cy.contains('a', 'Financial health assessment (FHA) risks or issues raised').should('be.visible');
+        cy.getById('task-status-fha-risks-or-issues-raised').should('be.visible');
+        return this;
+    }
+
+    public openFhaRisksOrIssuesRaisedTask(): this {
+        cy.contains('a', 'Financial health assessment (FHA) risks or issues raised').click();
+        return this;
+    }
+
+    public verifyRecommendationTaskVisible(): this {
+        cy.contains('a', 'Significant change recommendation').should('be.visible');
+        cy.getById('task-status-significant-change-recommendation').should('be.visible');
+        return this;
+    }
+
+    public openRecommendationTask(): this {
+        cy.contains('a', 'Significant change recommendation').click();
+        return this;
+    }
+
+    public openOfstedTask(): this {
+        cy.contains('h3.app-task-list__section', 'Academy performance')
+            .next('.app-task-list')
+            .contains('a', 'Ofsted')
+            .click();
+        return this;
+    }
+
+    public verifyOfstedTaskVisible(): this {
+        cy.contains('a', 'Ofsted').should('be.visible');
+        cy.getById('task-status-ofsted').should('be.visible');
+        return this;
+    }
+
     public verifyPublicSectorEqualityDutyTaskVisible(): this {
         cy.contains('a', 'Public Sector Equality Duty').should('be.visible');
         cy.getById('task-status-public-sector-equality-duty').should('be.visible');
@@ -101,9 +145,23 @@ class SignificantChangeTaskList extends BasePage {
     }
 
     public openHqtfConsiderationTask(): this {
-        cy.contains('h3.app-task-list__section', 'High Quality Trust Framework')
+        cy.contains('h3.app-task-list__section', 'High Quality Trust Framework').next('.app-task-list').click();
+        return this;
+    }
+
+    public verifyAdmissionsVariationRecommendationTaskVisible(): this {
+        cy.contains('h3.app-task-list__section', 'Recommendation on how to proceed')
             .next('.app-task-list')
-            .contains('a', 'High Quality Trust Framework (HQTF) consideration')
+            .contains('a', 'Recommendation')
+            .should('be.visible');
+        cy.getById('task-status-admissions-variation-recommendation').should('be.visible');
+        return this;
+    }
+
+    public openAdmissionsVariationRecommendationTask(): this {
+        cy.contains('h3.app-task-list__section', 'Recommendation on how to proceed')
+            .next('.app-task-list')
+            .contains('a', 'Recommendation')
             .click();
         return this;
     }

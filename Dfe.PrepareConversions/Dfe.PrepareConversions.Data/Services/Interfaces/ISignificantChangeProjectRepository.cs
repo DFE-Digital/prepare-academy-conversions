@@ -20,7 +20,7 @@ public interface ISignificantChangeProjectRepository
 
    Task<ApiResponse<SignificantChangeProjectResponse>> CreateProject(CreateSignificantProjectCommand command);
 
-   Task<ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>> GetAllProjects(
+   Task<ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>> GetAllProjects(
       int page,
       int count,
       SignificantChangeFilterOptions? filterOptions = null);
@@ -43,6 +43,11 @@ public interface ISignificantChangeProjectRepository
    Task SetAdmissionVariationConsultation(int id, SetSignificantChangeAdmissionVariationConsultationCommand command);
    Task SetLandTransaction(int id, SetSignificantChangeLandTransactionCommand command);
    Task SetFunding(int id, SetSignificantChangeFundingCommand command);
+   Task SetOfstedInspection(int id, SetSignificantChangeOfstedInspectionCommand command);
+   Task SetAdmissionsVariationRecommendation(int id, SetAdmissionsVariationRecommendationCommand command);
+   Task SetRecommendation(int id, SetSignificantChangeRecommendationCommand command);
    Task SetHQTFConsideration(int id, SetSignificantChangeHqtfConsiderationCommand command);
+   Task SetFhaRisksOrIssuesRaised(int id, SetSignificantChangeFhaRisksOrIssuesRaisedCommand command);
+   Task SetAdmissionsVariation(int id, SetSignificantChangeAdmissionsVariationCommand command);
 
 }
