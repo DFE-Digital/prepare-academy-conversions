@@ -49,11 +49,7 @@ public class DecisionDateModel(ISignificantChangeProjectRepository repository,
       IActionResult redirect = RedirectToStartIfNoDecision(decision, id);
       if (redirect != null) return redirect;
 
-      SetBackLinkModel(
-         decision.DecisionMadeBy == DecisionMadeBy.None
-            ? Links.SignificantChangeDecision.WhoDecided
-            : Links.SignificantChangeDecision.DecisionMaker,
-         id);
+      SetBackLinkModel(Links.SignificantChangeDecision.DecisionMaker, id);
 
       DateOfDecision = decision.DecisionDate;
 

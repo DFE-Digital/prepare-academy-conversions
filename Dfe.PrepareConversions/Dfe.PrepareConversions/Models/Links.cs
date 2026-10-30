@@ -103,9 +103,21 @@ public static class Links
       public static readonly LinkItem SignificantChangeTaskList = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/Index");
       public static readonly LinkItem SignificantChangeProjectAssignment = AddLinkItem(backText: "Back", page: "/SignificantChange/ProjectAssignment/Index");
       public static readonly LinkItem StakeholderConsultation = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/StakeholderConsultation/Index");
+      public static readonly LinkItem StakeholderObjections = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/StakeholderObjections/Index");
+      public static readonly LinkItem AdmissionVariationConsultation = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/AdmissionVariationConsultation/Index");
+      public static readonly LinkItem ConsultationDuration = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/ConsultationDuration/Index");
       public static readonly LinkItem PublicSectorEqualityDuty = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/PublicSectorEqualityDuty/Index");
       public static readonly LinkItem ReligiousBodyConsultation = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/ReligiousBodyConsultation/Index");
       public static readonly LinkItem ConfirmProjectDates = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/ConfirmProjectDates/Index");
+      public static readonly LinkItem AdmissionsVariationDetails = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/AdmissionsVariationDetails/Index");
+      public static readonly LinkItem Funding = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/Funding/Index");
+      public static readonly LinkItem PlanningPermission = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/PlanningPermission/Index");
+      public static readonly LinkItem OfstedInspection = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/Ofsted/Index");
+      public static readonly LinkItem OfstedInspectionQuestion = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/Ofsted/InspectionQuestion");
+      public static readonly LinkItem AdmissionsVariationRecommendation = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/AdmissionsVariationRecommendation/Index");
+      public static readonly LinkItem SignificantChangeRecommendation = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/Recommendation/Index");
+      public static readonly LinkItem HqtfConsideration = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/HqtfConsideration/Index");
+      public static readonly LinkItem FhaRisksOrIssuesRaised = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/FhaRisksOrIssuesRaised/Index");
    }
 
     public static class SignificantChangeDecision
@@ -119,6 +131,10 @@ public static class Links
       public static readonly LinkItem DecisionMaker = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/DecisionMaker");
       public static readonly LinkItem DecisionDate = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/DecisionDate");
       public static readonly LinkItem Summary = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/Summary");
+   }
+   public static class SignificantChangeApplication
+   {
+      public static readonly LinkItem Index = AddLinkItem(page: "/SignificantChange/Application/Index");
    }
    public static class FormAMat
    {

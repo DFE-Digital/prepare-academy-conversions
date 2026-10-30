@@ -49,8 +49,21 @@ public class PathFor
    public static string GetSignificantChangeFilterParameters => "/significant-change/filter-parameters";
    public static string SetSignificantChangeAssignedUser => "/significant-change/{0}/SetAssignedUser";
    public static string RecordSignificantChangeDecision => "/significant-change/decision";
+   public static string GetSignificantChangeDecision => "/significant-change/decision/{0}";
    public static string SetSignificantChangeStakeholderConsultation => "/significant-change/{0}/SetStakeholderConsultation";
+   public static string SetSignificantChangeStakeholderObjections => "/significant-change/{0}/SetStakeholderObjections";
+   public static string SetSignificantChangeConsultationDuration => "/significant-change/{0}/SetConsultationDuration";
+   public static string SetAdmissionVariationConsultation => "/significant-change/{0}/SetSignificantChangeAdmissionVariationConsultation";
    public static string SetSignificantChangeEqualitiesImpactAssessment => "/significant-change/{0}/SetEqualitiesImpactAssessment";
    public static string SetSignificantChangeReligiousBodyConsultation => "/significant-change/{0}/SetReligiousBodyConsultation";
    public static string SetSignificantChangeProjectDates => "/significant-change/{0}/SetSignificantChangeProjectDates";
+   public static string SetSignificantChangeFunding => "/significant-change/{0}/SetFunding";
+   public static string SetSignificantChangePlanningPermission => "/significant-change/{0}/SetPlanningPermission";
+   public static string SetSignificantChangeOfstedInspection => "/significant-change/{0}/SetOfstedInspection";
+   public static string AdmissionsVariationRecommendation => "/significant-change/{0}/AdmissionsVariationRecommendation";
+   public static string SetSignificantChangeRecommendation => "/significant-change/{0}/SetRecommendation";
+   public static string SetSignificantChangeHqtfConsideration => "/significant-change/{0}/SetHQTFConsideration";
+   public static string SetSignificantChangeFhaRisksOrIssuesRaised => "/significant-change/{0}/SetFHARisksOrIssuesRaised";
+   public static string SetSignificantChangeAdmissionsVariation => "/significant-change/{0}/SetAdmissionsVariation";
+
 }

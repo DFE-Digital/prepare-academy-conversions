@@ -76,7 +76,16 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}");
 
       Document.QuerySelectorAll("h3.app-task-list__section").Select(x => x.TextContent.Trim())
-         .Should().OnlyContain(x=> x == "Consultation" || x == "Proposed decision and conversion dates" || x == "Public Sector Equality Duty");
+         .Should().Equal(
+            "Key project dates",
+            "Admissions variation",
+            "Consultation details",
+            "Academy performance",
+            "Public Sector Equality Duty",
+            "Land transaction application and planning permission",
+            "Financial details",
+            "High Quality Trust Framework",
+            "Recommendation on how to proceed");
 
       var stakeholderConsultationLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Stakeholder consultation"));
@@ -90,6 +99,19 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       religiousBodyConsultationLink.Should().NotBeNull();
       religiousBodyConsultationLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/religious-body-consultation");
 
+      var planningPermissionLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Planning Permission"));
+
+      planningPermissionLink.Should().NotBeNull();
+      planningPermissionLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/planning-permission");
+
+      var ofstedLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Trim() == "Ofsted");
+
+      ofstedLink.Should().NotBeNull();
+      ofstedLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/ofsted");
+      Document.QuerySelector("#task-status-ofsted")!.TextContent.Should().Contain("Not started");
+
       var publicSectorEqualityDutyLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Public Sector Equality Duty"));
 
@@ -100,6 +122,15 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
 
       confirmProjectDatesLink.Should().NotBeNull();
       confirmProjectDatesLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/confirm-project-dates");
+
+      var admissionsVariationLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Admissions variation details"));
+
+      admissionsVariationLink.Should().NotBeNull();
+      admissionsVariationLink.GetAttribute("href").Should()
+         .Contain($"/significant-change/task-list/{project.Id}/admissions-variation-details");
+      Document.QuerySelector("#task-status-admissions-variation-details")?.TextContent
+         .Should().Contain("Not started");
 
       Document.QuerySelectorAll("a").Any(a => a.TextContent != null && a.TextContent.Contains("Gather trust feedback"))
          .Should().BeFalse();
@@ -119,6 +150,41 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       var religiousBodyStatusTag = Document.QuerySelector("#task-status-religious-body-consultation");
       religiousBodyStatusTag.Should().NotBeNull();
       religiousBodyStatusTag.TextContent.Should().Contain("Not started");
+
+      var fundingStatusTag = Document.QuerySelector("#task-status-funding");
+      fundingStatusTag.Should().NotBeNull();
+      fundingStatusTag.TextContent.Should().Contain("Not started");
+
+      var fhaRisksOrIssuesRaisedLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Financial Health Assessment (FHA) outcomes"));
+
+      fhaRisksOrIssuesRaisedLink.Should().NotBeNull();
+      fhaRisksOrIssuesRaisedLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/fha-risks-or-issues-raised");
+
+      var fhaRisksOrIssuesRaisedStatusTag = Document.QuerySelector("#task-status-fha-risks-or-issues-raised");
+      fhaRisksOrIssuesRaisedStatusTag.Should().NotBeNull();
+      fhaRisksOrIssuesRaisedStatusTag.TextContent.Should().Contain("Not started");
+
+      var recommendationLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Admission Variation recommendation"));
+
+      recommendationLink.Should().NotBeNull();
+      recommendationLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/admissions-variation-recommendation");
+
+      Document.QuerySelector("#task-status-admissions-variation-recommendation").TextContent.Should().Contain("Not started");
+      var recommendationStatusTag = Document.QuerySelector("#task-status-significant-change-recommendation");
+      recommendationStatusTag.Should().NotBeNull();
+      recommendationStatusTag.TextContent.Should().Contain("Not started");
+
+      var hqtfConsiderationLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("High Quality Trust Framework (HQTF) consideration"));
+
+      hqtfConsiderationLink.Should().NotBeNull();
+      hqtfConsiderationLink!.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/hqtf-consideration");
+
+      var hqtfConsiderationStatusTag = Document.QuerySelector("#task-status-hqtf-consideration");
+      hqtfConsiderationStatusTag.Should().NotBeNull();
+      hqtfConsiderationStatusTag!.TextContent.Should().Contain("Not started");
    }
 
    [Fact]
@@ -140,6 +206,47 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       statusTag.TextContent.Should().Contain("Completed");
    }
 
+   [Fact]
+   public async Task Should_show_admissions_variation_recommendation_task_as_completed_when_status_is_completed()
+   {
+      SignificantChangeProjectResponse project = BuildProject(
+         id: 106,
+         status: "pre decision",
+         assignedUser: null,
+         admissionsVariationRecommendationStatus: SignificantChangeTaskStatus.Completed);
+
+      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
+
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}");
+
+      var statusTag = Document.QuerySelector("#task-status-admissions-variation-recommendation");
+      statusTag.Should().NotBeNull();
+      statusTag.TextContent.Should().Contain("Completed");
+   }
+
+      [Fact]
+   public async Task Should_render_consultation_duration_task_when_stakeholders_were_consulted()
+   {
+      SignificantChangeProjectResponse project = BuildProject(
+         id: 105,
+         status: "pre decision",
+         assignedUser: null,
+         trustConsultedStakeholders: true);
+
+      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
+
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}");
+
+      var consultationDurationLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Consultation duration"));
+
+      consultationDurationLink.Should().NotBeNull();
+      consultationDurationLink!.GetAttribute("href")
+         .Should().Contain($"/significant-change/task-list/{project.Id}/consultation-duration");
+
+      Document.QuerySelector("#task-status-consultation-duration")!.TextContent.Should().Contain("Not started");
+   }
+
    private static SignificantChangeProjectResponse BuildProject(
       int id,
       string status,
@@ -147,7 +254,9 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       string route = "Route A",
       SignificantChangeTaskStatus stakeholderConsultationStatus = SignificantChangeTaskStatus.NotStarted,
       bool? trustConsultedStakeholders = null,
-      string trustConsultedStakeholdersNotConsultedReason = null)
+      string trustConsultedStakeholdersNotConsultedReason = null,
+      SignificantChangeTaskStatus consultationDurationStatus = SignificantChangeTaskStatus.NotStarted,
+      SignificantChangeTaskStatus admissionsVariationRecommendationStatus = SignificantChangeTaskStatus.NotStarted)
    {
       return new SignificantChangeProjectResponse
       {
@@ -159,7 +268,10 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
          TrustUkprn = "12345678",
          AssignedUser = assignedUser,
          TypeOfSignificantChange = route,
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
          Status = status,
+         LocalAuthorityName = "Test local authority",
          StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse
          {
             Status = stakeholderConsultationStatus,
@@ -169,6 +281,11 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
          ReligiousBodyConsultation = new SignificantChangeReligiousBodyConsultationResponse
          {
             Status = SignificantChangeTaskStatus.NotStarted
+         },
+         AdmissionsVariationRecommendation = new SignificantChangeAdmissionsVariationRecommendationResponse
+         {
+            Status = admissionsVariationRecommendationStatus,
+            AdmissionsVariationRecommendationAnswer = AdmissionsVariationRecommendationAnswer.Approve
          }
       };
    }

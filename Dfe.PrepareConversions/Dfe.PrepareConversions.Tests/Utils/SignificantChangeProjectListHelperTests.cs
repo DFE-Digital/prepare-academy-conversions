@@ -1,7 +1,7 @@
+using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using Dfe.PrepareConversions.Utils;
 using FluentAssertions;
-using System;
 using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Utils;
@@ -9,9 +9,48 @@ namespace Dfe.PrepareConversions.Tests.Utils;
 public class SignificantChangeProjectListHelperTests
 {
    [Fact]
+   public void Build_Maps_all_project_search_properties()
+   {
+      SignificantChangeProjectSearchResponse response = new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         SchoolName = "Test Academy",
+         Tier = 1,
+         TrustName = "Test Trust",
+         TrustUkprn = "12345678",
+         AssignedUser = new User("123", "John Doe", "John.Doe@example.com"),
+         TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Kent",
+         RegionName = "London",
+         Status = "ApprovedWithConditions"
+      };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+      viewModel.Should().BeEquivalentTo(new
+      {
+         response.Id,
+         response.Urn,
+         response.SchoolName,
+         response.Tier,
+         response.TrustName,
+         response.TrustUkprn,
+         response.AssignedUser,
+         response.TypeOfSignificantChange,
+         response.LocalAuthorityName,
+         response.RegionName,
+         Status = "Approved with conditions",
+         StatusColour = "green"
+      });
+   }
+
+   [Fact]
    public void Build_Maps_status_using_shared_status_mapping()
    {
-      SignificantChangeProjectResponse response = new()
+      SignificantChangeProjectSearchResponse response = new()
       {
          Id = 1,
          Urn = 10000000,
@@ -19,6 +58,10 @@ public class SignificantChangeProjectListHelperTests
          TrustName = "Trust name",
          TrustUkprn = "12345678",
          TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Kent",
+         RegionName = "London",
          Status = "approved with conditions"
       };
 
@@ -26,112 +69,8 @@ public class SignificantChangeProjectListHelperTests
 
       Assert.Equal("Approved with conditions", viewModel.Status);
       Assert.Equal("green", viewModel.StatusColour);
-   }
-
-   [Fact]
-   public void Build_Maps_nested_consult_stakeholders_values()
-   {
-      SignificantChangeProjectResponse response = new()
-      {
-         Id = 1,
-         Urn = 10000000,
-         Tier = 1,
-         TrustName = "Trust name",
-         TrustUkprn = "12345678",
-         TypeOfSignificantChange = "Route A",
-         Status = "pre decision",
-         StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse
-         {
-            TrustConsultedStakeholders = false,
-            TrustConsultedStakeholdersNotConsultedReason = "Consultation planned",
-            Status = SignificantChangeTaskStatus.InProgress
-         }
-      };
-
-      var viewModel = SignificantChangeProjectListHelper.Build(response);
-
-      Assert.False(viewModel.StakeholderConsultationTrustConsultedStakeholders);
-      Assert.Equal("Consultation planned", viewModel.StakeholderConsultationTrustConsultedStakeholdersNotConsultedReason);
-      Assert.Equal(SignificantChangeTaskStatus.InProgress, viewModel.StakeholderConsultationStatus);
-   }
-
-   [Fact]
-   public void Build_Maps_nested_religious_body_consultation_values()
-   {
-      SignificantChangeProjectResponse response = new()
-      {
-         Id = 1,
-         Urn = 10000000,
-         Tier = 1,
-         TrustName = "Trust name",
-         TrustUkprn = "12345678",
-         TypeOfSignificantChange = "Route A",
-         Status = "pre decision",
-         ReligiousBodyConsultation = new SignificantChangeReligiousBodyConsultationResponse
-         {
-            TrustConsultedReligiousBody = false,
-            TrustConsultedReligiousBodyNotConsultedReason = "Further action needed",
-            Status = SignificantChangeTaskStatus.Completed
-         }
-      };
-
-      var viewModel = SignificantChangeProjectListHelper.Build(response);
-
-      Assert.False(viewModel.ReligiousBodyConsultationTrustConsultedReligiousBody);
-      Assert.Equal("Further action needed", viewModel.ReligiousBodyConsultationTrustConsultedReligiousBodyNotConsultedReason);
-      Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.ReligiousBodyConsultationStatus);
-   }
-
-   [Fact]
-   public void Build_Maps_project_dates_values_when_dates_are_set()
-   {
-      var proposedDecisionDate = new DateTime(2024, 12, 15);
-      var proposedChangeDate = new DateTime(2025, 01, 20);
-
-      SignificantChangeProjectResponse response = new()
-      {
-         Id = 1,
-         Urn = 10000000,
-         Tier = 1,
-         TrustName = "Trust name",
-         TrustUkprn = "12345678",
-         TypeOfSignificantChange = "Route A",
-         Status = "pre decision",
-         ProjectDates = new SignificantChangeProjectDatesResponse
-         {
-            ProposedDecisionDate = proposedDecisionDate,
-            ProposedChangeDate = proposedChangeDate,
-            Status = SignificantChangeTaskStatus.Completed
-         }
-      };
-
-      var viewModel = SignificantChangeProjectListHelper.Build(response);
-
-      Assert.Equal(proposedDecisionDate, viewModel.ProposedDecisionDate);
-      Assert.Equal(proposedChangeDate, viewModel.ProposedChangeDate);
-      Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.ProjectDatesStatus);
-   }
-
-   [Fact]
-   public void Build_Maps_project_dates_to_not_started_when_null()
-   {
-      SignificantChangeProjectResponse response = new()
-      {
-         Id = 1,
-         Urn = 10000000,
-         Tier = 1,
-         TrustName = "Trust name",
-         TrustUkprn = "12345678",
-         TypeOfSignificantChange = "Route A",
-         Status = "pre decision",
-         ProjectDates = null
-      };
-
-      var viewModel = SignificantChangeProjectListHelper.Build(response);
-
-      Assert.Null(viewModel.ProposedDecisionDate);
-      Assert.Null(viewModel.ProposedChangeDate);
-      Assert.Equal(SignificantChangeTaskStatus.NotStarted, viewModel.ProjectDatesStatus);
+      Assert.Equal("Kent", viewModel.LocalAuthorityName);
+      Assert.Equal("London", viewModel.RegionName);
    }
 
    [Theory]
@@ -146,7 +85,7 @@ public class SignificantChangeProjectListHelperTests
    [InlineData("something unexpected", "Pre decision")]
    public void MapProjectStatus_Returns_expected_display_value(string inputStatus, string expectedStatus)
    {
-      SignificantChangeProjectListHelper.MapProjectStatus(inputStatus).Should().Be(expectedStatus);
+      SignificantChangeProjectStatusHelper.MapProjectStatus(inputStatus).Should().Be(expectedStatus);
    }
 
    [Theory]
@@ -160,35 +99,6 @@ public class SignificantChangeProjectListHelperTests
    [InlineData("unknown", "yellow")]
    public void MapProjectStatusColour_Returns_expected_colour(string inputStatus, string expectedColour)
    {
-      SignificantChangeProjectListHelper.MapProjectStatusColour(inputStatus).Should().Be(expectedColour);
-   }
-  
-   [Fact]
-   public void Build_Maps_nested_equalities_impact_assessment_values()
-   {
-      SignificantChangeProjectResponse response = new()
-      {
-         Id = 1,
-         Urn = 10000000,
-         Tier = 1,
-         TrustName = "Trust name",
-         TrustUkprn = "12345678",
-         TypeOfSignificantChange = "Route A",
-         Status = "pre decision",
-         EqualitiesImpactAssessment = new SignificantChangeEqualitiesImpactAssessmentResponse
-         {
-            EqualitiesImpactAssessmentCompleted = true,
-            EqualitiesImpactIdentified = EqualitiesImpact.ImpactsIdentified,
-            EqualitiesImpactIdentifiedMitigation = "Need more info",
-            Status = SignificantChangeTaskStatus.Completed
-         }
-      };
-
-      var viewModel = SignificantChangeProjectListHelper.Build(response);
-
-      Assert.True(viewModel.EqualitiesImpactAssessmentCompleted);
-      Assert.Equal(EqualitiesImpact.ImpactsIdentified, viewModel.EqualitiesImpactIdentified);
-      Assert.Equal("Need more info", viewModel.EqualitiesImpactIdentifiedMitigation);
-      Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.EqualitiesImpactAssessmentStatus);
+      SignificantChangeProjectStatusHelper.MapProjectStatusColour(inputStatus).Should().Be(expectedColour);
    }
 }

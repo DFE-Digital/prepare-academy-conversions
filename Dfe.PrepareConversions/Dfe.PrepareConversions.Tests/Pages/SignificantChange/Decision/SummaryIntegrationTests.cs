@@ -1,5 +1,6 @@
+using AngleSharp.Dom;
+using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Data.Features;
-using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using FluentAssertions;
 using Newtonsoft.Json.Linq;
@@ -25,7 +26,7 @@ public class SummaryIntegrationTests(IntegrationTestingWebApplicationFactory fac
       await Wizard.StartFor(ProjectId);
       await Wizard.SetDecisionToAndContinue(SignificantChangeDecisions.Approved);
       await Wizard.SetIsConditionalAndContinue(conditionsSet, conditionDetails);
-      await Wizard.SetDecisionByAndContinue(DecisionMadeBy.RegionalDirectorForRegion);
+      await Wizard.SetDecisionByAndContinue(DecisionMadeBy.RegionalDirector);
       await Wizard.SetDecisionMakerNameAndContinue("Jane Smith");
       await Wizard.SetDecisionDateAndContinue(DecisionDate);
    }
@@ -66,7 +67,7 @@ public class SummaryIntegrationTests(IntegrationTestingWebApplicationFactory fac
 
       Document.QuerySelector("#decision")?.TextContent.Should().Contain("Approved with conditions");
       Document.QuerySelector("#condition-set")?.TextContent.Should().Contain("Appoint a new chair");
-      Document.QuerySelector("#decision-made-by")?.TextContent.Should().Contain("Regional Director for the region");
+      Document.QuerySelector("#decision-made-by")?.TextContent.Should().Contain("Regional Director");
       Document.QuerySelector("#decision-maker-name")?.TextContent.Should().Contain("Jane Smith");
       Document.QuerySelector("#decision-date")?.TextContent.Should().Contain("27 March 2026");
    }
@@ -86,7 +87,7 @@ public class SummaryIntegrationTests(IntegrationTestingWebApplicationFactory fac
       Field(posted, "Decision").Value<int>().Should().Be((int)SignificantChangeDecisions.Approved);
       Field(posted, "ApprovedConditionsSet").Value<bool>().Should().BeTrue();
       Field(posted, "ApprovedConditionsDetails").Value<string>().Should().Be("Appoint a new chair");
-      Field(posted, "DecisionMadeBy").Value<int>().Should().Be((int)DecisionMadeBy.RegionalDirectorForRegion);
+      Field(posted, "DecisionMadeBy").Value<int>().Should().Be((int)DecisionMadeBy.RegionalDirector);
       Field(posted, "DecisionMakerName").Value<string>().Should().Be("Jane Smith");
    }
 
@@ -104,16 +105,14 @@ public class SummaryIntegrationTests(IntegrationTestingWebApplicationFactory fac
    }
 
    [Fact]
-   public async Task Should_send_declined_reasons_using_the_api_enum_values()
+   public async Task Should_send_declined_reason()
    {
       AddProject();
       AddDecisionPostStub();
 
       await Wizard.StartFor(ProjectId);
       await Wizard.SetDecisionToAndContinue(SignificantChangeDecisions.Declined);
-      await Wizard.SetDeclinedReasonsAndContinue(
-         (SignificantChangeDeclinedReason.Governance, "Weak governance"),
-         (SignificantChangeDeclinedReason.ChoiceOfTrust, "Trust not suitable"));
+      await Wizard.SetDeclinedReasonAndContinue("Trust not suitable");
       await Wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
       await Wizard.SetDecisionMakerNameAndContinue("Jane Smith");
       await Wizard.SetDecisionDateAndContinue(DecisionDate);
@@ -125,28 +124,7 @@ public class SummaryIntegrationTests(IntegrationTestingWebApplicationFactory fac
       Field(posted, "ApprovedConditionsSet").Type.Should().Be(JTokenType.Null,
          "the API requires ApprovedConditionsSet to be null unless the decision is Approved");
 
-      JArray declined = (JArray)Field(posted, "DeclinedReasons");
-      declined.Should().HaveCount(2);
-      declined.Select(r => Field(r, "Reason").Value<int>())
-         .Should().BeEquivalentTo(GovernanceAndChoiceOfTrustReasons);
-      declined.Select(r => Field(r, "Details").Value<string>())
-         .Should().BeEquivalentTo("Weak governance", "Trust not suitable");
-   }
-
-   [Fact]
-   public async Task Should_omit_the_decision_maker_name_row_when_nobody_made_the_decision()
-   {
-      AddProject();
-      AddDecisionPostStub();
-
-      await Wizard.StartFor(ProjectId);
-      await Wizard.SetDecisionToAndContinue(SignificantChangeDecisions.Approved);
-      await Wizard.SetIsConditionalAndContinue(false);
-      await Wizard.SetDecisionByAndContinue(DecisionMadeBy.None);
-      await Wizard.SetDecisionDateAndContinue(DecisionDate);
-
-      Document.Url.Should().Be(BuildRequestAddress(PathTo("summary")));
-      Document.QuerySelector("#decision-maker-name").Should().BeNull();
+      Field(posted, "DeclinedReason").Value<string>().Should().Be("Trust not suitable");
    }
 
    [Fact]
@@ -177,5 +155,47 @@ public class SummaryIntegrationTests(IntegrationTestingWebApplicationFactory fac
       await CompleteApprovedJourney();
 
       Document.QuerySelector("#change-who-btn")?.GetAttribute("href").Should().Contain("obl=true");
+   }
+
+   [Fact]
+   public async Task Should_update_an_existing_decision_and_clear_answers_from_the_previous_branch()
+   {
+      AddProject();
+
+      SignificantChangeDecision existingDecision = new()
+      {
+         SignificantChangeProjectId = ProjectId,
+         Decision = SignificantChangeDecisions.Approved,
+         ApprovedConditionsSet = true,
+         ApprovedConditionsDetails = "Old condition"
+      };
+      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeDecision, ProjectId), existingDecision);
+
+      SignificantChangeDecision updatedDecision = new()
+      {
+         SignificantChangeProjectId = ProjectId,
+         Decision = SignificantChangeDecisions.Declined,
+         DeclinedReason = "Weak governance",
+         DecisionMadeBy = DecisionMadeBy.Minister,
+         DecisionMakerName = "Minister Smith",
+         DecisionDate = DecisionDate
+      };
+      _factory.AddPutWithJsonRequest(
+         PathFor.RecordSignificantChangeDecision,
+         updatedDecision,
+         new SignificantChangeDecision());
+
+      await Wizard.StartFor(ProjectId);
+      Document.QuerySelector<IHtmlInputElement>("#declined-radio")!.IsChecked = true;
+      await Wizard.ClickSubmitButton();
+      await Wizard.SetDeclinedReasonAndContinue("Weak governance");
+      await Wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
+      await Wizard.SetDecisionMakerNameAndContinue("Minister Smith");
+      await Wizard.SetDecisionDateAndContinue(DecisionDate);
+      await Wizard.ClickSubmitButton();
+
+      Document.Url.Should().Be(BuildRequestAddress($"/significant-change/task-list/{ProjectId}"));
+      _factory.GetMockServerLogs(PathFor.RecordSignificantChangeDecision, HttpMethod.Put).Should().ContainSingle();
+      _factory.GetMockServerLogs(PathFor.RecordSignificantChangeDecision, HttpMethod.Post).Should().BeEmpty();
    }
 }

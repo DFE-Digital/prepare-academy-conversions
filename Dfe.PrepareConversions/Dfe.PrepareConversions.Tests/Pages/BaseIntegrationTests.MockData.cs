@@ -117,7 +117,9 @@ public abstract partial class BaseIntegrationTests
             new FilterValueDisplay { Value = "1", Display = "Tier 1" },
             new FilterValueDisplay { Value = "2", Display = "Tier 2" }
          ],
-         Routes = [new FilterValueDisplay { Value = "Change of age range", Display = "Change of age range" }]
+         Routes = [new FilterValueDisplay { Value = "Change of age range", Display = "Change of age range" }],
+         LocalAuthorities = [new FilterValueDisplay { Value = "Kent", Display = "Kent" }],
+         Regions = [new FilterValueDisplay { Value = "London", Display = "London" }]
       };
 
       _factory.AddGetWithJsonResponse(PathFor.GetSignificantChangeFilterParameters, filterParameters);

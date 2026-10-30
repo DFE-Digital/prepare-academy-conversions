@@ -9,16 +9,21 @@ namespace Dfe.PrepareConversions.Data.Services.Interfaces;
 
 public interface ISignificantChangeProjectRepository
 {
+   public record SignificantChangeFilterOptions(
+      string? Keyword = null,
+      string[]? Statuses = null,
+      string[]? Assignees = null,
+      byte[]? Tiers = null,
+      string[]? Routes = null,
+      string[]? LocalAuthorities = null,
+      string[]? Regions = null);
+
    Task<ApiResponse<SignificantChangeProjectResponse>> CreateProject(CreateSignificantProjectCommand command);
 
-   Task<ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>> GetAllProjects(
+   Task<ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>> GetAllProjects(
       int page,
       int count,
-      string? keyword = null,
-      string[]? statuses = null,
-      string[]? assignees = null,
-      byte[]? tiers = null,
-      string[]? routes = null);
+      SignificantChangeFilterOptions? filterOptions = null);
 
    Task<ApiResponse<SignificantChangeProjectResponse>> GetProjectById(int id);
 
@@ -26,9 +31,22 @@ public interface ISignificantChangeProjectRepository
 
    Task SetAssignedUser(int id, SetAssignedUserSignificantChangeCommand updatedAssignedUser);
    Task RecordDecision(SignificantChangeDecision decision);
+   Task UpdateDecision(SignificantChangeDecision decision);
+   Task<ApiResponse<SignificantChangeDecision>> GetDecision(int id);
+   Task SetConsultationDuration(int id, SetSignificantChangeConsultationDurationCommand command);
    Task SetStakeholderConsultation(int id, SetSignificantChangeStakeholderConsultationCommand command);
    Task SetEqualitiesImpactAssessment(int id, SetSignificantChangeEqualitiesImpactAssessmentCommand command);
    Task SetReligiousBodyConsultation(int id, SetSignificantChangeReligiousBodyConsultationCommand command);
    Task SetProjectDates(int id, SetSignificantChangeProjectDatesCommand command);
+   Task SetPlanningPermission(int id, SetSignificantChangePlanningPermissionCommand command);
+   Task SetStakeholderObjections(int id, SetSignificantChangeStakeholderObjectionsCommand command);
+   Task SetAdmissionVariationConsultation(int id, SetSignificantChangeAdmissionVariationConsultationCommand command);
+   Task SetFunding(int id, SetSignificantChangeFundingCommand command);
+   Task SetOfstedInspection(int id, SetSignificantChangeOfstedInspectionCommand command);
+   Task SetAdmissionsVariationRecommendation(int id, SetAdmissionsVariationRecommendationCommand command);
+   Task SetRecommendation(int id, SetSignificantChangeRecommendationCommand command);
+   Task SetHQTFConsideration(int id, SetSignificantChangeHqtfConsiderationCommand command);
+   Task SetFhaRisksOrIssuesRaised(int id, SetSignificantChangeFhaRisksOrIssuesRaisedCommand command);
+   Task SetAdmissionsVariation(int id, SetSignificantChangeAdmissionsVariationCommand command);
 
 }

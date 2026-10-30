@@ -12,8 +12,11 @@ public class SignificantChangeProjectListFiltersTests
    private static readonly string[] KeywordBishop = ["Bishop"];
    private static readonly string[] StatusPreDecision = ["PreDecision"];
    private static readonly string[] StatusPreDecisionAndApproved = ["PreDecision", "Approved"];
+   private static readonly string[] ProjectOwnersBobAndAlice = ["Bob", "Alice"];
    private static readonly string[] RouteOther = ["Other"];
    private static readonly string[] Tier2 = ["2"];
+   private static readonly string[] LocalAuthorityKent = ["Kent"];
+   private static readonly string[] RegionLondon = ["London"];
 
    [Fact]
    public void PersistUsing_RehydratesFiltersFromStore()
@@ -23,7 +26,9 @@ public class SignificantChangeProjectListFiltersTests
       {
          { SignificantChangeProjectListFilters.SigChangeFilterKeyword, KeywordBishop },
          { SignificantChangeProjectListFilters.SigChangeFilterStatuses, StatusPreDecision },
-         { SignificantChangeProjectListFilters.SigChangeFilterTiers, Tier2 }
+         { SignificantChangeProjectListFilters.SigChangeFilterTiers, Tier2 },
+         { SignificantChangeProjectListFilters.SigChangeFilterLocalAuthorities, LocalAuthorityKent },
+         { SignificantChangeProjectListFilters.SigChangeFilterRegions, RegionLondon }
       };
 
       filters.PersistUsing(store);
@@ -31,6 +36,8 @@ public class SignificantChangeProjectListFiltersTests
       filters.Keyword.Should().Be("Bishop");
       filters.SelectedStatuses.Should().BeEquivalentTo(StatusPreDecision);
       filters.SelectedTiers.Should().BeEquivalentTo(Tier2);
+      filters.SelectedLocalAuthorities.Should().BeEquivalentTo(LocalAuthorityKent);
+      filters.SelectedRegions.Should().BeEquivalentTo(RegionLondon);
       filters.IsVisible.Should().BeTrue();
    }
 
@@ -41,7 +48,9 @@ public class SignificantChangeProjectListFiltersTests
       Dictionary<string, object> store = new()
       {
          { SignificantChangeProjectListFilters.SigChangeFilterKeyword, KeywordBishop },
-         { SignificantChangeProjectListFilters.SigChangeFilterRoutes, RouteOther }
+         { SignificantChangeProjectListFilters.SigChangeFilterRoutes, RouteOther },
+         { SignificantChangeProjectListFilters.SigChangeFilterLocalAuthorities, LocalAuthorityKent },
+         { SignificantChangeProjectListFilters.SigChangeFilterRegions, RegionLondon }
       };
 
       filters.PersistUsing(store);
@@ -50,6 +59,8 @@ public class SignificantChangeProjectListFiltersTests
       filters.IsVisible.Should().BeFalse();
       filters.Keyword.Should().BeNull();
       filters.SelectedRoutes.Should().BeEmpty();
+      filters.SelectedLocalAuthorities.Should().BeEmpty();
+      filters.SelectedRegions.Should().BeEmpty();
    }
 
    [Fact]
@@ -85,6 +96,43 @@ public class SignificantChangeProjectListFiltersTests
 
       filters.SelectedStatuses.Should().BeEquivalentTo(StatusPreDecision);
       store.Should().ContainKey(SignificantChangeProjectListFilters.SigChangeFilterStatuses);
+   }
+
+   [Fact]
+   public void PopulateFrom_MapsSelectedProjectOwnersQueryKeyToSelectedProjectOwners()
+   {
+      SignificantChangeProjectListFilters filters = new();
+      Dictionary<string, object> store = new();
+
+      filters.PersistUsing(store);
+      filters.PopulateFrom(
+      [
+         new KeyValuePair<string, StringValues>(
+            nameof(SignificantChangeProjectListFilters.SelectedProjectOwners),
+            new StringValues("Bob"))
+      ]);
+
+      filters.SelectedProjectOwners.Should().BeEquivalentTo("Bob");
+      store.Should().ContainKey(SignificantChangeProjectListFilters.SigChangeFilterProjectOwners);
+   }
+
+   [Fact]
+   public void PopulateFrom_RemoveSupportsProjectOwnerQueryKey()
+   {
+      SignificantChangeProjectListFilters filters = new();
+      Dictionary<string, object> store = new()
+      {
+         { SignificantChangeProjectListFilters.SigChangeFilterProjectOwners, ProjectOwnersBobAndAlice }
+      };
+
+      filters.PersistUsing(store);
+      filters.PopulateFrom(
+      [
+         new KeyValuePair<string, StringValues>("remove", new StringValues("true")),
+         new KeyValuePair<string, StringValues>(nameof(SignificantChangeProjectListFilters.SelectedProjectOwners), new StringValues("Bob"))
+      ]);
+
+      filters.SelectedProjectOwners.Should().BeEquivalentTo("Alice");
    }
 
    [Fact]

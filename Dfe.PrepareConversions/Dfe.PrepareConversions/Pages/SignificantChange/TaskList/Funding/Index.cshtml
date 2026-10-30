@@ -1,0 +1,74 @@
+@page "/significant-change/task-list/{id:int}/funding"
+@using Dfe.PrepareConversions.Data.Models.SignificantChange
+@model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.Funding.IndexModel
+@{
+   Layout = "_SignificantChangeTaskLayout";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Links.SignificantChange.SignificantChangeTaskList.Page" asp-route-id="@Model.Project.Id"
+      class="govuk-back-link">Back</a>
+}
+
+<div class="govuk-form-group">
+   <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+         Has funding been secured?
+      </legend>
+
+      <inline-error for="@nameof(Model.FundingAnswer)" />
+
+      <div class="govuk-radios" data-module="govuk-radios">
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.FundingAnswer" class="govuk-radios__input"
+                   id="funding-yes" type="radio"
+                   value="@nameof(FundingAnswer.Yes)"
+                   data-test="funding-yes" />
+            <label class="govuk-label govuk-radios__label" for="funding-yes">
+               Yes
+            </label>
+         </div>
+
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.FundingAnswer" class="govuk-radios__input"
+                   id="funding-no" type="radio"
+                   value="@nameof(FundingAnswer.No)"
+                   aria-controls="conditional-funding-no"
+                   data-test="funding-no" />
+            <label class="govuk-label govuk-radios__label" for="funding-no">
+               No
+            </label>
+         </div>
+
+         <div class="govuk-radios__conditional" id="conditional-funding-no">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+               <label class="govuk-label" for="AdditionalInformation">
+                  Use this area for additional information relating to mitigations, actions and further investigations.
+               </label>
+               <inline-error for="@nameof(Model.AdditionalInformation)" />
+               <textarea asp-for="@Model.AdditionalInformation"
+                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.AdditionalInformation))"
+                         rows="5" data-test="funding-additional-information"></textarea>
+            </div>
+         </div>
+
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.FundingAnswer" class="govuk-radios__input"
+                   id="funding-not-applicable" type="radio"
+                   value="@nameof(FundingAnswer.NotApplicable)"
+                   data-test="funding-not-applicable" />
+            <label class="govuk-label govuk-radios__label" for="funding-not-applicable">
+               Not applicable
+            </label>
+         </div>
+      </div>
+   </fieldset>
+</div>
+
+<div class="govuk-form-group">
+   <label class="govuk-label" for="SupportingEvidence">
+      Supporting evidence
+   </label>
+   <input asp-for="@Model.SupportingEvidence" class="govuk-input" type="text" data-test="funding-supporting-evidence" />
+</div>

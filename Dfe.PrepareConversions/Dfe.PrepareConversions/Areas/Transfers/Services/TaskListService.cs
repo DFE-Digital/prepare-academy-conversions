@@ -22,6 +22,7 @@ namespace Dfe.PrepareTransfers.Web.Services
         public void BuildTaskListStatuses(Index indexPage)
         {
             var project = _projectRepository.GetByUrn(indexPage.Urn).Result;
+            var requestedDate = Models.FinancialHealthAssessmentPrerequisites.GetRequestedDate(project.Result);
             indexPage.ProjectReference = project.Result.Reference;
             indexPage.IncomingTrustReferenceNumber = project.Result.IncomingTrustReferenceNumber;
             indexPage.IncomingTrustName = !string.IsNullOrEmpty(project.Result.IncomingTrustName) ? project.Result.IncomingTrustName.ToTitleCase() : project.Result.OutgoingTrustName.ToTitleCase();
@@ -47,7 +48,10 @@ namespace Dfe.PrepareTransfers.Web.Services
             indexPage.PublicEqualityDutySectionComplete = project.Result.PublicEqualityDutySectionComplete;
 
             // SFSO Commissioning
-            indexPage.FinancialHealthAssessmentStatus = GetFinancialHealthAssessmentStatus(project.Result);
+            indexPage.FinancialHealthAssessmentStatus = GetFinancialHealthAssessmentStatus(project.Result, requestedDate);
+            indexPage.FHARequestedWithin15Days = Models.FinancialHealthAssessmentPrerequisites.FHARequestedWithin15Days(project.Result);
+            indexPage.HasAllFinancialHealthAssessmentMandatoryInformation = Models.FinancialHealthAssessmentPrerequisites.IsComplete(project.Result);
+            indexPage.FinancialHealthAssessmentRequestedDate = requestedDate;
         }
 
         private static ProjectStatuses GetAcademyAndTrustInformationStatus(Project project)
@@ -96,9 +100,9 @@ namespace Dfe.PrepareTransfers.Web.Services
             return ProjectStatuses.InProgress;
         }
         
-        private static ProjectStatuses GetFinancialHealthAssessmentStatus(Project project)
+        private static ProjectStatuses GetFinancialHealthAssessmentStatus(Project project, DateTime? requestedDate)
         {
-            var hasRequestedDate = project.Dates?.SfsoCommissioningRequestedDate.HasValue == true;
+            var hasRequestedDate = requestedDate.HasValue;
 
             // Fail-safe: keep mandatory prerequisites in this check even though the API should
             // only set the requested date once prerequisites are complete.

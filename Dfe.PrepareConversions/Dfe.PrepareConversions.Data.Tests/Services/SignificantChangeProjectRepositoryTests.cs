@@ -25,7 +25,7 @@ public class SignificantChangeProjectRepositoryTests
       [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
       SignificantChangeProjectRepository sut)
    {
-      CreateSignificantProjectCommand command = new(123456, 2, "Route", "10000001");
+      CreateSignificantProjectCommand command = new(123456, 2, "Route", "10000001", "ID_APP_123", "APP_REF_123");
       HttpClient httpClient = new();
       SignificantChangeProjectResponse expectedBody = new()
       {
@@ -36,7 +36,10 @@ public class SignificantChangeProjectRepositoryTests
          TrustName = "Example Trust",
          TrustUkprn = command.TrustUkprn,
          TypeOfSignificantChange = "Fast track",
-         Status = "Pre decision"
+         Status = "Pre decision",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority"
       };
 
       httpClientFactory
@@ -68,7 +71,7 @@ public class SignificantChangeProjectRepositoryTests
       [Frozen] Mock<IHttpClientService> httpClientService,
       SignificantChangeProjectRepository sut)
    {
-      CreateSignificantProjectCommand command = new(123456, 2, "Route", "10000001");
+      CreateSignificantProjectCommand command = new(123456, 2, "Route", "10000001", "ID_APP_123", "APP_REF_123");
 
       httpClientService
          .Setup(x => x.Post<CreateSignificantProjectCommand, SignificantChangeProjectResponse>(
@@ -92,11 +95,11 @@ public class SignificantChangeProjectRepositoryTests
       const int count = 15;
       GetSignificantProjectsQuery expectedQuery = new(page, count);
 
-      ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>> expectedBody = new()
+      ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>> expectedBody = new()
       {
-         Data = new[]
-         {
-            new SignificantChangeProjectResponse
+         Data =
+         [
+            new SignificantChangeProjectSearchResponse
             {
                Id = 99,
                Urn = 123456,
@@ -105,30 +108,28 @@ public class SignificantChangeProjectRepositoryTests
                TrustName = "Example Trust",
                TrustUkprn = "10000001",
                TypeOfSignificantChange = "Fast track",
-               Status = "Pre decision"
+               Status = "Pre decision",
+               ApplicationId = "ID_APP_123",
+               ApplicationReference = "APP_REF_123",
+               LocalAuthorityName = "Test local authority"
             }
-         },
-         Paging = new ApiV2PagingInfo
-         {
-            Page = page,
-            RecordCount = 1,
-            NextPageUrl = "https://example.org/next"
-         }
+         ],
+         Paging = new ApiV2PagingInfo { Page = page, RecordCount = 1, NextPageUrl = "https://example.org/next" }
       };
 
       httpClientService
-         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
+         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(
             It.IsAny<HttpClient>(),
             PathFor.GetAllSignificantChangeProjects,
             expectedQuery))
-         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(HttpStatusCode.OK, expectedBody));
+         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(HttpStatusCode.OK, expectedBody));
 
-      ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>> response = await sut.GetAllProjects(page, count);
+      ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>> response = await sut.GetAllProjects(page, count);
 
       response.StatusCode.Should().Be(HttpStatusCode.OK);
       response.Body.Should().BeSameAs(expectedBody);
 
-      httpClientService.Verify(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
+      httpClientService.Verify(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(
          It.IsAny<HttpClient>(),
          PathFor.GetAllSignificantChangeProjects,
          expectedQuery), Times.Once);
@@ -145,13 +146,13 @@ public class SignificantChangeProjectRepositoryTests
       GetSignificantProjectsQuery expectedQuery = new(page, count);
 
       httpClientService
-         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
+         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(
             It.IsAny<HttpClient>(),
             PathFor.GetAllSignificantChangeProjects,
             expectedQuery))
-         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(HttpStatusCode.BadRequest, null));
+         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(HttpStatusCode.BadRequest, null));
 
-      ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>> response = await sut.GetAllProjects(page, count);
+      ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>> response = await sut.GetAllProjects(page, count);
 
       response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
       response.Body.Should().NotBeNull();
@@ -183,7 +184,10 @@ public class SignificantChangeProjectRepositoryTests
          TrustName = "Example Trust",
          TrustUkprn = "10000001",
          TypeOfSignificantChange = "Fast track",
-         Status = "Pre decision"
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
+         Status = "Pre decision",
+         LocalAuthorityName = "Test local authority"
       };
 
       httpClientFactory
@@ -279,7 +283,7 @@ public class SignificantChangeProjectRepositoryTests
          SignificantChangeProjectId = 123,
          Decision = SignificantChangeDecisions.Approved,
          ApprovedConditionsSet = false,
-         DecisionDate = new DateTime(2026, 3, 27),
+         DecisionDate = new DateTime(2026, 3, 27, 0, 0, 0, DateTimeKind.Utc),
          DecisionMakerName = "Jane Smith"
       };
 
@@ -298,6 +302,60 @@ public class SignificantChangeProjectRepositoryTests
          x => x.Post<SignificantChangeDecision, SignificantChangeDecision>(
             httpClient, PathFor.RecordSignificantChangeDecision, decision),
             Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task UpdateDecision_ShouldPutDecisionToApi(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      SignificantChangeDecision decision = new()
+      {
+         SignificantChangeProjectId = 123,
+         Decision = SignificantChangeDecisions.Declined
+      };
+
+      HttpClient httpClient = new();
+
+      httpClientFactory.Setup(x => x.CreateAcademisationClient()).Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SignificantChangeDecision, SignificantChangeDecision>(
+            httpClient, PathFor.RecordSignificantChangeDecision, decision))
+         .ReturnsAsync(new ApiResponse<SignificantChangeDecision>(HttpStatusCode.OK, decision));
+
+      await sut.UpdateDecision(decision);
+
+      httpClientService.Verify(
+         x => x.Put<SignificantChangeDecision, SignificantChangeDecision>(
+            httpClient, PathFor.RecordSignificantChangeDecision, decision),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task GetDecision_ShouldGetDecisionByProjectId(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int projectId = 123;
+      SignificantChangeDecision expectedDecision = new() { SignificantChangeProjectId = projectId };
+      HttpClient httpClient = new();
+      string expectedPath = string.Format(PathFor.GetSignificantChangeDecision, projectId);
+
+      httpClientFactory.Setup(x => x.CreateAcademisationClient()).Returns(httpClient);
+      httpClientService
+         .Setup(x => x.Get<SignificantChangeDecision>(httpClient, expectedPath))
+         .ReturnsAsync(new ApiResponse<SignificantChangeDecision>(HttpStatusCode.OK, expectedDecision));
+
+      ApiResponse<SignificantChangeDecision> response = await sut.GetDecision(projectId);
+
+      response.Body.Should().BeSameAs(expectedDecision);
+      response.StatusCode.Should().Be(HttpStatusCode.OK);
+      httpClientService.Verify(x => x.Get<SignificantChangeDecision>(httpClient, expectedPath), Times.Once);
    }
 
    [Theory]
@@ -377,7 +435,7 @@ public class SignificantChangeProjectRepositoryTests
       const int id = 77;
       string expectedPath = string.Format(PathFor.SetSignificantChangeEqualitiesImpactAssessment, id);
       HttpClient httpClient = new();
-      SetSignificantChangeEqualitiesImpactAssessmentCommand command = new(true, EqualitiesImpact.ImpactsIdentified, "Affected group and mitigation");
+      SetSignificantChangeEqualitiesImpactAssessmentCommand command = new(true, null, EqualitiesImpact.Likely, "Affected group and mitigation", null, "sharepoint.edu.gov.uk/evidence");
 
       httpClientFactory
          .Setup(x => x.CreateAcademisationClient())
@@ -402,7 +460,7 @@ public class SignificantChangeProjectRepositoryTests
    {
       const int id = 77;
       string expectedPath = string.Format(PathFor.SetSignificantChangeEqualitiesImpactAssessment, id);
-      SetSignificantChangeEqualitiesImpactAssessmentCommand command = new(true, EqualitiesImpact.None, null);
+      SetSignificantChangeEqualitiesImpactAssessmentCommand command = new(true, null, EqualitiesImpact.Unlikely, null, null, "sharepoint.edu.gov.uk/evidence");
 
       httpClientService
          .Setup(x => x.Put<SetSignificantChangeEqualitiesImpactAssessmentCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
@@ -459,6 +517,56 @@ public class SignificantChangeProjectRepositoryTests
       exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
    }
 
+      [Theory]
+   [AutoMoqData]
+   public async Task SetStakeholderObjections_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 88;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeStakeholderObjections, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeStakeholderObjectionsCommand command = new(
+         SignificantChangeStakeholderObjection.YesNoFurtherInformationProvided,
+         "Additional information was provided");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeStakeholderObjectionsCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetStakeholderObjections(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeStakeholderObjectionsCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetStakeholderObjections_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 88;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeStakeholderObjections, id);
+      SetSignificantChangeStakeholderObjectionsCommand command = new(
+         SignificantChangeStakeholderObjection.YesNoFurtherInformationProvided,
+         "Reason");
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeStakeholderObjectionsCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetStakeholderObjections(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+
    [Theory]
    [AutoMoqData]
    public async Task GetAllProjects_WithNoFilters_ShouldSendNullForEveryFilterMember(
@@ -468,12 +576,12 @@ public class SignificantChangeProjectRepositoryTests
       GetSignificantProjectsQuery capturedQuery = null;
 
       httpClientService
-         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
+         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(
             It.IsAny<HttpClient>(),
             PathFor.GetAllSignificantChangeProjects,
             It.IsAny<GetSignificantProjectsQuery>()))
          .Callback<HttpClient, string, GetSignificantProjectsQuery>((_, _, query) => capturedQuery = query)
-         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(HttpStatusCode.OK, null));
+         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(HttpStatusCode.OK, null));
 
       await sut.GetAllProjects(1, 10);
 
@@ -483,6 +591,8 @@ public class SignificantChangeProjectRepositoryTests
       capturedQuery.Assignee.Should().BeNull();
       capturedQuery.Tier.Should().BeNull();
       capturedQuery.Route.Should().BeNull();
+      capturedQuery.LocalAuthority.Should().BeNull();
+      capturedQuery.Region.Should().BeNull();
    }
 
    [Theory]
@@ -494,22 +604,34 @@ public class SignificantChangeProjectRepositoryTests
       GetSignificantProjectsQuery capturedQuery = null;
 
       httpClientService
-         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
+         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(
             It.IsAny<HttpClient>(),
             PathFor.GetAllSignificantChangeProjects,
             It.IsAny<GetSignificantProjectsQuery>()))
          .Callback<HttpClient, string, GetSignificantProjectsQuery>((_, _, query) => capturedQuery = query)
-         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(HttpStatusCode.OK, null));
+         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(HttpStatusCode.OK, null));
 
       // Empty arrays and a whitespace-only keyword must not become empty lists — record equality on
       // List<T> is reference equality, so an empty list breaks request-body matching downstream.
-      await sut.GetAllProjects(1, 10, "   ", [], [], [], []);
+      await sut.GetAllProjects(
+         1,
+         10,
+         new ISignificantChangeProjectRepository.SignificantChangeFilterOptions(
+         "   ",
+         [],
+         [],
+         [],
+         [],
+         [],
+         []));
 
       capturedQuery.Keyword.Should().BeNull();
       capturedQuery.Status.Should().BeNull();
       capturedQuery.Assignee.Should().BeNull();
       capturedQuery.Tier.Should().BeNull();
       capturedQuery.Route.Should().BeNull();
+      capturedQuery.LocalAuthority.Should().BeNull();
+      capturedQuery.Region.Should().BeNull();
    }
 
    [Theory]
@@ -521,28 +643,34 @@ public class SignificantChangeProjectRepositoryTests
       GetSignificantProjectsQuery capturedQuery = null;
 
       httpClientService
-         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
+         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(
             It.IsAny<HttpClient>(),
             PathFor.GetAllSignificantChangeProjects,
             It.IsAny<GetSignificantProjectsQuery>()))
          .Callback<HttpClient, string, GetSignificantProjectsQuery>((_, _, query) => capturedQuery = query)
-         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(HttpStatusCode.OK, null));
+         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectSearchResponse>>>(HttpStatusCode.OK, null));
 
       await sut.GetAllProjects(
-         2, 20,
-         "  Example School  ",
-         ["PreDecision"],
-         ["Assigned User", "Not assigned"],
-         [1, 3],
-         ["Change of age range"]);
+         2,
+         20,
+         new ISignificantChangeProjectRepository.SignificantChangeFilterOptions(
+            "  Example School  ",
+            ["PreDecision"],
+            ["Assigned User", "Not assigned"],
+            [1, 3],
+            ["Change of age range"],
+            ["Kent", "Bristol"],
+            ["London", "North West"]));
 
       capturedQuery.Page.Should().Be(2);
       capturedQuery.Count.Should().Be(20);
       capturedQuery.Keyword.Should().Be("Example School");
-      capturedQuery.Status.Should().BeEquivalentTo(["PreDecision"]);
-      capturedQuery.Assignee.Should().BeEquivalentTo(["Assigned User", "Not assigned"]);
+      capturedQuery.Status.Should().BeEquivalentTo("PreDecision");
+      capturedQuery.Assignee.Should().BeEquivalentTo("Assigned User", "Not assigned");
       capturedQuery.Tier.Should().BeEquivalentTo([(byte)1, (byte)3]);
-      capturedQuery.Route.Should().BeEquivalentTo(["Change of age range"]);
+      capturedQuery.Route.Should().BeEquivalentTo("Change of age range");
+      capturedQuery.LocalAuthority.Should().BeEquivalentTo("Kent", "Bristol");
+      capturedQuery.Region.Should().BeEquivalentTo("London", "North West");
    }
 
    [Theory]
@@ -558,7 +686,9 @@ public class SignificantChangeProjectRepositoryTests
          Statuses = [new FilterValueDisplay { Value = "PreDecision", Display = "Pre decision" }],
          Tiers = [new FilterValueDisplay { Value = "1", Display = "Tier 1" }],
          AssignedUsers = [new FilterValueDisplay { Value = "Bob", Display = "Bob" }],
-         Routes = [new FilterValueDisplay { Value = "Other", Display = "Other" }]
+         Routes = [new FilterValueDisplay { Value = "Other", Display = "Other" }],
+         LocalAuthorities = [new FilterValueDisplay { Value = "Kent", Display = "Kent" }],
+         Regions = [new FilterValueDisplay { Value = "London", Display = "London" }]
       };
 
       httpClientFactory
@@ -596,6 +726,8 @@ public class SignificantChangeProjectRepositoryTests
       response.Body.Tiers.Should().BeEmpty();
       response.Body.AssignedUsers.Should().BeEmpty();
       response.Body.Routes.Should().BeEmpty();
+      response.Body.LocalAuthorities.Should().BeEmpty();
+      response.Body.Regions.Should().BeEmpty();
    }
 
    [Theory]
@@ -640,6 +772,425 @@ public class SignificantChangeProjectRepositoryTests
          .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
 
       ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetProjectDates(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetPlanningPermission_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 77;
+      string expectedPath = string.Format(PathFor.SetSignificantChangePlanningPermission, id);
+      HttpClient httpClient = new();
+      SetSignificantChangePlanningPermissionCommand command = new(PlanningPermissionAnswer.No, "Pending decision", "Planning reference 12345");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangePlanningPermissionCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetPlanningPermission(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangePlanningPermissionCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetPlanningPermission_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 77;
+      string expectedPath = string.Format(PathFor.SetSignificantChangePlanningPermission, id);
+      SetSignificantChangePlanningPermissionCommand command = new(PlanningPermissionAnswer.Yes, null, "Planning reference 12345");
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangePlanningPermissionCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetPlanningPermission(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetOfstedInspection_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 79;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeOfstedInspection, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeOfstedInspectionCommand command =
+         new(new DateTime(2025, 9, 19), false, "Improvement needed", null);
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeOfstedInspectionCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetOfstedInspection(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeOfstedInspectionCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetOfstedInspection_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 79;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeOfstedInspection, id);
+      SetSignificantChangeOfstedInspectionCommand command =
+         new(new DateTime(2025, 9, 19), true, null, null);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeOfstedInspectionCommand, object>(
+            It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(
+         () => sut.SetOfstedInspection(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+  
+    [Theory]
+   [AutoMoqData]
+   public async Task SetAdmissionVariationConsultation_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 78;
+      string expectedPath = string.Format(PathFor.SetAdmissionVariationConsultation, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeAdmissionVariationConsultationCommand command = new(false, "Consultation did not include admission variation details");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeAdmissionVariationConsultationCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetAdmissionVariationConsultation(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeAdmissionVariationConsultationCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetAdmissionVariationConsultation_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 78;
+      string expectedPath = string.Format(PathFor.SetAdmissionVariationConsultation, id);
+      SetSignificantChangeAdmissionVariationConsultationCommand command = new(false, "Reason");
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeAdmissionVariationConsultationCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetAdmissionVariationConsultation(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+  
+   [Theory]
+   [AutoMoqData]
+   public async Task SetConsultationDuration_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 78;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeConsultationDuration, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeConsultationDurationCommand command = new(ConsultationDurationAnswer.No, "Consultation ran for two weeks only");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeConsultationDurationCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetConsultationDuration(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeConsultationDurationCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetConsultationDuration_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 78;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeConsultationDuration, id);
+      SetSignificantChangeConsultationDurationCommand command = new(ConsultationDurationAnswer.No, "Reason");
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeConsultationDurationCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetConsultationDuration(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetFunding_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 79;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeFunding, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeFundingCommand command = new(FundingAnswer.No, "Additional information", "Supporting evidence");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeFundingCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetFunding(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeFundingCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetFunding_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 79;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeFunding, id);
+      SetSignificantChangeFundingCommand command = new(FundingAnswer.No, "Additional information", "Supporting evidence");
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeFundingCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetFunding(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetHQTFConsideration_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 80;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeHqtfConsideration, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeHqtfConsiderationCommand command = new(HqtfConsiderationAnswer.Yes, "Workforce risk", "Board minutes");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeHqtfConsiderationCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetHQTFConsideration(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeHqtfConsiderationCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetHQTFConsideration_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 80;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeHqtfConsideration, id);
+      SetSignificantChangeHqtfConsiderationCommand command = new(HqtfConsiderationAnswer.No, null, "Evidence");
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeHqtfConsiderationCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetHQTFConsideration(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetAdmissionsVariation_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 81;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeAdmissionsVariation, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeAdmissionsVariationCommand command = new(true, "Admissions policy", true, false, true, null, null, null);
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeAdmissionsVariationCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetAdmissionsVariation(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeAdmissionsVariationCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetAdmissionsVariation_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 81;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeAdmissionsVariation, id);
+      SetSignificantChangeAdmissionsVariationCommand command = new(true, "Admissions policy", true, false, true, null, null, null);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeAdmissionsVariationCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(
+         () => sut.SetAdmissionsVariation(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetAdmissionsVariationRecommendation_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 80;
+      string expectedPath = string.Format(PathFor.AdmissionsVariationRecommendation, id);
+      HttpClient httpClient = new();
+      SetAdmissionsVariationRecommendationCommand command = new(AdmissionsVariationRecommendationAnswer.Approve);
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetAdmissionsVariationRecommendationCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetAdmissionsVariationRecommendation(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetAdmissionsVariationRecommendationCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetAdmissionsVariationRecommendation_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 80;
+      string expectedPath = string.Format(PathFor.AdmissionsVariationRecommendation, id);
+      SetAdmissionsVariationRecommendationCommand command = new(AdmissionsVariationRecommendationAnswer.Approve);
+
+      httpClientService
+         .Setup(x => x.Put<SetAdmissionsVariationRecommendationCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetAdmissionsVariationRecommendation(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetFhaRisksOrIssuesRaised_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 81;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeFhaRisksOrIssuesRaised, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeFhaRisksOrIssuesRaisedCommand command = new(true, "Cashflow risk", "FHA report");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeFhaRisksOrIssuesRaisedCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetFhaRisksOrIssuesRaised(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeFhaRisksOrIssuesRaisedCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetFhaRisksOrIssuesRaised_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 81;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeFhaRisksOrIssuesRaised, id);
+      SetSignificantChangeFhaRisksOrIssuesRaisedCommand command = new(false, null, "Evidence");
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeFhaRisksOrIssuesRaisedCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetFhaRisksOrIssuesRaised(id, command));
 
       exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
    }

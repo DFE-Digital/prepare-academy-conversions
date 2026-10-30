@@ -60,7 +60,7 @@ describe('Request Financial Health Assessment (SFSO commissioning)', () => {
                     .invoke('text')
                     .should('match', /will be sent|has been sent/);
             } else {
-                cy.get('[data-test="fha-no-decision-date"], [data-test="fha-not-requested"]').should('be.visible');
+                cy.get('[data-test="fha-not-requested"]').should('be.visible');
             }
         });
     });

@@ -1,4 +1,7 @@
 using Dfe.PrepareTransfers.Data.Models;
+using Dfe.PrepareTransfers.Data.Models.Projects;
+using System;
+using System.Globalization;
 using System.Collections.Generic;
 
 namespace Dfe.PrepareTransfers.Web.Models;
@@ -20,6 +23,19 @@ public record FinancialHealthAssessmentPrerequisite(string Description, string P
 /// </summary>
 public static class FinancialHealthAssessmentPrerequisites
 {
+   public static bool FHARequestedWithin15Days(Project project)
+   {
+      if (project is null)
+      {
+         return false;
+      }
+
+      DateTime? proposedDecisionDate = TryParseDate(project.Dates?.Htb);
+
+      if (!proposedDecisionDate.HasValue || proposedDecisionDate >= DateTime.UtcNow.AddDays(15)) return false;
+      return project.Dates?.SfsoCommissioningRequestedDate is null;
+   }
+
    public static IReadOnlyList<FinancialHealthAssessmentPrerequisite> GetMissing(Project project)
    {
       List<FinancialHealthAssessmentPrerequisite> missing = [];
@@ -44,8 +60,44 @@ public static class FinancialHealthAssessmentPrerequisites
             "a proposed transfer date", "/Projects/TransferDates/Target"));
       }
 
+      if (project.Features is null || project.Features.TypeOfTransfer == TransferFeatures.TransferTypes.Empty)
+      {
+         missing.Add(new FinancialHealthAssessmentPrerequisite(
+            "what type of transfer it is", "/Projects/Features/Type"));
+      }
+
       return missing;
    }
 
    public static bool IsComplete(Project project) => GetMissing(project).Count == 0;
+
+   public static DateTime? GetRequestedDate(Project project)
+   {
+      if (project is null)
+      {
+         return null;
+      }
+
+      if (project.Dates?.SfsoCommissioningRequestedDate.HasValue == true)
+      {
+         return project.Dates.SfsoCommissioningRequestedDate;
+      }
+
+      if (!IsComplete(project) || FHARequestedWithin15Days(project))
+      {
+         return null;
+      }
+
+      DateTime? proposedDecisionDate = TryParseDate(project.Dates?.Htb);
+
+      return proposedDecisionDate?.AddDays(-15);
+   }
+
+   private static DateTime? TryParseDate(string date)
+   {
+      return DateTime.TryParseExact(date, ["dd/MM/yyyy", "dd-MM-yyyy"],
+         CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate)
+         ? parsedDate
+         : (DateTime?)null;
+   }
 }

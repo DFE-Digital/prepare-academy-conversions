@@ -1,0 +1,53 @@
+@page "/significant-change/task-list/{id:int}/admission-variation-consultation"
+@model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.AdmissionVariationConsultation.IndexModel
+@{
+   Layout = "_SignificantChangeTaskLayout";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Links.SignificantChange.SignificantChangeTaskList.Page" asp-route-id="@Model.Project.Id"
+      class="govuk-back-link">Back</a>
+}
+
+<div class="govuk-form-group">
+   <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+         Did the consultation include information about the admissions variation?
+      </legend>
+      <inline-error for="@nameof(Model.ConsultationIncludeAdmissionVariation)" />
+
+      <div class="govuk-radios" data-module="govuk-radios">
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.ConsultationIncludeAdmissionVariation" class="govuk-radios__input"
+                   id="consultation-include-admission-variation-yes" type="radio" value="true"
+                       data-test="consultation-include-admission-variation-yes" />
+                <label class="govuk-label govuk-radios__label" for="consultation-include-admission-variation-yes">
+               Yes
+            </label>
+         </div>
+
+         <div class="govuk-radios__item">
+                <input asp-for="@Model.ConsultationIncludeAdmissionVariation" class="govuk-radios__input"
+                       id="consultation-include-admission-variation-no" type="radio" value="false"
+                       aria-controls="conditional-include-admission-variation-no"
+                       data-test="consultation-include-admission-variation-no" />
+                <label class="govuk-label govuk-radios__label" for="consultation-include-admission-variation-no">
+               No
+            </label>
+         </div>
+
+            <div class="govuk-radios__conditional" id="conditional-include-admission-variation-no">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+                    <label class="govuk-label" for="ConsultationNoAdmissionVariationReason">
+                  Use this area for additional information relating to mitigations, actions and further investigations.
+               </label>
+                    <inline-error for="@nameof(Model.ConsultationNoAdmissionVariationReason)" />
+                    <textarea asp-for="@Model.ConsultationNoAdmissionVariationReason"
+                              class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.ConsultationNoAdmissionVariationReason))"
+                         rows="5" data-test="consultation-no-admission-variation-reason"></textarea>
+            </div>
+         </div>
+      </div>
+   </fieldset>
+</div>

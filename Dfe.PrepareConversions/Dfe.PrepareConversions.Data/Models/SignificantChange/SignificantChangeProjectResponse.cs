@@ -2,19 +2,23 @@ using System;
 
 namespace Dfe.PrepareConversions.Data.Models.SignificantChange;
 
-public class SignificantChangeProjectResponse
+public class SignificantChangeProjectResponse : SignificantChangeProjectSearchResponse
 {
-   public int Id { get; set; }
-   public int Urn { get; set; }
-   public string SchoolName { get; set; }
-   public byte Tier { get; set; }
-   public required string TrustName { get; set; }
-   public required string TrustUkprn { get; set; }
-   public User AssignedUser { get; set; }
-   public required string TypeOfSignificantChange { get; set; }
-   public required string Status { get; set; }
    public SignificantChangeStakeholderConsultationResponse StakeholderConsultation { get; set; } = new();
+   public SignificantChangeStakeholderObjectionsResponse StakeholderObjections { get; set; } = new();
+   public SignificantChangeConsultationDurationResponse ConsultationDuration { get; set; } = new();
+   public SignificantChangeAdmissionVariationConsultationResponse AdmissionVariationConsultation { get; set;} = new();
    public SignificantChangeEqualitiesImpactAssessmentResponse EqualitiesImpactAssessment { get; set; } = new();
    public SignificantChangeReligiousBodyConsultationResponse ReligiousBodyConsultation { get; set; } = new();
    public SignificantChangeProjectDatesResponse ProjectDates { get; set; } = new();
+   public SignificantChangeAdmissionsVariationResponse AdmissionsVariation { get; set; } = new();
+   public SignificantChangeFundingResponse Funding { get; set; } = new();
+   public SignificantChangePlanningPermissionResponse PlanningPermission { get; set; } = new();
+   public SignificantChangeAdmissionsVariationRecommendationResponse AdmissionsVariationRecommendation { get; set; } = new();
+   public SignificantChangeRecommendationResponse Recommendation { get; set; } = new();
+   public SignificantChangeHqtfConsiderationResponse HQTFConsideration { get; set; } = new();
+   public SignificantChangeOfstedInspectionResponse OfstedInspection { get; set; } = new();
+   public SignificantChangeFhaRisksOrIssuesRaisedResponse FHARisksOrIssuesRaised { get; set; } = new();
+   public SignificantChangeDecisions? Decision { get; set; }
+   public DateTime? DecisionDate { get; set; }
 }

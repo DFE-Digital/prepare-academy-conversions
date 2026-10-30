@@ -1,0 +1,66 @@
+@page "/significant-change/task-list/{id:int}/consultation-duration"
+@using Dfe.PrepareConversions.Data.Models.SignificantChange
+@model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.ConsultationDuration.IndexModel
+@{
+   Layout = "_SignificantChangeTaskLayout";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Links.SignificantChange.SignificantChangeTaskList.Page" asp-route-id="@Model.Project.Id"
+      class="govuk-back-link">Back</a>
+}
+
+<div class="govuk-form-group">
+   <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+         Was this for a minimum 3 weeks during term time?
+      </legend>
+      <inline-error for="@nameof(Model.ConsultationLastedMinimumThreeWeeks)" />
+
+      <div class="govuk-radios" data-module="govuk-radios">
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.ConsultationLastedMinimumThreeWeeks" class="govuk-radios__input"
+                   id="consultation-duration-yes" type="radio"
+                   value="@nameof(ConsultationDurationAnswer.Yes)"
+                   data-test="consultation-duration-yes" />
+            <label class="govuk-label govuk-radios__label" for="consultation-duration-yes">
+               Yes
+            </label>
+         </div>
+
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.ConsultationLastedMinimumThreeWeeks" class="govuk-radios__input"
+                   id="consultation-duration-no-satisfactory" type="radio"
+                   value="@nameof(ConsultationDurationAnswer.NoSatisfactoryConsultationCarriedOut)"
+                   data-test="consultation-duration-no-satisfactory" />
+            <label class="govuk-label govuk-radios__label" for="consultation-duration-no-satisfactory">
+               No - satisfactory consultation carried out
+            </label>
+         </div>
+
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.ConsultationLastedMinimumThreeWeeks" class="govuk-radios__input"
+                   id="consultation-duration-no" type="radio"
+                   value="@nameof(ConsultationDurationAnswer.No)"
+                   aria-controls="conditional-consultation-duration-no"
+                   data-test="consultation-duration-no" />
+            <label class="govuk-label govuk-radios__label" for="consultation-duration-no">
+               No
+            </label>
+         </div>
+
+         <div class="govuk-radios__conditional" id="conditional-consultation-duration-no">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+               <label class="govuk-label" for="ConsultationDurationNotMetReason">
+                  Use this area for additional information relating to mitigations, actions and further investigations.
+               </label>
+               <inline-error for="@nameof(Model.ConsultationDurationNotMetReason)" />
+               <textarea asp-for="@Model.ConsultationDurationNotMetReason"
+                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.ConsultationDurationNotMetReason))"
+                         rows="5" data-test="consultation-duration-not-met-reason"></textarea>
+            </div>
+         </div>
+      </div>
+   </fieldset>
+</div>

@@ -9,7 +9,7 @@ class SignificantChangeDecision extends BasePage {
         return this;
     }
 
-    public selectDecision(decision: 'approved' | 'declined' | 'deferred' | 'withdrawn'): this {
+    public selectDecision(decision: 'approved' | 'declined' | 'withdrawn'): this {
         cy.getById(`${decision}-radio`).check();
         return this;
     }
@@ -59,7 +59,7 @@ class SignificantChangeDecision extends BasePage {
     }
 
     public verifyOnStep(step: string): this {
-        cy.url().should('match', new RegExp(String.raw`/significant-change/\d+/decision/${step}$`));
+        cy.url().should('match', new RegExp(String.raw`/significant-change/\d+/decision/${step}(?:\?.*)?$`));
         return this;
     }
 }

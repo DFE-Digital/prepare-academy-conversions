@@ -172,7 +172,10 @@ public class ReligiousBodyConsultationModelTests
          TrustName = "Example trust",
          TrustUkprn = "12345678",
          TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
          Status = "pre decision",
+         LocalAuthorityName = "Test local authority",
          StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse(),
          ReligiousBodyConsultation = new SignificantChangeReligiousBodyConsultationResponse()
       };
