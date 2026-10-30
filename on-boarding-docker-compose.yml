@@ -1,0 +1,41 @@
+name: dfe-flexforms
+
+networks:
+    dfe-academies-network:
+        name: dfe-academies-network
+        driver: bridge
+        external: true
+    dfe-shared-network:
+        name: dfe-shared-network
+        external: true
+
+services:
+  prepare-academy-conversions:
+    container_name: prepare-academy-conversions
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    build:
+      context: ${REPO_PATH}/prepare-academy-conversions
+      dockerfile: Dockerfile.dev
+      secrets:
+        - github_token
+    ports:
+      - 5002:8080
+      - 5003:8081
+    restart: unless-stopped
+    environment:
+      - ASPNETCORE_URLS=https://+:8081;http://+:8080
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Pa55w0rd
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/docker_dev_cert.pfx
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ${APPDATA}/dev-certs/docker_dev_cert.pfx:/https/docker_dev_cert.pfx:ro
+      - ${APPDATA}/Microsoft/UserSecrets/eae6d8bd-2a58-4ed4-99e2-a82f32b0ce47:/home/app/.microsoft/usersecrets/eae6d8bd-2a58-4ed4-99e2-a82f32b0ce47:ro
+      - ${APPDATA}/mkcert/rootCA.pem:/usr/local/share/ca-certificates/mkcert-rootCA.crt:ro
+    networks:
+      - dfe-academies-network
+      - dfe-shared-network

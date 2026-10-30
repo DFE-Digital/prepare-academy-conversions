@@ -122,4 +122,11 @@
 	  <None Include="Areas\Transfers\Pages\TaskList\KeyStage5Performance\KeyStage5Performance.cshtml" />
 	  <None Include="Areas\Transfers\Pages\TaskList\KeyStage5Performance\KeyStage5PerformanceTables.cshtml" />
 	</ItemGroup>
+
+	<Target Name="BuildDockerImage" AfterTargets="Build" Condition="'$(SkipDockerCompose)' != 'true' and '$(LocalDevelopment)' == 'true'">
+		<Exec Command="set &quot;REPO_PATH=$(SolutionDir)&quot; &amp;&amp; docker compose -f &quot;$(SolutionDir)on-boarding-docker-compose.yaml&quot; down" />
+
+		<Exec Command="set &quot;REPO_PATH=$(SolutionDir)&quot; &amp;&amp; docker compose -f &quot;$(SolutionDir)on-boarding-docker-compose.yaml&quot; up -d --build --force-recreate" />
+	</Target>
+
 </Project>

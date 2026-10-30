@@ -5,8 +5,8 @@ ARG NODEJS_VERSION_MAJOR=22
 # Build assets
 FROM node:${NODEJS_VERSION_MAJOR}-bullseye-slim AS assets
 WORKDIR /app
-EXPOSE 5003
-EXPOSE 5002
+EXPOSE 8080
+EXPOSE 8081
 COPY ./Dfe.PrepareConversions/Dfe.PrepareConversions/wwwroot .
 RUN npm install && \
     npm run build
@@ -31,17 +31,22 @@ COPY . .
 WORKDIR "/src/Dfe.PrepareConversions"
 RUN --mount=type=secret,id=github_token dotnet nuget add source --username USERNAME --password $(cat /run/secrets/github_token) --store-password-in-clear-text --name github "https://nuget.pkg.github.com/DFE-Digital/index.json" && \
     dotnet restore Dfe.PrepareConversions
-RUN dotnet build "Dfe.PrepareConversions" --no-restore -c $BUILD_CONFIGURATION -o /app/build 
+RUN dotnet build "Dfe.PrepareConversions" --no-restore -c $BUILD_CONFIGURATION -p:SkipDockerCompose=true -o /app/build 
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Debug
-RUN dotnet publish "Dfe.PrepareConversions" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Dfe.PrepareConversions" -c $BUILD_CONFIGURATION -p:SkipDockerCompose=true -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 COPY --from=assets /app/ ./wwwroot/
-#RUN find /app/wwwroot -type f -name 'package-lock.json' -delete
-ENTRYPOINT ["dotnet", "Dfe.PrepareConversions.dll"]
+USER root
+
+COPY script/dev-web-docker-entrypoint.sh /app/docker-entrypoint.sh
+RUN sed -i 's/\r$//' /app/docker-entrypoint.sh
+RUN chmod +x /app/docker-entrypoint.sh
+
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
