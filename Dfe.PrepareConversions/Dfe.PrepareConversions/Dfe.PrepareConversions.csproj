@@ -124,9 +124,9 @@
 	</ItemGroup>
 
 	<Target Name="BuildDockerImage" AfterTargets="Build" Condition="'$(SkipDockerCompose)' != 'true' and '$(LocalDevelopment)' == 'true'">
-		<Exec Command="set &quot;REPO_PATH=$(SolutionDir)&quot; &amp;&amp; docker compose -f &quot;$(SolutionDir)on-boarding-docker-compose.yaml&quot; down" />
+      <Exec Command="set &quot;REPO_PATH=$(SolutionDir)..\..&quot; &amp;&amp; docker compose -f &quot;$(SolutionDir)on-boarding-docker-compose.yaml&quot; up -d --build --force-recreate" />
 
-		<Exec Command="set &quot;REPO_PATH=$(SolutionDir)&quot; &amp;&amp; docker compose -f &quot;$(SolutionDir)on-boarding-docker-compose.yaml&quot; up -d --build --force-recreate" />
+		<Exec Command="set &quot;REPO_PATH=$(SolutionDir)..\..&quot; &amp;&amp; docker compose -f &quot;$(SolutionDir)on-boarding-docker-compose.yaml&quot; up -d --build --force-recreate" />
 	</Target>
 
 </Project>
