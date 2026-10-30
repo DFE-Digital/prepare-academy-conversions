@@ -1,6 +1,8 @@
+using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Services;
+using Dfe.PrepareConversions.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using FundingAnswerType = Dfe.PrepareConversions.Data.Models.SignificantChange.FundingAnswer;
@@ -52,7 +54,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
       if (!ModelState.IsValid)
       {
          errorService.AddErrors(
-            [nameof(FundingAnswer), nameof(AdditionalInformation)],
+            [nameof(FundingAnswer), nameof(AdditionalInformation), nameof(SupportingEvidence)],
             ModelState);
 
          return Page();

@@ -80,7 +80,7 @@ public class SignificantChangeProjectListHelperTests
    [InlineData("Deferred", "Deferred")]
    [InlineData("Declined", "Declined")]
    [InlineData("Withdrawn", "Withdrawn")]
-   [InlineData("approved with conditions", "Approved with conditions")]  // display form still accepted
+   [InlineData("approved with conditions", "Approved with conditions")]
    [InlineData("", "Pre decision")]
    [InlineData("something unexpected", "Pre decision")]
    public void MapProjectStatus_Returns_expected_display_value(string inputStatus, string expectedStatus)

@@ -1,6 +1,8 @@
+using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Services;
+using Dfe.PrepareConversions.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -50,7 +52,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       if (!ModelState.IsValid)
       {
-         errorService.AddErrors([nameof(PlanningPermissionAnswer)], ModelState);
+         errorService.AddErrors([nameof(PlanningPermissionAnswer), nameof(PlanningPermissionSupportingEvidence)], ModelState);
 
          return Page();
       }
