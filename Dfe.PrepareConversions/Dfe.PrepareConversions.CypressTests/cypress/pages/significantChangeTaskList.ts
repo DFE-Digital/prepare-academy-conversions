@@ -39,23 +39,18 @@ class SignificantChangeTaskList extends BasePage {
     }
 
     public verifyConsultationDurationTaskVisible(): this {
-        cy.contains('a', 'Consultation duration').should('be.visible');
-        cy.getById('task-status-consultation-duration').should('be.visible');
+        cy.contains('a', 'Consultation').should('be.visible');
+        cy.getById('task-status-consultation').should('be.visible');
         return this;
     }
 
     public verifyConsultationDurationTaskHidden(): this {
-        cy.contains('a', 'Consultation duration').should('not.exist');
+        cy.contains('a', 'Consultation').should('not.exist');
         return this;
     }
 
     public openConsultationDurationTask(): this {
-        cy.contains('a', 'Consultation duration').click();
-        return this;
-    }
-
-    public openStakeholderConsultationTask(): this {
-        cy.contains('a', 'Stakeholder consultation').click();
+        cy.contains('a', 'Consultation').click();
         return this;
     }
 
@@ -110,6 +105,20 @@ class SignificantChangeTaskList extends BasePage {
 
     public openRecommendationTask(): this {
         cy.contains('a', 'Significant change recommendation').click();
+        return this;
+    }
+
+    public openOfstedTask(): this {
+        cy.contains('h3.app-task-list__section', 'Academy performance')
+            .next('.app-task-list')
+            .contains('a', 'Ofsted')
+            .click();
+        return this;
+    }
+
+    public verifyOfstedTaskVisible(): this {
+        cy.contains('a', 'Ofsted').should('be.visible');
+        cy.getById('task-status-ofsted').should('be.visible');
         return this;
     }
 
