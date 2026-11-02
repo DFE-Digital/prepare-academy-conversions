@@ -102,7 +102,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       if (TrustConsultedReligiousBody == YesNoNotApplicableAnswer.No
           && string.IsNullOrWhiteSpace(TrustConsultedReligiousBodyNotConsultedReason))
-         ModelState.AddModelError(nameof(TrustConsultedReligiousBodyNotConsultedReason), "Add a reason");
+         ModelState.AddModelError(nameof(TrustConsultedReligiousBodyNotConsultedReason), "Add details");
 
       if (!ReligiousBodyRaisedObjection.HasValue)
          ModelState.AddModelError(nameof(ReligiousBodyRaisedObjection), "Select an option");
@@ -116,6 +116,6 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       if (ReligiousBodyConsentGranted == YesNoNotApplicableAnswer.No
           && string.IsNullOrWhiteSpace(ReligiousBodyConsentNotGrantedReason))
-         ModelState.AddModelError(nameof(ReligiousBodyConsentNotGrantedReason), "Add a reason");
+         ModelState.AddModelError(nameof(ReligiousBodyConsentNotGrantedReason), "Add details");
    }
 }

@@ -57,8 +57,8 @@ describe('Significant change - consultation', () => {
             significantChangeConsultationDuration.selectNo().save();
 
             significantChangeConsultationDuration
-                .verifyErrorSummaryContains('Add a reason')
-                .verifyInlineError('ConsultationDurationNotMetReason', 'Add a reason');
+                .verifyErrorSummaryContains('Add details')
+                .verifyInlineError('ConsultationDurationNotMetReason', 'Add details');
 
             significantChangeConsultationDuration.selectNo().enterReason('Consultation ran for two weeks only').save();
 

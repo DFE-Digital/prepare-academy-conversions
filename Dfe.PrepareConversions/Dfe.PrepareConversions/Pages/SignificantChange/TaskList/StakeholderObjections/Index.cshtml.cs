@@ -103,7 +103,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
          ModelState.AddModelError(nameof(TrustConsultedStakeholders), "Select an option");
 
       if (TrustConsultedStakeholders == false && string.IsNullOrWhiteSpace(TrustConsultedStakeholdersNotConsultedReason))
-         ModelState.AddModelError(nameof(TrustConsultedStakeholdersNotConsultedReason), "Add a reason");
+         ModelState.AddModelError(nameof(TrustConsultedStakeholdersNotConsultedReason), "Add details");
 
       if (!WereThereAnyObjectionsRaised.HasValue)
          ModelState.AddModelError(nameof(WereThereAnyObjectionsRaised), "Select an option");
@@ -116,6 +116,6 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       if (RelevantStakeholdersNotifiedOfAdmissionsChanges == YesNoNotApplicableAnswer.No
           && string.IsNullOrWhiteSpace(RelevantStakeholdersNotifiedOfAdmissionsChangesReason))
-         ModelState.AddModelError(nameof(RelevantStakeholdersNotifiedOfAdmissionsChangesReason), "Add a reason");
+         ModelState.AddModelError(nameof(RelevantStakeholdersNotifiedOfAdmissionsChangesReason), "Add details");
    }
 }
