@@ -175,22 +175,6 @@ public class SignificantChangeProjectRepository(
       return new ApiResponse<SignificantChangeDecision>(result.StatusCode, result.Body);
    }
 
-   public async Task SetStakeholderConsultation(int id, SetSignificantChangeStakeholderConsultationCommand command)
-   {
-      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
-      string path = string.Format(PathFor.SetSignificantChangeStakeholderConsultation, id);
-
-      var result = await httpClientService.Put<SetSignificantChangeStakeholderConsultationCommand, object>(
-         httpClient,
-         path,
-         command);
-
-      if (!result.Success)
-      {
-         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
-      }
-   }
-
    public async Task SetReligiousBodyConsultation(int id, SetSignificantChangeReligiousBodyConsultationCommand command)
    {
       HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
@@ -255,29 +239,13 @@ public class SignificantChangeProjectRepository(
       }
    }
       
-   public async Task SetAdmissionVariationConsultation(int id, SetSignificantChangeAdmissionVariationConsultationCommand command)
+   public async Task SetOtherStakeholderEngagement(int id, SetSignificantChangeOtherStakeholderEngagementCommand command)
    {
       HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
-      string path = string.Format(PathFor.SetAdmissionVariationConsultation, id);
+      string path = string.Format(PathFor.SetSignificantChangeOtherStakeholderEngagement, id);
 
-      var result = await httpClientService.Put<SetSignificantChangeAdmissionVariationConsultationCommand, object>(
+      var result = await httpClientService.Put<SetSignificantChangeOtherStakeholderEngagementCommand, object>(
          httpClient,
-         path,
-         command);
-
-      if (!result.Success)
-      {
-         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
-      }
-   }
-
-   public async Task SetStakeholderObjections(int id, SetSignificantChangeStakeholderObjectionsCommand command)
-   {
-      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
-      string path = string.Format(PathFor.SetSignificantChangeStakeholderObjections, id);
-
-      var result = await httpClientService.Put<SetSignificantChangeStakeholderObjectionsCommand, object>(
-           httpClient,
          path,
          command);
 

@@ -18,18 +18,17 @@ public class SignificantChangeProjectViewBaseModel
    public string RegionName { get; set; } = string.Empty;
    public required string Status { get; set; }
    public required string StatusColour { get; set; }
-   public SignificantChangeTaskStatus StakeholderConsultationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
-   public bool? StakeholderConsultationTrustConsultedStakeholders { get; set; }
-   public string StakeholderConsultationTrustConsultedStakeholdersNotConsultedReason { get; set; } = string.Empty;
-   public SignificantChangeTaskStatus StakeholderObjectionsStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
-   public SignificantChangeStakeholderObjection? StakeholderObjections { get; set; }
-   public string StakeholderObjectionsComment { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus OtherStakeholderEngagementStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public bool? OtherStakeholderEngagementTrustConsultedStakeholders { get; set; }
+   public string OtherStakeholderEngagementTrustConsultedStakeholdersNotConsultedReason { get; set; } = string.Empty;
+   public bool? WereThereAnyObjectionsRaised { get; set; }
+   public string StakeholderObjectionsDetails { get; set; } = string.Empty;
+   public YesNoNotApplicableAnswer? RelevantStakeholdersNotifiedOfAdmissionsChanges { get; set; }
+   public string RelevantStakeholdersNotifiedOfAdmissionsChangesReason { get; set; } = string.Empty;
+   public string OtherStakeholderEngagementSupportingEvidence { get; set; } = string.Empty;
    public SignificantChangeTaskStatus ConsultationDurationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public ConsultationDurationAnswer? ConsultationLastedMinimumThreeWeeks { get; set; }
    public string ConsultationDurationNotMetReason { get; set; } = string.Empty;
-   public SignificantChangeTaskStatus AdmissionVariationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
-   public bool? ConsultationIncludeAdmissionVariation { get; set; }
-   public string ConsultationNoAdmissionVariationReason { get; set; } = string.Empty;
    public SignificantChangeTaskStatus EqualitiesImpactAssessmentStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public bool? EqualitiesImpactAssessmentCompleted { get; set; }
    public string EqualitiesImpactAssessmentNoReason { get; set; } = string.Empty;
@@ -38,8 +37,13 @@ public class SignificantChangeProjectViewBaseModel
    public string EqualitiesSomeImpactDetails { get; set; } = string.Empty;
    public string EqualitiesImpactSupportingEvidence { get; set; } = string.Empty;
    public SignificantChangeTaskStatus ReligiousBodyConsultationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
-   public bool? ReligiousBodyConsultationTrustConsultedReligiousBody { get; set; }
-   public string ReligiousBodyConsultationTrustConsultedReligiousBodyNotConsultedReason { get; set; } = string.Empty;
+   public YesNoNotApplicableAnswer? ReligiousBodyConsultedAnswer { get; set; }
+   public string ReligiousBodyConsultedReason { get; set; } = string.Empty;
+   public YesNoNotApplicableAnswer? ReligiousBodyRaisedObjection { get; set; }
+   public string ReligiousBodyRaisedObjectionReason { get; set; } = string.Empty;
+   public YesNoNotApplicableAnswer? ReligiousBodyConsentGranted { get; set; }
+   public string ReligiousBodyConsentNotGrantedReason { get; set; } = string.Empty;
+   public string ReligiousBodySupportingEvidence { get; set; } = string.Empty;
    public SignificantChangeTaskStatus ProjectDatesStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public DateTime? ProposedDecisionDate { get; set; }
    public DateTime? ProposedChangeDate { get; set; }
