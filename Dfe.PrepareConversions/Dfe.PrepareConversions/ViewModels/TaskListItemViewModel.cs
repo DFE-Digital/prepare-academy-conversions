@@ -12,9 +12,9 @@ public sealed class TaskListItemViewModel : IEquatable<TaskListItemViewModel>
       CssClass = cssClass;
    }
 
-   public static string NotStartedText = "Not started";
-   public static string InProgressText = "In progress";
-   public static string CompletedText = "Completed";
+   public static readonly string NotStartedText = "Not started";
+   public static readonly string InProgressText = "In progress";
+   public static readonly string CompletedText = "Completed";
 
    public string Status { get; }
    public string CssClass { get; }
