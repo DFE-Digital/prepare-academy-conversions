@@ -10,21 +10,31 @@ namespace Dfe.PrepareConversions.Tests.Utils;
 public class SignificantChangeProjectHelperTests
 {
    [Fact]
-   public void Build_Maps_nested_consult_stakeholders_values()
+   public void Build_Maps_nested_other_stakeholder_engagement_values()
    {
       SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
-      response.StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse
+      response.OtherStakeholderEngagement = new SignificantChangeOtherStakeholderEngagementResponse
       {
+         Status = SignificantChangeTaskStatus.InProgress,
          TrustConsultedStakeholders = false,
          TrustConsultedStakeholdersNotConsultedReason = "Consultation planned",
-         Status = SignificantChangeTaskStatus.InProgress
+         WereThereAnyObjectionsRaised = true,
+         StakeholderObjectionsDetails = "Objection details",
+         RelevantStakeholdersNotifiedOfAdmissionsChanges = YesNoNotApplicableAnswer.No,
+         RelevantStakeholdersNotifiedOfAdmissionsChangesReason = "Notification details",
+         SupportingEvidence = "https://example.test/evidence"
       };
 
       var viewModel = SignificantChangeProjectHelper.Build(response);
 
-      Assert.False(viewModel.StakeholderConsultationTrustConsultedStakeholders);
-      Assert.Equal("Consultation planned", viewModel.StakeholderConsultationTrustConsultedStakeholdersNotConsultedReason);
-      Assert.Equal(SignificantChangeTaskStatus.InProgress, viewModel.StakeholderConsultationStatus);
+      Assert.False(viewModel.OtherStakeholderEngagementTrustConsultedStakeholders);
+      Assert.Equal("Consultation planned", viewModel.OtherStakeholderEngagementTrustConsultedStakeholdersNotConsultedReason);
+      Assert.True(viewModel.WereThereAnyObjectionsRaised);
+      Assert.Equal("Objection details", viewModel.StakeholderObjectionsDetails);
+      Assert.Equal(YesNoNotApplicableAnswer.No, viewModel.RelevantStakeholdersNotifiedOfAdmissionsChanges);
+      Assert.Equal("Notification details", viewModel.RelevantStakeholdersNotifiedOfAdmissionsChangesReason);
+      Assert.Equal("https://example.test/evidence", viewModel.OtherStakeholderEngagementSupportingEvidence);
+      Assert.Equal(SignificantChangeTaskStatus.InProgress, viewModel.OtherStakeholderEngagementStatus);
    }
 
    [Fact]
@@ -33,15 +43,15 @@ public class SignificantChangeProjectHelperTests
       SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
       response.ReligiousBodyConsultation = new SignificantChangeReligiousBodyConsultationResponse
       {
-         TrustConsultedReligiousBody = false,
+         TrustConsultedReligiousBody = YesNoNotApplicableAnswer.No,
          TrustConsultedReligiousBodyNotConsultedReason = "Further action needed",
          Status = SignificantChangeTaskStatus.Completed
       };
 
       var viewModel = SignificantChangeProjectHelper.Build(response);
 
-      Assert.False(viewModel.ReligiousBodyConsultationTrustConsultedReligiousBody);
-      Assert.Equal("Further action needed", viewModel.ReligiousBodyConsultationTrustConsultedReligiousBodyNotConsultedReason);
+      Assert.Equal(YesNoNotApplicableAnswer.No, viewModel.ReligiousBodyConsultedAnswer);
+      Assert.Equal("Further action needed", viewModel.ReligiousBodyConsultedReason);
       Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.ReligiousBodyConsultationStatus);
    }
 
@@ -145,24 +155,6 @@ public class SignificantChangeProjectHelperTests
       Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.HQTFConsiderationStatus);
    }
 
-   [Fact]
-   public void Build_Maps_nested_admission_variation_values()
-   {
-      SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
-      response.AdmissionVariationConsultation = new SignificantChangeAdmissionVariationConsultationResponse
-      {
-         ConsultationIncludeAdmissionVariation = false,
-         ConsultationNoAdmissionVariationReason = "Consultation focused on governance only",
-         Status = SignificantChangeTaskStatus.Completed
-      };
-
-      var viewModel = SignificantChangeProjectHelper.Build(response);
-
-      Assert.False(viewModel.ConsultationIncludeAdmissionVariation);
-      Assert.Equal("Consultation focused on governance only", viewModel.ConsultationNoAdmissionVariationReason);
-      Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.AdmissionVariationStatus);
-   }
-  
    [Fact]
    public void Build_Maps_nested_consultation_duration_values()
    {
