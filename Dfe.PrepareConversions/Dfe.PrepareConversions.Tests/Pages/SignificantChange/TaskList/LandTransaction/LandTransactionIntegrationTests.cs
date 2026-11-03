@@ -16,9 +16,9 @@ public class LandTransactionIntegrationTests(IntegrationTestingWebApplicationFac
    public async Task Should_display_land_transaction_page_with_existing_values()
    {
       SignificantChangeProjectResponse project = BuildProject(id: 801);
-      project.LandTransaction.LandTransactionApplication = SignificantChangeGenericYesNoNa.No;
+      project.LandTransaction.LandTransactionApplication = YesNoNotApplicableAnswer.No;
       project.LandTransaction.LandTransactionApplicationAdditionalInfo = "Land transaction application is pending";
-      project.LandTransaction.LandTransactionConsent = SignificantChangeGenericYesNoNa.Yes;
+      project.LandTransaction.LandTransactionConsent = YesNoNotApplicableAnswer.Yes;
       project.LandTransaction.LandTransactionConsentAdditionalInfo = "Consent has been granted";
       project.LandTransaction.LandTransactionSupportingEvidence = "https://educationgovuk.sharepoint.com/sites/land-transaction/reference/12345";
 
@@ -49,9 +49,9 @@ public class LandTransactionIntegrationTests(IntegrationTestingWebApplicationFac
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeLandTransaction, project.Id),
          new SetSignificantChangeLandTransactionCommand(
-            SignificantChangeGenericYesNoNa.No,
+            YesNoNotApplicableAnswer.No,
             applicationAdditionalInfo,
-            SignificantChangeGenericYesNoNa.No,
+            YesNoNotApplicableAnswer.No,
             consentAdditionalInfo,
             supportingEvidence),
          new object());

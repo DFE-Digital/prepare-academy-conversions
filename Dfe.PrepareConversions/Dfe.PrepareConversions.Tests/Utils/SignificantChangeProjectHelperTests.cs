@@ -192,9 +192,9 @@ public class SignificantChangeProjectHelperTests
       SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
       response.LandTransaction = new SignificantChangeLandTransactionResponse
       {
-         LandTransactionConsent = SignificantChangeGenericYesNoNa.Yes,
+         LandTransactionConsent = YesNoNotApplicableAnswer.Yes,
          LandTransactionConsentAdditionalInfo = "Consent additional info",
-         LandTransactionApplication = SignificantChangeGenericYesNoNa.No,
+         LandTransactionApplication = YesNoNotApplicableAnswer.No,
          LandTransactionApplicationAdditionalInfo = "Application additional info",
          LandTransactionSupportingEvidence = "Supporting evidence link",
          Status = SignificantChangeTaskStatus.Completed
@@ -202,9 +202,9 @@ public class SignificantChangeProjectHelperTests
 
       var viewModel = SignificantChangeProjectHelper.Build(response);
 
-      Assert.Equal(SignificantChangeGenericYesNoNa.No, viewModel.LandTransactionApplication);
+      Assert.Equal(YesNoNotApplicableAnswer.No, viewModel.LandTransactionApplication);
       Assert.Equal("Application additional info", viewModel.LandTransactionApplicationAdditionalInfo);
-      Assert.Equal(SignificantChangeGenericYesNoNa.Yes, viewModel.LandTransactionConsent);
+      Assert.Equal(YesNoNotApplicableAnswer.Yes, viewModel.LandTransactionConsent);
       Assert.Equal("Consent additional info", viewModel.LandTransactionConsentAdditionalInfo);
       Assert.Equal("Supporting evidence link", viewModel.LandTransactionSupportingEvidence);
       Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.LandTransactionTaskStatus);
