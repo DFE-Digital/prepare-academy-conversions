@@ -87,17 +87,23 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
             "High Quality Trust Framework",
             "Recommendation on how to proceed");
 
-      var stakeholderConsultationLink = Document.QuerySelectorAll("a")
-         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Stakeholder consultation"));
+      var consultationLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Trim() == "Consultation");
 
-      stakeholderConsultationLink.Should().NotBeNull();
-      stakeholderConsultationLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/stakeholder-consultation");
+      consultationLink.Should().NotBeNull();
+      consultationLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/consultation");
+
+      var engagementLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Other stakeholder engagement"));
+
+      engagementLink.Should().NotBeNull();
+      engagementLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/other-stakeholder-engagement");
 
       var religiousBodyConsultationLink = Document.QuerySelectorAll("a")
-         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Religious body consultation"));
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Religious bodies"));
 
       religiousBodyConsultationLink.Should().NotBeNull();
-      religiousBodyConsultationLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/religious-body-consultation");
+      religiousBodyConsultationLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/religious-bodies");
 
       var planningPermissionLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Planning Permission"));
@@ -138,16 +144,19 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       Document.QuerySelectorAll("a").Any(a => a.TextContent != null && a.TextContent.Contains("Record rationale"))
          .Should().BeFalse();
 
-      var statusTag = Document.QuerySelector("#task-status-stakeholder-consultation");
-      statusTag.Should().NotBeNull();
-      statusTag.TextContent.Should().Contain("Not started");
-
       var equalityDutyStatusTag = Document.QuerySelector("#task-status-public-sector-equality-duty");
       equalityDutyStatusTag.Should().NotBeNull();
       equalityDutyStatusTag.TextContent.Should().Contain("Not started");
-      statusTag.TextContent.Should().Contain("Not started");
 
-      var religiousBodyStatusTag = Document.QuerySelector("#task-status-religious-body-consultation");
+      var consultationStatusTag = Document.QuerySelector("#task-status-consultation");
+      consultationStatusTag.Should().NotBeNull();
+      consultationStatusTag.TextContent.Should().Contain("Not started");
+
+      var engagementStatusTag = Document.QuerySelector("#task-status-other-stakeholder-engagement");
+      engagementStatusTag.Should().NotBeNull();
+      engagementStatusTag.TextContent.Should().Contain("Not started");
+
+      var religiousBodyStatusTag = Document.QuerySelector("#task-status-religious-bodies");
       religiousBodyStatusTag.Should().NotBeNull();
       religiousBodyStatusTag.TextContent.Should().Contain("Not started");
 
@@ -188,20 +197,20 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
    }
 
    [Fact]
-   public async Task Should_show_stakeholder_consultation_task_as_completed_when_status_is_completed()
+   public async Task Should_show_other_stakeholder_engagement_task_as_completed_when_status_is_completed()
    {
       SignificantChangeProjectResponse project = BuildProject(
          id: 104,
          status: "pre decision",
          assignedUser: null,
          route: "Route B",
-         stakeholderConsultationStatus: SignificantChangeTaskStatus.Completed);
+         otherStakeholderEngagementStatus: SignificantChangeTaskStatus.Completed);
 
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}");
 
-      var statusTag = Document.QuerySelector("#task-status-stakeholder-consultation");
+      var statusTag = Document.QuerySelector("#task-status-other-stakeholder-engagement");
       statusTag.Should().NotBeNull();
       statusTag.TextContent.Should().Contain("Completed");
    }
@@ -224,38 +233,12 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       statusTag.TextContent.Should().Contain("Completed");
    }
 
-      [Fact]
-   public async Task Should_render_consultation_duration_task_when_stakeholders_were_consulted()
-   {
-      SignificantChangeProjectResponse project = BuildProject(
-         id: 105,
-         status: "pre decision",
-         assignedUser: null,
-         trustConsultedStakeholders: true);
-
-      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
-
-      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}");
-
-      var consultationDurationLink = Document.QuerySelectorAll("a")
-         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Consultation duration"));
-
-      consultationDurationLink.Should().NotBeNull();
-      consultationDurationLink!.GetAttribute("href")
-         .Should().Contain($"/significant-change/task-list/{project.Id}/consultation-duration");
-
-      Document.QuerySelector("#task-status-consultation-duration")!.TextContent.Should().Contain("Not started");
-   }
-
    private static SignificantChangeProjectResponse BuildProject(
       int id,
       string status,
       User assignedUser,
       string route = "Route A",
-      SignificantChangeTaskStatus stakeholderConsultationStatus = SignificantChangeTaskStatus.NotStarted,
-      bool? trustConsultedStakeholders = null,
-      string trustConsultedStakeholdersNotConsultedReason = null,
-      SignificantChangeTaskStatus consultationDurationStatus = SignificantChangeTaskStatus.NotStarted,
+      SignificantChangeTaskStatus otherStakeholderEngagementStatus = SignificantChangeTaskStatus.NotStarted,
       SignificantChangeTaskStatus admissionsVariationRecommendationStatus = SignificantChangeTaskStatus.NotStarted)
    {
       return new SignificantChangeProjectResponse
@@ -272,11 +255,9 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
          ApplicationReference = "APP_REF_123",
          Status = status,
          LocalAuthorityName = "Test local authority",
-         StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse
+         OtherStakeholderEngagement = new SignificantChangeOtherStakeholderEngagementResponse
          {
-            Status = stakeholderConsultationStatus,
-            TrustConsultedStakeholders = trustConsultedStakeholders,
-            TrustConsultedStakeholdersNotConsultedReason = trustConsultedStakeholdersNotConsultedReason
+            Status = otherStakeholderEngagementStatus
          },
          ReligiousBodyConsultation = new SignificantChangeReligiousBodyConsultationResponse
          {
