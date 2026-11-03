@@ -143,7 +143,7 @@ public class UpdateSchoolBudgetInformationIntegrationTests : BaseIntegrationTest
 
       Document.Url.Should()
          .BeUrl(
-            $"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information#/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information?return=%2FTaskList%2FSchoolBudgetInformation/ConfirmSchoolBudgetInformation&fragment=financial-year");
+            $"task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information?return=%2FTaskList%2FSchoolBudgetInformation/ConfirmSchoolBudgetInformation&fragment=financial-year");
    }
 
    [Fact]

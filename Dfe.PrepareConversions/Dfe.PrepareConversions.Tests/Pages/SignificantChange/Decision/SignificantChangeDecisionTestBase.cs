@@ -16,7 +16,8 @@ public abstract class SignificantChangeDecisionTestBase : BaseIntegrationTests
       Wizard = new SignificantChangeDecisionWizard(Context);
    }
 
-   protected SignificantChangeProjectResponse AddProject(int id = ProjectId, SignificantChangeDecisions? decision = null)
+   protected SignificantChangeProjectResponse AddProject(int id = ProjectId, SignificantChangeDecisions? decision = null,
+      SignificantChangeTaskStatus taskStatus = SignificantChangeTaskStatus.Completed, bool assigned = true)
    {
       SignificantChangeProjectResponse project = new()
       {
@@ -26,13 +27,28 @@ public abstract class SignificantChangeDecisionTestBase : BaseIntegrationTests
          Tier = 1,
          TrustName = "Example Trust",
          TrustUkprn = "12345678",
-         AssignedUser = new User("user-id", "assigned.user@test.local", "Assigned User"),
+         AssignedUser = assigned ? new User("user-id", "assigned.user@test.local", "Assigned User") : null,
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
          Status = "pre decision",
          LocalAuthorityName = "Test local authority",
-         Decision = decision
+         Decision = decision,
+         ProjectDates = new() { Status = taskStatus },
+         AdmissionsVariation = new() { Status = taskStatus },
+         StakeholderConsultation = new() { Status = taskStatus },
+         ConsultationDuration = new() { Status = taskStatus },
+         AdmissionVariationConsultation = new() { Status = taskStatus },
+         StakeholderObjections = new() { Status = taskStatus },
+         ReligiousBodyConsultation = new() { Status = taskStatus },
+         OfstedInspection = new() { Status = taskStatus },
+         EqualitiesImpactAssessment = new() { Status = taskStatus },
+         PlanningPermission = new() { Status = taskStatus },
+         Funding = new() { Status = taskStatus },
+         FHARisksOrIssuesRaised = new() { Status = taskStatus },
+         HQTFConsideration = new() { Status = taskStatus },
+         Recommendation = new() { Status = taskStatus },
+         AdmissionsVariationRecommendation = new() { Status = taskStatus }
       };
 
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, id), project);

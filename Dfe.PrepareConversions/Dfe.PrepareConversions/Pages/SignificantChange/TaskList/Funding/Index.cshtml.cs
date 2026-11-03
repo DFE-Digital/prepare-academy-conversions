@@ -65,7 +65,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       await _repository.SetFunding(id, command);
 
-      return RedirectToTaskList(id);
+      return RedirectToTaskListOrReturnPage(id);
    }
 
    private void Validate()

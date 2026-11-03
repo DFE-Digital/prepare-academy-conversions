@@ -60,7 +60,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
         await _repository.SetStakeholderObjections(id, command);
 
-        return RedirectToTaskList(id);
+        return RedirectToTaskListOrReturnPage(id);
     }
 
     public void Validate()

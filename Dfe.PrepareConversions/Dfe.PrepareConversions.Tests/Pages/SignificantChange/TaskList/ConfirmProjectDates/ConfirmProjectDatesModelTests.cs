@@ -69,8 +69,10 @@ public class ConfirmProjectDatesModelTests
       result.Should().BeOfType<NotFoundResult>();
    }
 
-   [Fact]
-   public async Task OnPostAsync_WhenBothDatesAreProvided_ShouldSaveAndRedirect()
+   [Theory]
+   [InlineData(false)]
+   [InlineData(true)]
+   public async Task OnPostAsync_WhenBothDatesAreProvided_ShouldSaveAndRedirect(bool returnToDecision)
    {
       const int id = 403;
       var proposedDecisionDate = new DateTime(2024, 12, 15);
@@ -85,13 +87,19 @@ public class ConfirmProjectDatesModelTests
          .Returns(Task.CompletedTask);
 
       IndexModel sut = BuildModel(repository.Object);
+      if (returnToDecision)
+      {
+         sut.Request.QueryString = QueryString.Create("return", Links.SignificantChangeDecision.RecordDecision.Page);
+      }
       sut.ProposedDecisionDate = proposedDecisionDate;
       sut.ProposedChangeDate = proposedChangeDate;
 
       IActionResult result = await sut.OnPostAsync(id);
 
       RedirectToPageResult redirect = Assert.IsType<RedirectToPageResult>(result);
-      redirect.PageName.Should().Be(Links.SignificantChange.SignificantChangeTaskList.Page);
+      redirect.PageName.Should().Be(returnToDecision
+         ? Links.SignificantChangeDecision.RecordDecision.Page
+         : Links.SignificantChange.SignificantChangeTaskList.Page);
       redirect.RouteValues.Should().ContainKey("id").WhoseValue.Should().Be(id);
 
       repository.Verify(x => x.SetProjectDates(

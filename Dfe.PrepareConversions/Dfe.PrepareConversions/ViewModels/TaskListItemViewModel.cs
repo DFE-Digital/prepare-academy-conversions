@@ -12,12 +12,16 @@ public sealed class TaskListItemViewModel : IEquatable<TaskListItemViewModel>
       CssClass = cssClass;
    }
 
+   public static string NotStartedText = "Not started";
+   public static string InProgressText = "In progress";
+   public static string CompletedText = "Completed";
+
    public string Status { get; }
    public string CssClass { get; }
 
-   public static TaskListItemViewModel NotStarted => new("Not started", "govuk-tag--grey");
-   public static TaskListItemViewModel InProgress => new("In progress", "govuk-tag--blue");
-   public static TaskListItemViewModel Completed => new("Completed", "");
+   public static TaskListItemViewModel NotStarted => new(NotStartedText, "govuk-tag--grey");
+   public static TaskListItemViewModel InProgress => new(InProgressText, "govuk-tag--blue");
+   public static TaskListItemViewModel Completed => new(CompletedText, "");
 
    public bool Equals([AllowNull] TaskListItemViewModel other)
    {
