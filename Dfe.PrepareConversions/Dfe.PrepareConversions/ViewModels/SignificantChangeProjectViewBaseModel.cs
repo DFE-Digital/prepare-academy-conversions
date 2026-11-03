@@ -12,7 +12,7 @@ public class SignificantChangeProjectViewBaseModel
    public byte Tier { get; set; }
    public required string TrustName { get; set; }
    public required string TrustUkprn { get; set; }
-   public User? AssignedUser { get; set; }
+   public User AssignedUser { get; set; }
    public required string TypeOfSignificantChange { get; set; }
    public string LocalAuthorityName { get; set; } = string.Empty;
    public string RegionName { get; set; } = string.Empty;
