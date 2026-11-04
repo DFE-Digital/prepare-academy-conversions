@@ -138,12 +138,25 @@ public class UpdateSchoolBudgetInformationIntegrationTests : BaseIntegrationTest
       Document.QuerySelector<IHtmlInputElement>("#next-financial-year-day")!.Value = request.EndOfNextFinancialYear?.Day.ToString()!;
       Document.QuerySelector<IHtmlInputElement>("#next-financial-year-month")!.Value = request.EndOfNextFinancialYear?.Month.ToString()!;
       Document.QuerySelector<IHtmlInputElement>("#next-financial-year-year")!.Value = request.EndOfNextFinancialYear?.Year.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#finance-year-current")!.Value = "100.00";
+      Document.QuerySelector<IHtmlInputElement>("#finance-current-capital")!.Value = "200.00";
+      Document.QuerySelector<IHtmlInputElement>("#finance-year-following")!.Value = "300.00";
+      Document.QuerySelector<IHtmlInputElement>("#finance-projected-capital")!.Value = "400.00";
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
       await NavigateAsync("The next financial year cannot be before or within a year of the current financial year");
 
       Document.Url.Should()
-         .BeUrl(
-            $"task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information?return=%2FTaskList%2FSchoolBudgetInformation/ConfirmSchoolBudgetInformation&fragment=financial-year");
+         .BeUrl($"task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information#financial-year");
+      Document.QuerySelector<IHtmlInputElement>("#financial-year-day")!.Value.Should().Be("2");
+      Document.QuerySelector<IHtmlInputElement>("#financial-year-month")!.Value.Should().Be("12");
+      Document.QuerySelector<IHtmlInputElement>("#financial-year-year")!.Value.Should().Be("2023");
+      Document.QuerySelector<IHtmlInputElement>("#next-financial-year-day")!.Value.Should().Be("2");
+      Document.QuerySelector<IHtmlInputElement>("#next-financial-year-month")!.Value.Should().Be("12");
+      Document.QuerySelector<IHtmlInputElement>("#next-financial-year-year")!.Value.Should().Be("2022");
+      Document.QuerySelector<IHtmlInputElement>("#finance-year-current")!.Value.Should().Be("100.00");
+      Document.QuerySelector<IHtmlInputElement>("#finance-current-capital")!.Value.Should().Be("200.00");
+      Document.QuerySelector<IHtmlInputElement>("#finance-year-following")!.Value.Should().Be("300.00");
+      Document.QuerySelector<IHtmlInputElement>("#finance-projected-capital")!.Value.Should().Be("400.00");
    }
 
    [Fact]
