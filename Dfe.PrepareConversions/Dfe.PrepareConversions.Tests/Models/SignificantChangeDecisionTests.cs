@@ -1,4 +1,3 @@
-using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using FluentAssertions;
 using Xunit;
@@ -24,47 +23,42 @@ public class SignificantChangeDecisionTests
    }
 
    [Fact]
-   public void Switching_from_declined_to_deferred_clears_the_declined_reasons()
+   public void Switching_from_declined_to_approved_clears_the_declined_reason()
    {
       SignificantChangeDecision decision = new() { Decision = SignificantChangeDecisions.Declined };
-      decision.DeclinedReasons.Add(
-         new SignificantChangeDeclinedReasonDetails(SignificantChangeDeclinedReason.Finance, "Cost"));
+      decision.DeclinedReason = "Cost";
 
-      decision.Decision = SignificantChangeDecisions.Deferred;
+      decision.Decision = SignificantChangeDecisions.Approved;
 
-      decision.DeclinedReasons.Should().BeEmpty("the API rejects reasons that do not match the decision");
+      decision.DeclinedReason.Should().BeNullOrEmpty();
    }
 
    [Fact]
-   public void Switching_to_withdrawn_clears_deferred_reasons()
+   public void Switching_to_withdrawn_clears_declined_reasons()
    {
-      SignificantChangeDecision decision = new() { Decision = SignificantChangeDecisions.Deferred };
-      decision.DeferredReasons.Add(
-         new AdvisoryBoardDeferredReasonDetails(AdvisoryBoardDeferredReason.Other, "Waiting"));
+      SignificantChangeDecision decision = new() { Decision = SignificantChangeDecisions.Declined };
+      decision.DeclinedReason = "Waiting";
 
       decision.Decision = SignificantChangeDecisions.Withdrawn;
 
-      decision.DeferredReasons.Should().BeEmpty();
+      decision.DeclinedReason.Should().BeNullOrEmpty();
    }
 
    [Fact]
    public void Reassigning_the_same_decision_keeps_the_answers()
    {
       SignificantChangeDecision decision = new() { Decision = SignificantChangeDecisions.Declined };
-      decision.DeclinedReasons.Add(
-         new SignificantChangeDeclinedReasonDetails(SignificantChangeDeclinedReason.Finance, "Cost"));
+      decision.DeclinedReason = "Cost";
 
       decision.Decision = SignificantChangeDecisions.Declined;
 
-      decision.DeclinedReasons.Should().HaveCount(1);
+      decision.DeclinedReason.Should().Be("Cost");
    }
 
    [Theory]
    [InlineData(SignificantChangeDecisions.Approved, null, "Approved")]
    [InlineData(SignificantChangeDecisions.Approved, true, "Approved with conditions")]
    [InlineData(SignificantChangeDecisions.Declined, null, "Declined")]
-   [InlineData(SignificantChangeDecisions.Deferred, null, "Deferred")]
-   [InlineData(SignificantChangeDecisions.Withdrawn, null, "Withdrawn")]
    public void GetDecisionAsFriendlyName_returns_the_display_name(
       SignificantChangeDecisions decision, bool? conditionsSet, string expected)
    {

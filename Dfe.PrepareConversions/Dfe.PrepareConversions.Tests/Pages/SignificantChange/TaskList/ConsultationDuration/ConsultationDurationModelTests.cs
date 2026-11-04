@@ -156,7 +156,7 @@ public class ConsultationDurationModelTests
       };
    }
 
-   private static SignificantChangeProjectResponse BuildProject(int id, bool? trustConsultedStakeholders = true)
+   private static SignificantChangeProjectResponse BuildProject(int id)
    {
       return new SignificantChangeProjectResponse
       {
@@ -171,10 +171,6 @@ public class ConsultationDurationModelTests
          ApplicationReference = "APP_REF_123",
          Status = "pre decision",
          LocalAuthorityName = "Test local authority",
-         StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse
-         {
-            TrustConsultedStakeholders = trustConsultedStakeholders
-         },
          ConsultationDuration = new SignificantChangeConsultationDurationResponse()
       };
    }

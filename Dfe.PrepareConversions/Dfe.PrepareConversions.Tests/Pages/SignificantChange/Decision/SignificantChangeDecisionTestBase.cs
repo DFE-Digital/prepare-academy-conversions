@@ -16,7 +16,7 @@ public abstract class SignificantChangeDecisionTestBase : BaseIntegrationTests
       Wizard = new SignificantChangeDecisionWizard(Context);
    }
 
-   protected SignificantChangeProjectResponse AddProject(int id = ProjectId)
+   protected SignificantChangeProjectResponse AddProject(int id = ProjectId, SignificantChangeDecisions? decision = null)
    {
       SignificantChangeProjectResponse project = new()
       {
@@ -31,10 +31,16 @@ public abstract class SignificantChangeDecisionTestBase : BaseIntegrationTests
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
          Status = "pre decision",
-         LocalAuthorityName = "Test local authority"
+         LocalAuthorityName = "Test local authority",
+         Decision = decision
       };
 
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, id), project);
+
+      if (decision.HasValue)
+      {
+         _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeDecision, id), new SignificantChangeDecision { Decision = decision.Value });
+      }
 
       return project;
    }

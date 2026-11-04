@@ -1,0 +1,17 @@
+@page "/significant-change/task-list/{id:int}/ofsted"
+@model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.Ofsted.IndexModel
+@{
+   Layout = "_SignificantChangeTaskLayout";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Links.SignificantChange.SignificantChangeTaskList.Page" asp-route-id="@Model.Project.Id"
+      class="govuk-back-link">Back</a>
+}
+
+<govuk-date-input heading-label="false"
+                  label="Date of most recent Ofsted inspection"
+                  name="inspection-date"
+                  asp-for="InspectionDate"
+                  hint="For example, 15 9 2026" />

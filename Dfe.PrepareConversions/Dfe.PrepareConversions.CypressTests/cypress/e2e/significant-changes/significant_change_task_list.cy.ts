@@ -40,7 +40,7 @@ describe('Significant change task list', () => {
                     cy.contains('a', 'Confirm project dates').should('be.visible');
                     cy.contains('a', 'Public Sector Equality Duty').should('be.visible');
                     cy.contains('a', 'Local authority objections').should('be.visible');
-                    cy.contains('a', 'Religious body consultation').should('be.visible');
+                    cy.contains('a', 'Religious bodies').should('be.visible');
                 } else {
                     cy.contains('There are no matching results.').should('be.visible');
                 }

@@ -1,0 +1,48 @@
+@page "/significant-change/task-list/{id:int}/ofsted-inspection-question"
+@model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.Ofsted.InspectionQuestionModel
+@{
+   Layout = "_SignificantChangeTaskLayout";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Links.SignificantChange.OfstedInspection.Page" asp-route-id="@Model.Project.Id"
+      class="govuk-back-link">Back</a>
+}
+
+<div class="govuk-form-group">
+   <fieldset class="govuk-fieldset">
+      <div class="govuk-hint">
+         The most recent Ofsted inspection was @Model.DateOfInspection!.Value.ToString("dd MMMM yyyy")
+      </div>
+      <inline-error for="@nameof(Model.MeetsOfstedStandards)" />
+
+      <div class="govuk-radios" data-module="govuk-radios">
+         <div class="govuk-radios__item">
+            <input asp-for="MeetsOfstedStandards" class="govuk-radios__input"
+                   id="ofsted-yes" type="radio" value="true" />
+            <label class="govuk-label govuk-radios__label" for="ofsted-yes">Yes</label>
+         </div>
+         <div class="govuk-radios__item">
+            <input asp-for="MeetsOfstedStandards" class="govuk-radios__input"
+                   id="ofsted-no" type="radio" value="false"
+                   aria-controls="conditional-ofsted-no" />
+            <label class="govuk-label govuk-radios__label" for="ofsted-no">No</label>
+         </div>
+         <div class="govuk-radios__conditional" id="conditional-ofsted-no">
+            <div class="govuk-form-group">
+               <label class="govuk-label" for="AdditionalInformation">Use this area for additional information relating to mitigations, actions and further investigations.</label>
+               <textarea asp-for="AdditionalInformation" class="govuk-textarea" rows="5"></textarea>
+            </div>
+         </div>
+      </div>
+   </fieldset>
+</div>
+
+<div class="govuk-form-group">
+    <label class="govuk-label govuk-label--m" for="SupportingEvidence">
+        Supporting Evidence
+    </label>
+    <input asp-for="@Model.SupportingEvidence" class="govuk-input" type="text"
+           data-test="ofsted-supporting-evidence" />
+</div>

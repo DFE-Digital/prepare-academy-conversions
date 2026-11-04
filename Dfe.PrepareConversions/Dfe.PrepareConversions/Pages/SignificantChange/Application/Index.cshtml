@@ -1,0 +1,26 @@
+@page "/significant-change/application/{id:int}"
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+    
+@model Dfe.PrepareConversions.Pages.SignificantChange.Application.IndexModel
+@{
+    ViewData["Title"] = "Significant Change Project Application";
+}
+
+@section BeforeMain
+{
+}
+
+<div data="application-form-page">
+    <partial name="Shared/SignificantChangeProjects/_ProjectHeader" model="Model.Project" />
+
+    <h2 class="govuk-heading-l">Significant Change Application</h2>
+
+    <p class="govuk-body">This is the holding page for the significant change application. The page will be implemented later under a different ticket</p>
+
+    <ul class="govuk-list">
+        <li><b>Application ID:</b> @Model.Project.Id</li>
+        <li><b>School Name:</b> @Model.Project.SchoolName</li>
+        <li><b>Urn:</b> @Model.Project.Urn</li>
+    </ul>
+</div>

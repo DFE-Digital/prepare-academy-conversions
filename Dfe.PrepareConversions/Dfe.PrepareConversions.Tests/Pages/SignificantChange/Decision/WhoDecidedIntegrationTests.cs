@@ -1,4 +1,3 @@
-using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using FluentAssertions;
 using System.Threading.Tasks;
@@ -22,20 +21,9 @@ public class WhoDecidedIntegrationTests(IntegrationTestingWebApplicationFactory 
    {
       await StartAtWhoDecided();
 
-      await Wizard.SetDecisionByAndContinue(DecisionMadeBy.RegionalDirectorForRegion);
+      await Wizard.SetDecisionByAndContinue(DecisionMadeBy.RegionalDirector);
 
       Document.Url.Should().Be(BuildRequestAddress(PathTo("decision-maker")));
-   }
-
-   [Fact]
-   public async Task Should_skip_the_name_step_when_nobody_made_the_decision()
-   {
-      await StartAtWhoDecided();
-
-      await Wizard.SetDecisionByAndContinue(DecisionMadeBy.None);
-
-      Document.Url.Should().Be(BuildRequestAddress(PathTo("decision-date")),
-         "the API only requires a decision maker's name when DecisionMadeBy is not None");
    }
 
    [Fact]
@@ -51,7 +39,6 @@ public class WhoDecidedIntegrationTests(IntegrationTestingWebApplicationFactory 
 
    [Theory]
    [InlineData(SignificantChangeDecisions.Declined, "declined-reason")]
-   [InlineData(SignificantChangeDecisions.Deferred, "why-deferred")]
    [InlineData(SignificantChangeDecisions.Withdrawn, "why-withdrawn")]
    public async Task Should_link_back_to_the_branch_page_it_came_from(
       SignificantChangeDecisions decision, string expectedBackStep)

@@ -45,7 +45,14 @@ public static class SignificantChangeTaskListBuilder
          "admissions-variation",
          "Admissions variation",
          displayOrder,
-         []
+         [
+            new SignificantChangeTaskDefinition(
+               "admissions-variation-details",
+               "Admissions variation details",
+               1,
+               Links.SignificantChange.AdmissionsVariationDetails,
+               project => GetTaskStatus(project.AdmissionsVariationStatus))
+         ]
       );
    }
 
@@ -57,35 +64,21 @@ public static class SignificantChangeTaskListBuilder
          displayOrder,
          [
             new SignificantChangeTaskDefinition(
-               "stakeholder-consultation",
-               "Stakeholder consultation",
+               "consultation",
+               "Consultation",
                1,
-               Links.SignificantChange.StakeholderConsultation,
-               project => GetTaskStatus(project.StakeholderConsultationStatus)),
-            new SignificantChangeTaskDefinition(
-               "consultation-duration",
-               "Consultation duration",
-               2,
                Links.SignificantChange.ConsultationDuration,
                project => GetTaskStatus(project.ConsultationDurationStatus)),
             new SignificantChangeTaskDefinition(
-               "admission-variation-consultation",
-               "Admission variation consultation",
-               3,
-               Links.SignificantChange.AdmissionVariationConsultation,
-               project => GetTaskStatus(project.AdmissionVariationStatus)),
-
-            new SignificantChangeTaskDefinition(
-               "stakeholder-objections",
-               "Stakeholder objections",
+               "other-stakeholder-engagement",
+               "Other stakeholder engagement",
                4,
-               Links.SignificantChange.StakeholderObjections,
-               project => GetTaskStatus(project.StakeholderObjectionsStatus)),
-
+               Links.SignificantChange.OtherStakeholderEngagement,
+               project => GetTaskStatus(project.OtherStakeholderEngagementStatus)),
             new SignificantChangeTaskDefinition(
-               "religious-body-consultation",
-               "Religious body consultation",
-               5,
+               "religious-bodies",
+               "Religious bodies",
+               3,
                Links.SignificantChange.ReligiousBodyConsultation,
                project => GetTaskStatus(project.ReligiousBodyConsultationStatus))
          ]
@@ -98,7 +91,14 @@ public static class SignificantChangeTaskListBuilder
          "academy-performance",
          "Academy performance",
          displayOrder,
-         []
+         [
+            new SignificantChangeTaskDefinition(
+               "ofsted",
+               "Ofsted",
+               1,
+               Links.SignificantChange.OfstedInspection,
+               project => GetTaskStatus(project.OfstedInspectionStatus))
+         ]
       );
    }
 
@@ -155,7 +155,13 @@ public static class SignificantChangeTaskListBuilder
                "Funding",
                1,
                Links.SignificantChange.Funding,
-               project => GetTaskStatus(project.FundingStatus))
+               project => GetTaskStatus(project.FundingStatus)),
+            new SignificantChangeTaskDefinition(
+               "fha-risks-or-issues-raised",
+               "Financial Health Assessment (FHA) outcomes",
+               2,
+               Links.SignificantChange.FhaRisksOrIssuesRaised,
+               project => GetTaskStatus(project.FHARisksOrIssuesRaisedStatus))
          ]
       );
    }
@@ -166,7 +172,14 @@ public static class SignificantChangeTaskListBuilder
          "high-quality-trust-framework",
          "High Quality Trust Framework",
          displayOrder,
-         []
+         [
+            new SignificantChangeTaskDefinition(
+               "hqtf-consideration",
+               "High Quality Trust Framework (HQTF) consideration",
+               1,
+               Links.SignificantChange.HqtfConsideration,
+               project => GetTaskStatus(project.HQTFConsiderationStatus))
+         ]
       );
    }
 
@@ -176,7 +189,20 @@ public static class SignificantChangeTaskListBuilder
          "recommendation-on-how-to-proceed",
          "Recommendation on how to proceed",
          displayOrder,
-         []
+         [
+            new SignificantChangeTaskDefinition(
+               "significant-change-recommendation",
+               "Significant change recommendation",
+               1,
+               Links.SignificantChange.SignificantChangeRecommendation,
+               project => GetTaskStatus(project.RecommendationStatus)),
+            new SignificantChangeTaskDefinition(
+               "admissions-variation-recommendation",
+               "Admission Variation recommendation",
+               2,
+               Links.SignificantChange.AdmissionsVariationRecommendation,
+               project => GetTaskStatus(project.AdmissionsVariationRecommendationStatus))
+         ]
       );
    }
 

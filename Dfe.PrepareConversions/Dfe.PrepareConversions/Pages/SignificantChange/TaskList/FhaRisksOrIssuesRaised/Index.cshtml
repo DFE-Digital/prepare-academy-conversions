@@ -1,0 +1,61 @@
+@page "/significant-change/task-list/{id:int}/fha-risks-or-issues-raised"
+@model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.FhaRisksOrIssuesRaised.IndexModel
+@{
+   Layout = "_SignificantChangeTaskLayout";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Links.SignificantChange.SignificantChangeTaskList.Page" asp-route-id="@Model.Project.Id"
+      class="govuk-back-link">Back</a>
+}
+
+<div class="govuk-form-group">
+   <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            Have there been any risks or issues raised in the FHA?
+      </legend>
+      <inline-error for="@nameof(Model.FhaRisksOrIssuesRaised)" />
+
+      <div class="govuk-radios" data-module="govuk-radios">
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.FhaRisksOrIssuesRaised" class="govuk-radios__input"
+                   id="fha-risks-or-issues-raised-yes" type="radio" value="true"
+                   aria-controls="conditional-fha-risks-or-issues-raised-yes"
+                   data-test="fha-risks-or-issues-raised-yes" />
+            <label class="govuk-label govuk-radios__label" for="fha-risks-or-issues-raised-yes">
+               Yes
+            </label>
+         </div>
+
+         <div class="govuk-radios__conditional" id="conditional-fha-risks-or-issues-raised-yes">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+               <label class="govuk-label" for="AdditionalInformation">
+                  Use this area for additional information relating to the risks or issues raised.
+               </label>
+               <inline-error for="@nameof(Model.AdditionalInformation)" />
+               <textarea asp-for="@Model.AdditionalInformation"
+                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.AdditionalInformation))"
+                         rows="5" data-test="fha-risks-or-issues-raised-additional-information"></textarea>
+            </div>
+         </div>
+
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.FhaRisksOrIssuesRaised" class="govuk-radios__input"
+                   id="fha-risks-or-issues-raised-no" type="radio" value="false"
+                   data-test="fha-risks-or-issues-raised-no" />
+            <label class="govuk-label govuk-radios__label" for="fha-risks-or-issues-raised-no">
+               No
+            </label>
+         </div>
+      </div>
+   </fieldset>
+</div>
+
+<div class="govuk-form-group">
+   <label class="govuk-label govuk-label--m" for="SupportingEvidence">
+      Supporting evidence
+   </label>
+   <input asp-for="@Model.SupportingEvidence" class="govuk-input" type="text"
+          data-test="fha-risks-or-issues-raised-supporting-evidence" />
+</div>

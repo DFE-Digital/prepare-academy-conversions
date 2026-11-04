@@ -52,6 +52,12 @@ public abstract class SignificantChangeDecisionBaseModel(ISignificantChangeProje
          Id = id;
          Project = SignificantChangeProjectListHelper.Build(result.Body);
          SchoolName = Project.SchoolName;
+
+          if (result.Body.Decision == SignificantChangeDecisions.Approved)
+          {
+             context.Result = RedirectToPage(Links.SignificantChange.SignificantChangeTaskList.Page, new { id });
+             return;
+          }
       }
 
       await next();

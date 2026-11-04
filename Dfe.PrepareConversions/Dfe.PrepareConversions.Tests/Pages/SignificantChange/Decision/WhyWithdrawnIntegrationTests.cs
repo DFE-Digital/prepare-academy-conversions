@@ -18,24 +18,11 @@ public class WhyWithdrawnIntegrationTests(IntegrationTestingWebApplicationFactor
    }
 
    [Fact]
-   public async Task Should_offer_the_four_withdrawn_reasons()
-   {
-      await StartWithdrawnJourney();
-
-      Document.QuerySelectorAll("#WasReasonGiven input[type=checkbox]")
-         .Select(c => c.Id)
-         .Should().BeEquivalentTo(
-            "additionalinformationneeded-checkbox", "awaitingnextofstedreport-checkbox",
-            "performanceconcerns-checkbox", "other-checkbox");
-   }
-
-   [Fact]
    public async Task Should_continue_to_who_decided_when_a_reason_is_given()
    {
       await StartWithdrawnJourney();
 
-      await Wizard.SetWithdrawnReasonsAndContinue(
-         (AdvisoryBoardWithdrawnReason.AdditionalInformationNeeded, "Need finance pack"));
+      await Wizard.SetWithdrawnReasonAndContinue("Need finance pack");
 
       Document.Url.Should().Be(BuildRequestAddress(PathTo("who-decided")));
    }
@@ -47,6 +34,6 @@ public class WhyWithdrawnIntegrationTests(IntegrationTestingWebApplicationFactor
 
       await Wizard.ClickSubmitButton();
 
-      Document.QuerySelector("[data-cy='error-summary']")?.TextContent.Should().Contain("Select at least one reason");
+      Document.QuerySelector("[data-cy='error-summary']")?.TextContent.Should().Contain("Enter details");
    }
 }
