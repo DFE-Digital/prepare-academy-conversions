@@ -302,7 +302,7 @@ public class SignificantChangeProjectHelperTests
          }
       };
 
-      var viewModel = SignificantChangeProjectListHelper.Build(response);
+      var viewModel = SignificantChangeProjectHelper.Build(response);
 
       Assert.True(viewModel.LocalAuthorityRaisedObjections);
       Assert.Equal("Objections raised during planning consultation", viewModel.LocalAuthorityObjectionsFurtherInformation);
