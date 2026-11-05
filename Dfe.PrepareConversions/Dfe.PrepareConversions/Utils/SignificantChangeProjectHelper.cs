@@ -92,7 +92,11 @@ public static class SignificantChangeProjectHelper
          MeetsOfstedStandards = significantChangeProject.OfstedInspection?.MeetsOfstedStandards,
          OfstedInspectionStatus = significantChangeProject.OfstedInspection?.Status ?? SignificantChangeTaskStatus.NotStarted,
          OfstedInspectionAdditionalInformation = significantChangeProject.OfstedInspection?.AdditionalInformation ?? string.Empty,
-         OfstedSuportingEvidence = significantChangeProject.OfstedInspection?.SupportingEvidence ?? string.Empty
+         OfstedSuportingEvidence = significantChangeProject.OfstedInspection?.SupportingEvidence ?? string.Empty,
+         LocalAuthorityObjectionsStatus = significantChangeProject.LocalAuthorityObjections?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         LocalAuthorityRaisedObjections = significantChangeProject.LocalAuthorityObjections?.LocalAuthorityRaisedObjections,
+         LocalAuthorityObjectionsFurtherInformation = significantChangeProject.LocalAuthorityObjections?.LocalAuthorityObjectionsFurtherInformation ?? string.Empty,
+         LocalAuthorityObjectionsSupportingEvidenceLink = significantChangeProject.LocalAuthorityObjections?.SupportingEvidenceLink ?? string.Empty,
       };
    }
 }

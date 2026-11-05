@@ -110,6 +110,11 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
 
       planningPermissionLink.Should().NotBeNull();
       planningPermissionLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/planning-permission");
+      var confirmProjectDatesLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Confirm project dates"));
+
+      confirmProjectDatesLink.Should().NotBeNull();
+      confirmProjectDatesLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/confirm-project-dates");
 
       var ofstedLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Trim() == "Ofsted");
@@ -123,12 +128,12 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
 
       publicSectorEqualityDutyLink.Should().NotBeNull();
       publicSectorEqualityDutyLink!.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/public-sector-equality-duty");
-      
-      var confirmProjectDatesLink = Document.QuerySelectorAll("a")
-         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Confirm project dates"));
 
-      confirmProjectDatesLink.Should().NotBeNull();
-      confirmProjectDatesLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/confirm-project-dates");
+      var localAuthorityObjectionsLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Local authority objections"));
+
+      localAuthorityObjectionsLink.Should().NotBeNull();
+      localAuthorityObjectionsLink!.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/local-authority-objections");
 
       var admissionsVariationLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Admissions variation details"));
@@ -170,6 +175,10 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       var fundingStatusTag = Document.QuerySelector("#task-status-funding");
       fundingStatusTag.Should().NotBeNull();
       fundingStatusTag.TextContent.Should().Contain("Not started");
+
+      var localAuthorityObjectionsStatusTag = Document.QuerySelector("#task-status-local-authority-objections");
+      localAuthorityObjectionsStatusTag.Should().NotBeNull();
+      localAuthorityObjectionsStatusTag.TextContent.Should().Contain("Not started");
 
       var landTransactionStatusTag = Document.QuerySelector("#task-status-land-transaction-application");
       landTransactionStatusTag.Should().NotBeNull();
@@ -270,6 +279,14 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
             Status = otherStakeholderEngagementStatus
          },
          ReligiousBodyConsultation = new SignificantChangeReligiousBodyConsultationResponse
+         {
+            Status = SignificantChangeTaskStatus.NotStarted
+         },
+         ConsultationDuration = new SignificantChangeConsultationDurationResponse
+         {
+            Status = SignificantChangeTaskStatus.NotStarted
+         },
+         LocalAuthorityObjections = new SignificantChangeLocalAuthorityObjectionsResponse
          {
             Status = SignificantChangeTaskStatus.NotStarted
          },

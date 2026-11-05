@@ -70,6 +70,12 @@ public static class SignificantChangeTaskListBuilder
                Links.SignificantChange.ConsultationDuration,
                project => GetTaskStatus(project.ConsultationDurationStatus)),
             new SignificantChangeTaskDefinition(
+               "local-authority-objections",
+               "Local authority objections",
+               2,
+               Links.SignificantChange.LocalAuthorityObjections,
+               project => GetTaskStatus(project.LocalAuthorityObjectionsStatus)),
+            new SignificantChangeTaskDefinition(
                "other-stakeholder-engagement",
                "Other stakeholder engagement",
                4,
