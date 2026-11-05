@@ -10,6 +10,7 @@ public class SignificantChangeProjectResponse : SignificantChangeProjectSearchRe
    public SignificantChangeReligiousBodyConsultationResponse ReligiousBodyConsultation { get; set; } = new();
    public SignificantChangeLocalAuthorityObjectionsResponse LocalAuthorityObjections { get; set; } = new();
    public SignificantChangeProjectDatesResponse ProjectDates { get; set; } = new();
+   public SignificantChangeLandTransactionResponse LandTransaction { get; set; } = new();
    public SignificantChangeAdmissionsVariationResponse AdmissionsVariation { get; set; } = new();
    public SignificantChangeFundingResponse Funding { get; set; } = new();
    public SignificantChangePlanningPermissionResponse PlanningPermission { get; set; } = new();

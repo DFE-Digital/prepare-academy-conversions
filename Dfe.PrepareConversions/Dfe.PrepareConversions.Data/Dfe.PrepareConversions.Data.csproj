@@ -3,7 +3,8 @@
 	<PropertyGroup>
 		<TargetFramework>net10.0</TargetFramework>
 		<CodeAnalysisRuleSet>..\.sonarlint\dfe-digital_a2b-internalcsharp.ruleset</CodeAnalysisRuleSet>
-	</PropertyGroup>
+	  <UserSecretsId>f99c243b-a803-4d05-9c04-057d3128060f</UserSecretsId>
+  </PropertyGroup>
 
 	<ItemGroup>
 	  <AdditionalFiles Include="..\.sonarlint\dfe-digital_a2b-internal\CSharp\SonarLint.xml" Link="SonarLint.xml" />
@@ -17,7 +18,7 @@
 	  <PackageReference Include="Azure.Identity" Version="1.13.2" />
 	  <PackageReference Include="Dfe.Academisation.CorrelationIdMiddleware" Version="2.0.2" />
 	  <PackageReference Include="Dfe.Academisation.ExtensionMethods" Version="2.0.0" />
-	  <PackageReference Include="GovUk.DfE.CoreLibs.Contracts" Version="1.0.53" />
+	  <PackageReference Include="GovUk.DfE.CoreLibs.Contracts" Version="1.0.112" />
 	  <PackageReference Include="GovUK.Dfe.PersonsApi.Client" Version="0.1.3" />
 	  <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.7" />
 	  <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.7" />

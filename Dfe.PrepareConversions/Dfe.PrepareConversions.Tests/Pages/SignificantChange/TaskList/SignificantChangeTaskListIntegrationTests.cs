@@ -144,6 +144,12 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       Document.QuerySelector("#task-status-admissions-variation-details")?.TextContent
          .Should().Contain("Not started");
 
+      var landTransactionLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Land Transaction Application"));
+
+      landTransactionLink.Should().NotBeNull();
+      landTransactionLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/land-transaction");
+
       Document.QuerySelectorAll("a").Any(a => a.TextContent != null && a.TextContent.Contains("Gather trust feedback"))
          .Should().BeFalse();
 
@@ -174,6 +180,10 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       localAuthorityObjectionsStatusTag.Should().NotBeNull();
       localAuthorityObjectionsStatusTag.TextContent.Should().Contain("Not started");
 
+      var landTransactionStatusTag = Document.QuerySelector("#task-status-land-transaction-application");
+      landTransactionStatusTag.Should().NotBeNull();
+      landTransactionStatusTag.TextContent.Should().Contain("Not started");
+
       var fhaRisksOrIssuesRaisedLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Financial Health Assessment (FHA) outcomes"));
 
@@ -194,7 +204,6 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       var recommendationStatusTag = Document.QuerySelector("#task-status-significant-change-recommendation");
       recommendationStatusTag.Should().NotBeNull();
       recommendationStatusTag.TextContent.Should().Contain("Not started");
-
       var hqtfConsiderationLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("High Quality Trust Framework (HQTF) consideration"));
 
