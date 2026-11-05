@@ -67,7 +67,7 @@ describe('Significant change - planning permission', () => {
                 .verifyPageLoaded()
                 .selectNo()
                 .enterAdditionalInformation('Planning permission is awaiting local authority approval')
-                .enterSupportingEvidence('Planning application reference 67890')
+                .enterSupportingEvidence('https://educationgovuk.sharepoint.com/sites/planning/application/67890')
                 .save();
 
             cy.url().should('match', TASK_LIST_URL);
@@ -81,7 +81,7 @@ describe('Significant change - planning permission', () => {
             significantChangePlanningPermission
                 .verifyPageLoaded()
                 .selectNotApplicable()
-                .enterSupportingEvidence('Planning permission is not required')
+                .enterSupportingEvidence('https://educationgovuk.sharepoint.com/sites/planning/not-required')
                 .save();
 
             cy.url().should('match', TASK_LIST_URL);

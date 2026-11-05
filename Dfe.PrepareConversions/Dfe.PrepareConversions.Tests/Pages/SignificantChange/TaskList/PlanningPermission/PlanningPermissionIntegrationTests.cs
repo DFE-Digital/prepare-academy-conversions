@@ -18,7 +18,7 @@ public class PlanningPermissionIntegrationTests(IntegrationTestingWebApplication
       SignificantChangeProjectResponse project = BuildProject(id: 801);
       project.PlanningPermission.PlanningPermissionAnswer = PlanningPermissionAnswer.No;
       project.PlanningPermission.AdditionalInformation = "Planning permission decision is pending";
-      project.PlanningPermission.SupportingEvidence = "Planning reference 12345";
+      project.PlanningPermission.SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/planning/reference/12345";
 
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
@@ -29,7 +29,7 @@ public class PlanningPermissionIntegrationTests(IntegrationTestingWebApplication
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='planning-permission-additional-information']")!.Value
          .Should().Be("Planning permission decision is pending");
       Document.QuerySelector<IHtmlInputElement>("[data-test='planning-permission-supporting-evidence']")!.Value
-         .Should().Be("Planning reference 12345");
+         .Should().Be("https://educationgovuk.sharepoint.com/sites/planning/reference/12345");
    }
 
    [Fact]
@@ -39,7 +39,7 @@ public class PlanningPermissionIntegrationTests(IntegrationTestingWebApplication
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
       const string additionalInformation = "Planning permission is awaiting local authority approval";
-      const string supportingEvidence = "Planning application 67890";
+      const string supportingEvidence = "https://educationgovuk.sharepoint.com/sites/planning/application/67890";
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangePlanningPermission, project.Id),
          new SetSignificantChangePlanningPermissionCommand(PlanningPermissionAnswer.No, additionalInformation, supportingEvidence),
@@ -63,14 +63,18 @@ public class PlanningPermissionIntegrationTests(IntegrationTestingWebApplication
 
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangePlanningPermission, project.Id),
-         new SetSignificantChangePlanningPermissionCommand(PlanningPermissionAnswer.NotApplicable, null, "No planning requirement evidence"),
+         new SetSignificantChangePlanningPermissionCommand(
+            PlanningPermissionAnswer.NotApplicable,
+            null,
+            "https://educationgovuk.sharepoint.com/sites/planning/not-required"),
          new object());
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/planning-permission");
 
       Document.QuerySelector<IHtmlInputElement>("#planning-permission-not-applicable")!.IsChecked = true;
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='planning-permission-additional-information']")!.Value = "This should be cleared";
-      Document.QuerySelector<IHtmlInputElement>("[data-test='planning-permission-supporting-evidence']")!.Value = "No planning requirement evidence";
+      Document.QuerySelector<IHtmlInputElement>("[data-test='planning-permission-supporting-evidence']")!.Value =
+         "https://educationgovuk.sharepoint.com/sites/planning/not-required";
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}");
