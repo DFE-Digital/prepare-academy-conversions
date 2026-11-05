@@ -28,8 +28,10 @@ public class AdmissionsVariationDetailsIntegrationTests(IntegrationTestingWebApp
          .Value.Should().Be("Admissions policy");
    }
 
-   [Fact]
-   public async Task Should_save_no_and_supporting_evidence_without_opening_the_second_page()
+   [Theory]
+   [InlineData(false)]
+   [InlineData(true)]
+   public async Task Should_save_no_and_supporting_evidence_without_opening_the_second_page(bool returnToDecision)
    {
       SignificantChangeProjectResponse project = BuildProject(702);
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
@@ -38,12 +40,15 @@ public class AdmissionsVariationDetailsIntegrationTests(IntegrationTestingWebApp
          new SetSignificantChangeAdmissionsVariationCommand(false, "Admissions policy", null, null, null, null, null, null),
          new object());
 
-      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admissions-variation-details");
+      string query = returnToDecision ? "?return=%2FSignificantChange%2FDecision%2FRecordDecision" : "";
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admissions-variation-details{query}");
       Document.QuerySelector<IHtmlInputElement>("#admissions-variation-required-no")!.IsChecked = true;
       Document.QuerySelector<IHtmlInputElement>("[data-test='admissions-variation-supporting-evidence']")!.Value = "Admissions policy";
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}");
+      Document.Url.Should().EndWith(returnToDecision
+         ? $"significant-change/{project.Id}/decision/record-decision"
+         : $"significant-change/task-list/{project.Id}");
    }
 
    [Fact]
@@ -74,8 +79,10 @@ public class AdmissionsVariationDetailsIntegrationTests(IntegrationTestingWebApp
          System.Net.Http.HttpMethod.Put).Should().BeEmpty();
    }
 
-   [Fact]
-   public async Task Should_save_all_answers_after_both_pages_are_completed()
+   [Theory]
+   [InlineData(false)]
+   [InlineData(true)]
+   public async Task Should_save_all_answers_after_both_pages_are_completed(bool returnToDecision)
    {
       SignificantChangeProjectResponse project = BuildProject(704);
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
@@ -92,10 +99,14 @@ public class AdmissionsVariationDetailsIntegrationTests(IntegrationTestingWebApp
             null),
          new object());
 
-      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admissions-variation-details");
+      string query = returnToDecision ? "?return=%2FSignificantChange%2FDecision%2FRecordDecision" : "";
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admissions-variation-details{query}");
       Document.QuerySelector<IHtmlInputElement>("#admissions-variation-required-yes")!.IsChecked = true;
       Document.QuerySelector<IHtmlInputElement>("[data-test='admissions-variation-supporting-evidence']")!.Value = "Admissions policy";
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
+      Document.Url.Should().EndWith($"/significant-change/task-list/{project.Id}/admissions-variation-details/support{query}");
+      Document.QuerySelector(".govuk-back-link").GetAttribute("href")
+         .Should().Be($"/significant-change/task-list/{project.Id}/admissions-variation-details{query}");
       Document.QuerySelector<IHtmlInputElement>("#local-authority-supportive-yes")!.IsChecked = true;
       Document.QuerySelector<IHtmlInputElement>("#pupil-place-planning-supportive-no")!.IsChecked = true;
       Document.QuerySelector<IHtmlInputElement>("#admissions-team-supportive-yes")!.IsChecked = true;
@@ -103,7 +114,9 @@ public class AdmissionsVariationDetailsIntegrationTests(IntegrationTestingWebApp
          .Value = "Pupil place planning concerns";
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}");
+      Document.Url.Should().EndWith(returnToDecision
+         ? $"significant-change/{project.Id}/decision/record-decision"
+         : $"significant-change/task-list/{project.Id}");
    }
 
    [Fact]

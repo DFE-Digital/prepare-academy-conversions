@@ -28,8 +28,10 @@ public class OfstedIntegrationTests(IntegrationTestingWebApplicationFactory fact
       Document.QuerySelector<IHtmlInputElement>("#inspection-date-year")!.Value.Should().Be("2025");
    }
 
-   [Fact]
-   public async Task Should_save_inspection_date_and_yes_answer_then_return_to_task_list()
+   [Theory]
+   [InlineData(false)]
+   [InlineData(true)]
+   public async Task Should_save_inspection_date_and_yes_answer_then_return_to_the_correct_page(bool returnToDecision)
    {
       SignificantChangeProjectResponse project = BuildProject(id: 922);
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
@@ -41,14 +43,17 @@ public class OfstedIntegrationTests(IntegrationTestingWebApplicationFactory fact
          new SetSignificantChangeOfstedInspectionCommand(inspectionDate, true, null, supportingEvidence),
          new object());
 
-      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/ofsted");
+      string query = returnToDecision ? "?return=%2FSignificantChange%2FDecision%2FRecordDecision" : "";
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/ofsted{query}");
 
       InputWithId("inspection-date-day").Value = "15";
       InputWithId("inspection-date-month").Value = "9";
       InputWithId("inspection-date-year").Value = "2025";
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().Contain($"/significant-change/task-list/{project.Id}/ofsted-inspection-question");
+      Document.Url.Should().EndWith($"/significant-change/task-list/{project.Id}/ofsted-inspection-question{query}");
+      Document.QuerySelector(".govuk-back-link").GetAttribute("href")
+         .Should().Be($"/significant-change/task-list/{project.Id}/ofsted{query}");
       Document.QuerySelector<IHtmlHeadingElement>("h1")!.TextContent.Trim()
          .Should().Be("Is the academy rated good or outstanding in leadership and management and quality of education?");
       Document.QuerySelector(".govuk-hint")!.TextContent
@@ -59,7 +64,9 @@ public class OfstedIntegrationTests(IntegrationTestingWebApplicationFactory fact
       Document.QuerySelector<IHtmlInputElement>("[data-test='ofsted-supporting-evidence']")!.Value = supportingEvidence;
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}");
+      Document.Url.Should().EndWith(returnToDecision
+         ? $"significant-change/{project.Id}/decision/record-decision"
+         : $"significant-change/task-list/{project.Id}");
    }
 
    [Fact]
@@ -114,15 +121,18 @@ public class OfstedIntegrationTests(IntegrationTestingWebApplicationFactory fact
          .TextContent.Should().Contain("Select an option");
    }
 
-   [Fact]
-   public async Task Should_redirect_to_inspection_date_when_question_is_opened_without_a_date()
+   [Theory]
+   [InlineData(false)]
+   [InlineData(true)]
+   public async Task Should_redirect_to_inspection_date_when_question_is_opened_without_a_date(bool returnToDecision)
    {
       SignificantChangeProjectResponse project = BuildProject(id: 924);
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
+      string query = returnToDecision ? "?return=%2FSignificantChange%2FDecision%2FRecordDecision" : "";
       await OpenAndConfirmPathAsync(
-         $"/significant-change/task-list/{project.Id}/ofsted-inspection-question",
-         $"/significant-change/task-list/{project.Id}/ofsted");
+         $"/significant-change/task-list/{project.Id}/ofsted-inspection-question{query}",
+         $"/significant-change/task-list/{project.Id}/ofsted{query}");
    }
 
    [Fact]

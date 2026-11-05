@@ -69,7 +69,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
             Project.AdmissionsVariationAdmissionsTeamSupportiveAdditionalInformation);
 
          HttpContext.Session.Set(DraftSessionKey(id), draft);
-         return RedirectToPage("./Support", new { id });
+         return RedirectToPage("./Support", new { id, @return = ReturnPage });
       }
 
       SetSignificantChangeAdmissionsVariationCommand command = new(
@@ -84,7 +84,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       await repository.SetAdmissionsVariation(id, command);
       HttpContext.Session.Remove(DraftSessionKey(id));
-      return RedirectToTaskList(id);
+      return RedirectToTaskListOrReturnPage(id);
    }
 
    internal static string DraftSessionKey(int id) => $"{DraftSessionKeyPrefix}{id}";

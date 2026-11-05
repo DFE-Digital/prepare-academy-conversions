@@ -2,7 +2,22 @@
 import significantChangeDecision from '../../pages/significantChangeDecision';
 import { Logger } from '../../support/logger';
 
+const TASK_LIST_URL = /\/significant-change\/task-list\/\d+(\?.*)?$/;
+const projectIdFrom = (url: string): string => url.split('?')[0].split('/').pop() as string;
+
 describe('Significant change record a decision', () => {
+    let projectDatesToRestore:
+        | {
+              projectId: string;
+              decisionDay: string;
+              decisionMonth: string;
+              decisionYear: string;
+              changeDay: string;
+              changeMonth: string;
+              changeYear: string;
+          }
+        | undefined;
+
     beforeEach(() => {
         cy.login();
         Logger.log('Visit the homepage before each test');
@@ -10,7 +25,33 @@ describe('Significant change record a decision', () => {
         cy.acceptCookies();
     });
 
-    const withAProject = (test: (projectId: string) => void) => {
+    afterEach(() => {
+        if (!projectDatesToRestore) {
+            return;
+        }
+
+        const dates = projectDatesToRestore;
+        const restoreInput = (id: string, value: string) => {
+            cy.getById(id).clear();
+            if (value) {
+                cy.getById(id).type(value);
+            }
+        };
+        cy.visit(`/significant-change/task-list/${dates.projectId}/confirm-project-dates`);
+        restoreInput('proposed-decision-date-day', dates.decisionDay);
+        restoreInput('proposed-decision-date-month', dates.decisionMonth);
+        restoreInput('proposed-decision-date-year', dates.decisionYear);
+        restoreInput('proposed-change-date-day', dates.changeDay);
+        restoreInput('proposed-change-date-month', dates.changeMonth);
+        restoreInput('proposed-change-date-year', dates.changeYear);
+        cy.getByDataCy('select-common-submitbutton').click();
+        cy.location('pathname').should('eq', `/significant-change/task-list/${dates.projectId}`);
+        cy.then(() => {
+            projectDatesToRestore = undefined;
+        });
+    });
+
+    const withAProject = (then: (_projectId: string) => void) => {
         cy.visit('/significant-change/project-list');
 
         cy.getByDataCy('select-projectlist-filter-count')
@@ -20,21 +61,19 @@ describe('Significant change record a decision', () => {
                 const count = match ? parseInt(match[0], 10) : 0;
 
                 if (count === 0) {
+                    Logger.log('No significant change projects available - skipping');
                     cy.contains('There are no matching results.').should('be.visible');
                     return;
                 }
 
                 cy.getById('school-name-0').click();
-                cy.url().then((url) => {
-                    const idMatch = url.match(/\/significant-change\/task-list\/(\d+)/);
-                    expect(idMatch, 'project id in task list url').to.not.be.null;
-                    test(idMatch![1]);
-                });
+                cy.url().should('match', TASK_LIST_URL);
+                cy.url().then((taskListUrl) => then(projectIdFrom(taskListUrl)));
             });
     };
 
     it('Should show a Record a decision tab on the project details page', () => {
-        withAProject(() => {
+        withAProject((_projectId) => {
             cy.getByDataCy('significant_change_record_decision_menu')
                 .should('be.visible')
                 .and('contain.text', 'Record a decision');
@@ -112,6 +151,88 @@ describe('Significant change record a decision', () => {
                 .verifyOnStep('declined-reason')
                 .submit()
                 .verifyErrorSummaryContains('Select at least one reason');
+        });
+    });
+
+    it('Should return to Record a decision after completing an incomplete task from its error link', () => {
+        withAProject((projectId) => {
+            cy.visit(`/significant-change/task-list/${projectId}/confirm-project-dates`);
+
+            const originalDates = {
+                decisionDay: '',
+                decisionMonth: '',
+                decisionYear: '',
+                changeDay: '',
+                changeMonth: '',
+                changeYear: '',
+            };
+
+            cy.getById('proposed-decision-date-day')
+                .invoke('val')
+                .then((value) => (originalDates.decisionDay = String(value ?? '')));
+            cy.getById('proposed-decision-date-month')
+                .invoke('val')
+                .then((value) => (originalDates.decisionMonth = String(value ?? '')));
+            cy.getById('proposed-decision-date-year')
+                .invoke('val')
+                .then((value) => (originalDates.decisionYear = String(value ?? '')));
+            cy.getById('proposed-change-date-day')
+                .invoke('val')
+                .then((value) => (originalDates.changeDay = String(value ?? '')));
+            cy.getById('proposed-change-date-month')
+                .invoke('val')
+                .then((value) => (originalDates.changeMonth = String(value ?? '')));
+            cy.getById('proposed-change-date-year')
+                .invoke('val')
+                .then((value) => (originalDates.changeYear = String(value ?? '')));
+
+            cy.then(() => {
+                projectDatesToRestore = { projectId, ...originalDates };
+            });
+
+            cy.getById('proposed-decision-date-day').clear();
+            cy.getById('proposed-decision-date-month').clear();
+            cy.getById('proposed-decision-date-year').clear();
+            cy.getById('proposed-change-date-day').clear();
+            cy.getById('proposed-change-date-month').clear();
+            cy.getById('proposed-change-date-year').clear();
+            cy.getByDataCy('select-common-submitbutton').click();
+            cy.location('pathname').should('eq', `/significant-change/task-list/${projectId}`);
+
+            significantChangeDecision
+                .openFor(projectId)
+                .selectDecision('approved')
+                .submit()
+                .verifyOnStep('record-decision');
+
+            cy.getByDataCy('error-summary')
+                .contains('a', "The task 'Confirm project dates' must be completed")
+                .should(
+                    'have.attr',
+                    'href',
+                    `/significant-change/task-list/${projectId}/confirm-project-dates?return=%2FSignificantChange%2FDecision%2FRecordDecision`
+                )
+                .click();
+            cy.location('pathname').should('eq', `/significant-change/task-list/${projectId}/confirm-project-dates`);
+
+            cy.getById('proposed-decision-date-day').type('21');
+            cy.getByDataCy('select-common-submitbutton').click();
+            cy.getByDataCy('error-summary').should('contain.text', 'must include a month and year');
+            cy.location('pathname').should('eq', `/significant-change/task-list/${projectId}/confirm-project-dates`);
+            cy.location('search').should('eq', '?return=%2FSignificantChange%2FDecision%2FRecordDecision');
+
+            cy.getById('proposed-decision-date-month').type('11');
+            cy.getById('proposed-decision-date-year').type('2026');
+            cy.getById('proposed-change-date-day').type('22');
+            cy.getById('proposed-change-date-month').type('12');
+            cy.getById('proposed-change-date-year').type('2026');
+            cy.getByDataCy('select-common-submitbutton').click();
+
+            significantChangeDecision.verifyOnStep('record-decision').verifyHeading('Record the decision');
+            significantChangeDecision.selectDecision('approved').submit();
+            cy.get('body').should('not.contain.text', "The task 'Confirm project dates' must be completed");
+            cy.visit(`/significant-change/task-list/${projectId}`);
+            cy.getById('task-status-confirm-project-dates').should('contain.text', 'Completed');
         });
     });
 

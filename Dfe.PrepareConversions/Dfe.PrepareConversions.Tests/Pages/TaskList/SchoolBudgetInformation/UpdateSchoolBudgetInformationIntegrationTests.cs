@@ -138,12 +138,12 @@ public class UpdateSchoolBudgetInformationIntegrationTests : BaseIntegrationTest
       Document.QuerySelector<IHtmlInputElement>("#next-financial-year-day")!.Value = request.EndOfNextFinancialYear?.Day.ToString()!;
       Document.QuerySelector<IHtmlInputElement>("#next-financial-year-month")!.Value = request.EndOfNextFinancialYear?.Month.ToString()!;
       Document.QuerySelector<IHtmlInputElement>("#next-financial-year-year")!.Value = request.EndOfNextFinancialYear?.Year.ToString()!;
+
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
       await NavigateAsync("The next financial year cannot be before or within a year of the current financial year");
 
       Document.Url.Should()
-         .BeUrl(
-            $"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information#/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information?return=%2FTaskList%2FSchoolBudgetInformation/ConfirmSchoolBudgetInformation&fragment=financial-year");
+         .BeUrl($"task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information#financial-year");
    }
 
    [Fact]
