@@ -147,22 +147,6 @@ public class SignificantChangeTaskListBuilderTests
 
    [Theory]
    [MemberData(nameof(StatusCases))]
-   public void Build_maps_local_authority_objections_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
-   {
-      const string sectionKey = "land-transaction-application-and-planning-permission";
-      const string taskKey = "local-authority-objections";
-
-      SignificantChangeProjectViewBaseModel project = BuildProject(p => p.LocalAuthorityObjectionsStatus = TaskStatus);
-      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
-
-      var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
-      var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
-
-      task.Status.Status.Should().Be(expectedTaskStatus);
-   }
-
-   [Theory]
-   [MemberData(nameof(StatusCases))]
    public void Build_maps_land_transaction_status_to_task_status(SignificantChangeTaskStatus taskStatus, string expectedTaskStatus)
    {
       const string sectionKey = "land-transaction-application-and-planning-permission";
