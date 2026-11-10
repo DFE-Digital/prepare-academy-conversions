@@ -4,12 +4,15 @@ using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Pages.SignificantChange.Decision.Models;
 using Dfe.PrepareConversions.Services;
+using Dfe.PrepareConversions.Utils;
+using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.SignificantChange.Decision;
@@ -58,9 +61,11 @@ public class RecordDecisionModel : SignificantChangeDecisionBaseModel
 
    public async Task<IActionResult> OnPost(int id)
    {
+      Validate();
+
       if (!ModelState.IsValid)
       {
-         _errorService.AddErrors(["SignificantChangeDecision"], ModelState);
+         _errorService.AddErrors(ModelState.Keys, ModelState);
          return await OnGet(id);
       }
 
@@ -75,5 +80,26 @@ public class RecordDecisionModel : SignificantChangeDecisionBaseModel
          SignificantChangeDecisions.Withdrawn => RedirectToPage(Links.SignificantChangeDecision.WhyWithdrawn.Page, LinkParameters),
          _ => RedirectToPage(Links.SignificantChangeDecision.AnyConditions.Page, LinkParameters)
       };
+   }
+
+   private void Validate()
+   {
+      var projectOwner = Project.AssignedUser?.FullName;
+
+        var returnPage = WebUtility.UrlEncode(Links.SignificantChangeDecision.RecordDecision.Page);
+
+        if (string.IsNullOrEmpty(projectOwner))
+        {
+            ModelState.AddModelError(Url.Page(Links.SignificantChange.SignificantChangeProjectAssignment.Page, new { id = Id, returnUrl = returnPage }) ?? string.Empty,
+               "The project must be assigned to a user before a decision can be recorded.");
+        }
+
+        var incompleteTasks = TaskList.Sections.SelectMany(s => s.Tasks).Where(t => t.Status.Status != TaskListItemViewModel.CompletedText).ToList();
+
+        foreach (var significantChangeTaskItemViewModel in incompleteTasks)
+        {
+            ModelState.AddModelError(Url.Page(significantChangeTaskItemViewModel.Page, new { id = Id, @return = Links.SignificantChangeDecision.RecordDecision.Page }) ?? string.Empty,
+               $"The task '{significantChangeTaskItemViewModel.Title}' must be completed before a decision can be recorded.");
+        }
    }
 }

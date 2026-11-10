@@ -46,7 +46,7 @@ public class InspectionQuestionModel(
       Inspection = GetOfstedInspectionFromSession(id);
       if (Inspection?.InspectionDate.HasValue != true)
       {
-         return RedirectToPage(Links.SignificantChange.OfstedInspection.Page, new { id });
+         return RedirectToPage(Links.SignificantChange.OfstedInspection.Page, new { id, @return = ReturnPage });
       }
 
       MeetsOfstedStandards = Inspection.MeetsOfstedStandards;
@@ -71,7 +71,7 @@ public class InspectionQuestionModel(
       Inspection = GetOfstedInspectionFromSession(id);
       if (Inspection?.InspectionDate.HasValue != true)
       {
-         return RedirectToPage(Links.SignificantChange.OfstedInspection.Page, new { id });
+         return RedirectToPage(Links.SignificantChange.OfstedInspection.Page, new { id, @return = ReturnPage });
       }
 
       DateOfInspection = Inspection.InspectionDate;
@@ -100,6 +100,6 @@ public class InspectionQuestionModel(
 
       session.Remove(OfstedSessionKey(id));
 
-      return RedirectToPage(Links.SignificantChange.SignificantChangeTaskList.Page, new { id });
+      return RedirectToTaskListOrReturnPage(id);
    }
 }

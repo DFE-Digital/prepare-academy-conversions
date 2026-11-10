@@ -41,7 +41,7 @@ public class SupportModel(ISignificantChangeProjectRepository repository, ErrorS
       SetSignificantChangeAdmissionsVariationCommand draft = GetDraft(id);
       if (draft == null || draft.AdmissionsVariationRequired != true)
       {
-         return RedirectToPage("./Index", new { id });
+         return RedirectToPage("./Index", new { id, @return = ReturnPage });
       }
 
       LocalAuthoritySupportive = draft.AdmissionsVariationLocalAuthoritySupportive;
@@ -64,7 +64,7 @@ public class SupportModel(ISignificantChangeProjectRepository repository, ErrorS
       SetSignificantChangeAdmissionsVariationCommand draft = GetDraft(id);
       if (draft == null || draft.AdmissionsVariationRequired != true)
       {
-         return RedirectToPage("./Index", new { id });
+         return RedirectToPage("./Index", new { id, @return = ReturnPage });
       }
 
       Validate();
@@ -92,7 +92,7 @@ public class SupportModel(ISignificantChangeProjectRepository repository, ErrorS
 
       await repository.SetAdmissionsVariation(id, command);
       HttpContext.Session.Remove(IndexModel.DraftSessionKey(id));
-      return RedirectToTaskList(id);
+      return RedirectToTaskListOrReturnPage(id);
    }
 
    private SetSignificantChangeAdmissionsVariationCommand GetDraft(int id)

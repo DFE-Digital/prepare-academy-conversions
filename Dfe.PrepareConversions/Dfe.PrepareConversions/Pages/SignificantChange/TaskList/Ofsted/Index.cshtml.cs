@@ -64,7 +64,7 @@ public class IndexModel(
 
       SetOfstedInspectionInSession(id, inspection);
 
-      return RedirectToPage(Links.SignificantChange.OfstedInspectionQuestion.Page, new { id });
+      return RedirectToPage(Links.SignificantChange.OfstedInspectionQuestion.Page, new { id, @return = ReturnPage });
    }
 
    string IDateValidationMessageProvider.SomeMissing(string displayName, IEnumerable<string> missingParts)

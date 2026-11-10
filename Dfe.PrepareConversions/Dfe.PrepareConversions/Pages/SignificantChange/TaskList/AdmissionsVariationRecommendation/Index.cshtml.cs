@@ -60,7 +60,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       await _repository.SetAdmissionsVariationRecommendation(id, command);
 
-      return RedirectToTaskList(id);
+      return RedirectToTaskListOrReturnPage(id);
    }
 
    private void Validate()

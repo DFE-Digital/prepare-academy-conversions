@@ -28,6 +28,7 @@ public abstract class SignificantChangeDecisionBaseModel(ISignificantChangeProje
 
    public BackLinkModel BackLinkModel { get; set; }
    public SignificantChangeProjectViewBaseModel Project { get; set; }
+   public SignificantChangeTaskListViewModel TaskList { get; set; }
    public string SchoolName { get; set; }
    public int Id { get; set; }
 
@@ -50,8 +51,9 @@ public abstract class SignificantChangeDecisionBaseModel(ISignificantChangeProje
          }
 
          Id = id;
-         Project = SignificantChangeProjectListHelper.Build(result.Body);
+         Project = SignificantChangeProjectHelper.Build(result.Body);
          SchoolName = Project.SchoolName;
+         TaskList = SignificantChangeTaskListBuilder.Build(Project);
 
           if (result.Body.Decision == SignificantChangeDecisions.Approved)
           {
