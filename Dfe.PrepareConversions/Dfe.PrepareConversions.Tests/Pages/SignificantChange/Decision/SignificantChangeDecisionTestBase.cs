@@ -46,7 +46,9 @@ public abstract class SignificantChangeDecisionTestBase : BaseIntegrationTests
          FHARisksOrIssuesRaised = new() { Status = taskStatus },
          HQTFConsideration = new() { Status = taskStatus },
          Recommendation = new() { Status = taskStatus },
-         AdmissionsVariationRecommendation = new() { Status = taskStatus }
+         AdmissionsVariationRecommendation = new() { Status = taskStatus },
+         LocalAuthorityObjections = new() { Status = taskStatus },
+         LandTransaction = new() { Status = taskStatus }
       };
 
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, id), project);

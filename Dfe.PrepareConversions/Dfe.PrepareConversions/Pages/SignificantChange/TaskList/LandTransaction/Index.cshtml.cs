@@ -86,7 +86,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       await _repository.SetLandTransaction(id, command);
 
-      return RedirectToTaskList(id);
+      return RedirectToTaskListOrReturnPage(id);
    }
 
    private void Validate()

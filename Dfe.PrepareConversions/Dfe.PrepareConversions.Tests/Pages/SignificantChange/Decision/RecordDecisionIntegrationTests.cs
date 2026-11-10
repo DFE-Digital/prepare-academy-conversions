@@ -73,7 +73,7 @@ public class RecordDecisionIntegrationTests(IntegrationTestingWebApplicationFact
       var taskLinks = Document.QuerySelectorAll(".app-task-list__task-name a")
          .Select(link => new { Title = link.TextContent.Trim(), Url = link.GetAttribute("href") })
          .ToList();
-      taskLinks.Should().HaveCount(13);
+      taskLinks.Should().HaveCount(15);
 
       await Wizard.StartFor(ProjectId);
       await Wizard.SetDecisionToAndContinue(SignificantChangeDecisions.Approved);
