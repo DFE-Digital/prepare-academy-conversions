@@ -11,6 +11,17 @@ export const invalidSharePointLinks = [
     },
 ];
 
+const verifySupportingEvidenceError = (field: string, value: string, error: string): void => {
+    cy.get(`input[name="${field}"]`)
+        .should('have.value', value)
+        .and('have.class', 'govuk-input--error')
+        .invoke('attr', 'aria-describedby')
+        .then((errorId) => {
+            expect(errorId).to.be.a('string').and.not.be.empty;
+            cy.getById(errorId!).should('be.visible').and('contain.text', error);
+        });
+};
+
 export const verifySharePointLinkValidation = (field: string, value: string, error: string): void => {
     cy.get(`input[name="${field}"]`).should('be.visible');
     cy.location('pathname').then((path) => {
@@ -19,13 +30,7 @@ export const verifySharePointLinkValidation = (field: string, value: string, err
         cy.getById('save-and-continue-button').click();
 
         cy.location('pathname').should('eq', path);
-        cy.get(`input[name="${field}"]`)
-            .should('have.value', value)
-            .and('have.class', 'govuk-input--error')
-            .invoke('attr', 'aria-describedby')
-            .then((errorId) => {
-                expect(errorId).to.be.a('string').and.not.be.empty;
-                cy.getById(errorId!).should('be.visible').and('contain.text', error);
-            });
     });
+
+    verifySupportingEvidenceError(field, value, error);
 };
