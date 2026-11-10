@@ -94,8 +94,8 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       await _repository.SetOtherStakeholderEngagement(id, command);
 
-      return RedirectToTaskList(id);
-   }
+        return RedirectToTaskListOrReturnPage(id);
+    }
 
    private void Validate()
    {

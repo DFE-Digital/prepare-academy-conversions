@@ -57,7 +57,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       await _repository.SetProjectDates(id, command);
 
-      return RedirectToTaskList(id);
+      return RedirectToTaskListOrReturnPage(id);
    }
    
    string IDateValidationMessageProvider.SomeMissing(string displayName, IEnumerable<string> missingParts)

@@ -44,9 +44,12 @@ public class FundingModelTests
    }
 
    [Theory]
-   [InlineData(FundingAnswer.Yes)]
-   [InlineData(FundingAnswer.NotApplicable)]
-   public async Task OnPostAsync_WhenAnswerIsNotNo_ShouldSaveWithoutAdditionalInformationAndRedirect(FundingAnswer answer)
+   [InlineData(FundingAnswer.Yes, false)]
+   [InlineData(FundingAnswer.Yes, true)]
+   [InlineData(FundingAnswer.NotApplicable, false)]
+   [InlineData(FundingAnswer.NotApplicable, true)]
+   public async Task OnPostAsync_WhenAnswerIsNotNo_ShouldSaveWithoutAdditionalInformationAndRedirect(
+      FundingAnswer answer, bool returnToDecision)
    {
       const int id = 613;
 
@@ -56,6 +59,10 @@ public class FundingModelTests
          .Returns(Task.CompletedTask);
 
       IndexModel sut = BuildModel(repository.Object);
+      if (returnToDecision)
+      {
+         sut.Request.QueryString = QueryString.Create("return", Links.SignificantChangeDecision.RecordDecision.Page);
+      }
       sut.FundingAnswer = answer;
       sut.AdditionalInformation = "This should be cleared";
       sut.SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/funding/evidence";
@@ -63,7 +70,9 @@ public class FundingModelTests
       IActionResult result = await sut.OnPostAsync(id);
 
       RedirectToPageResult redirect = Assert.IsType<RedirectToPageResult>(result);
-      redirect.PageName.Should().Be(Links.SignificantChange.SignificantChangeTaskList.Page);
+      redirect.PageName.Should().Be(returnToDecision
+         ? Links.SignificantChangeDecision.RecordDecision.Page
+         : Links.SignificantChange.SignificantChangeTaskList.Page);
       redirect.RouteValues.Should().ContainKey("id").WhoseValue.Should().Be(id);
 
       repository.Verify(x => x.SetFunding(
