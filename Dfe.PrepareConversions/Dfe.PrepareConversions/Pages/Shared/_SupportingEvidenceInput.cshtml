@@ -8,7 +8,6 @@
    input.Attributes["name"] = Model.Name;
    input.Attributes["value"] = Model.Value ?? string.Empty;
    input.Attributes["type"] = "text";
-   input.Attributes["placeholder"] = "e.g. https://educationgovuk.sharepoint.com/your-evidence-location";
 
    if (showError)
    {
@@ -25,9 +24,13 @@
 }
 
 <div class="govuk-form-group @(showError ? "govuk-form-group--error" : "")">
-   <label class="govuk-label" for="@Model.Id">
+   <label class="govuk-label govuk-label--m" for="@Model.Id">
       Supporting evidence
    </label>
+   
+   <div id="evidence-hint" class="govuk-hint">
+      This must be a SharePoint link
+   </div>
    @if (showError)
    {
       <span id="@Model.Id-error" class="govuk-error-message">

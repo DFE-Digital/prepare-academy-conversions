@@ -28,7 +28,7 @@ public class HqtfConsiderationModelTests
       SignificantChangeProjectResponse project = BuildProject(id);
       project.HQTFConsideration.HqtfConsiderationAnswer = HqtfConsiderationAnswer.Yes;
       project.HQTFConsideration.AdditionalInformation = "Governance gap identified";
-      project.HQTFConsideration.SupportingEvidence = "Trust improvement plan";
+      project.HQTFConsideration.SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/hqtf/improvement-plan";
 
       Mock<ISignificantChangeProjectRepository> repository = new();
       repository
@@ -42,7 +42,7 @@ public class HqtfConsiderationModelTests
       result.Should().BeOfType<PageResult>();
       sut.HQTFConsiderationAnswer.Should().Be(HqtfConsiderationAnswer.Yes);
       sut.AdditionalInformation.Should().Be("Governance gap identified");
-      sut.SupportingEvidence.Should().Be("Trust improvement plan");
+      sut.SupportingEvidence.Should().Be("https://educationgovuk.sharepoint.com/sites/hqtf/improvement-plan");
       repository.Verify(x => x.GetProjectById(id), Times.Once);
    }
 
@@ -62,7 +62,7 @@ public class HqtfConsiderationModelTests
       IndexModel sut = BuildModel(repository.Object);
       sut.HQTFConsiderationAnswer = HqtfConsiderationAnswer.Yes;
       sut.AdditionalInformation = "Workforce capacity risk";
-      sut.SupportingEvidence = "Board minutes";
+      sut.SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/hqtf/board-minutes";
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -75,7 +75,7 @@ public class HqtfConsiderationModelTests
          It.Is<SetSignificantChangeHqtfConsiderationCommand>(command =>
             command.HqtfConsiderationAnswer == HqtfConsiderationAnswer.Yes
             && command.AdditionalInformation == "Workforce capacity risk"
-            && command.SupportingEvidence == "Board minutes")), Times.Once);
+            && command.SupportingEvidence == "https://educationgovuk.sharepoint.com/sites/hqtf/board-minutes")), Times.Once);
    }
 
    [Fact]

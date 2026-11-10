@@ -22,7 +22,7 @@ public class ReligiousBodyConsultationIntegrationTests(IntegrationTestingWebAppl
          TrustConsultedReligiousBodyNotConsultedReason = "Consultation planned",
          ReligiousBodyRaisedObjection = YesNoNotApplicableAnswer.Yes,
          ReligiousBodyConsentGranted = YesNoNotApplicableAnswer.NotApplicable,
-         SupportingEvidence = "https://example.test/evidence"
+         SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/religious-bodies/evidence"
       };
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
@@ -33,7 +33,7 @@ public class ReligiousBodyConsultationIntegrationTests(IntegrationTestingWebAppl
       Document.QuerySelector<IHtmlInputElement>("#religious-body-objection-yes")!.IsChecked.Should().BeTrue();
       Document.QuerySelector<IHtmlInputElement>("#religious-body-consent-not-applicable")!.IsChecked.Should().BeTrue();
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='religious-bodies-consulted-reason']")!.Value.Should().Be("Consultation planned");
-      Document.QuerySelector<IHtmlInputElement>("[data-test='religious-bodies-supporting-evidence']")!.Value.Should().Be("https://example.test/evidence");
+      Document.QuerySelector<IHtmlInputElement>("[data-test='religious-bodies-supporting-evidence']")!.Value.Should().Be("https://educationgovuk.sharepoint.com/sites/religious-bodies/evidence");
    }
 
    [Fact]
@@ -42,7 +42,7 @@ public class ReligiousBodyConsultationIntegrationTests(IntegrationTestingWebAppl
       SignificantChangeProjectResponse project = BuildProject(702);
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
       const string reason = "Consent has not yet been granted";
-      const string evidence = "https://example.test/evidence";
+      const string evidence = "https://educationgovuk.sharepoint.com/sites/religious-bodies/evidence";
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeReligiousBodyConsultation, project.Id),
          new SetSignificantChangeReligiousBodyConsultationCommand(

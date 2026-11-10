@@ -29,7 +29,7 @@ public class PublicSectorEqualityDutyModelTests
       project.EqualitiesImpactAssessment.EqualitiesImpactAssessmentCompleted = true;
       project.EqualitiesImpactAssessment.EqualitiesImpactIdentified = EqualitiesImpact.Likely;
       project.EqualitiesImpactAssessment.EqualitiesLikelyDetails = "Additional info required";
-      project.EqualitiesImpactAssessment.EqualitiesImpactSupportingEvidence = "sharepoint.edu.gov.uk/evidence";
+      project.EqualitiesImpactAssessment.EqualitiesImpactSupportingEvidence = "https://educationgovuk.sharepoint.com/sites/equalities/evidence";
 
       Mock<ISignificantChangeProjectRepository> repository = new();
       repository
@@ -44,7 +44,7 @@ public class PublicSectorEqualityDutyModelTests
       sut.EqualitiesImpactAssessmentCompleted.Should().BeTrue();
       sut.EqualitiesImpactIdentified.Should().Be(EqualitiesImpact.Likely);
       sut.LikelyDetails.Should().Be("Additional info required");
-      sut.SupportingEvidence.Should().Be("sharepoint.edu.gov.uk/evidence");
+      sut.SupportingEvidence.Should().Be("https://educationgovuk.sharepoint.com/sites/equalities/evidence");
       repository.Verify(x => x.GetProjectById(id), Times.Once);
    }
 

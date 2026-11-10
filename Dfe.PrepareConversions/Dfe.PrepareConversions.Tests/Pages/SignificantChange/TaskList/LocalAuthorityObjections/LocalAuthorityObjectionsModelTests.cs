@@ -28,7 +28,7 @@ public class LocalAuthorityObjectionsModelTests
       SignificantChangeProjectResponse project = BuildProject(id);
       project.LocalAuthorityObjections.LocalAuthorityRaisedObjections = true;
       project.LocalAuthorityObjections.LocalAuthorityObjectionsFurtherInformation = "Objections have been raised about capacity impact";
-      project.LocalAuthorityObjections.SupportingEvidenceLink = "https://example.org/evidence";
+      project.LocalAuthorityObjections.SupportingEvidenceLink = "https://educationgovuk.sharepoint.com/sites/local-authority/evidence";
 
       Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, project);
 
@@ -39,7 +39,7 @@ public class LocalAuthorityObjectionsModelTests
       result.Should().BeOfType<PageResult>();
       sut.LocalAuthorityRaisedObjections.Should().BeTrue();
       sut.LocalAuthorityObjectionsFurtherInformation.Should().Be("Objections have been raised about capacity impact");
-      sut.LocalAuthorityObjectionsSupportingEvidenceLink.Should().Be("https://example.org/evidence");
+      sut.LocalAuthorityObjectionsSupportingEvidenceLink.Should().Be("https://educationgovuk.sharepoint.com/sites/local-authority/evidence");
       repository.Verify(x => x.GetProjectById(id), Times.Once);
    }
 
@@ -52,7 +52,7 @@ public class LocalAuthorityObjectionsModelTests
       string enteredFurtherInformation,
       string expectedFurtherInformation)
    {
-      const string expectedEvidenceLink = "https://example.org/evidence";
+      const string expectedEvidenceLink = "https://educationgovuk.sharepoint.com/sites/local-authority/evidence";
 
       Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id));
       repository
@@ -88,7 +88,7 @@ public class LocalAuthorityObjectionsModelTests
       IndexModel sut = BuildModel(repository.Object);
       sut.LocalAuthorityRaisedObjections = null;
       sut.LocalAuthorityObjectionsFurtherInformation = "Objection details";
-      sut.LocalAuthorityObjectionsSupportingEvidenceLink = "https://example.org/evidence";
+      sut.LocalAuthorityObjectionsSupportingEvidenceLink = "https://educationgovuk.sharepoint.com/sites/local-authority/evidence";
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -107,7 +107,7 @@ public class LocalAuthorityObjectionsModelTests
       IndexModel sut = BuildModel(repository.Object);
       sut.LocalAuthorityRaisedObjections = true;
       sut.LocalAuthorityObjectionsFurtherInformation = " ";
-      sut.LocalAuthorityObjectionsSupportingEvidenceLink = "https://example.org/evidence";
+      sut.LocalAuthorityObjectionsSupportingEvidenceLink = "https://educationgovuk.sharepoint.com/sites/local-authority/evidence";
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -129,7 +129,7 @@ public class LocalAuthorityObjectionsModelTests
       IndexModel sut = BuildModel(repository.Object);
       sut.LocalAuthorityRaisedObjections = true;
       sut.LocalAuthorityObjectionsFurtherInformation = "Objection details";
-      sut.LocalAuthorityObjectionsSupportingEvidenceLink = " ";
+      sut.LocalAuthorityObjectionsSupportingEvidenceLink = string.Empty;
 
       IActionResult result = await sut.OnPostAsync(id);
 

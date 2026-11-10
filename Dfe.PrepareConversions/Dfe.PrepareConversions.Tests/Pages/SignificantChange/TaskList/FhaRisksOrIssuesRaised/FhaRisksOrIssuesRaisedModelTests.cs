@@ -28,7 +28,7 @@ public class FhaRisksOrIssuesRaisedModelTests
       SignificantChangeProjectResponse project = BuildProject(id);
       project.FHARisksOrIssuesRaised.FhaRisksOrIssuesRaised = true;
       project.FHARisksOrIssuesRaised.AdditionalInformation = "Cashflow risk identified";
-      project.FHARisksOrIssuesRaised.SupportingEvidence = "FHA report";
+      project.FHARisksOrIssuesRaised.SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/fha/report";
 
       Mock<ISignificantChangeProjectRepository> repository = new();
       repository
@@ -42,7 +42,7 @@ public class FhaRisksOrIssuesRaisedModelTests
       result.Should().BeOfType<PageResult>();
       sut.FhaRisksOrIssuesRaised.Should().BeTrue();
       sut.AdditionalInformation.Should().Be("Cashflow risk identified");
-      sut.SupportingEvidence.Should().Be("FHA report");
+      sut.SupportingEvidence.Should().Be("https://educationgovuk.sharepoint.com/sites/fha/report");
    }
 
    [Fact]
@@ -57,7 +57,7 @@ public class FhaRisksOrIssuesRaisedModelTests
       IndexModel sut = BuildModel(repository.Object);
       sut.FhaRisksOrIssuesRaised = true;
       sut.AdditionalInformation = "A deficit is forecast";
-      sut.SupportingEvidence = "Financial forecast";
+      sut.SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/fha/forecast";
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -68,7 +68,7 @@ public class FhaRisksOrIssuesRaisedModelTests
          It.Is<SetSignificantChangeFhaRisksOrIssuesRaisedCommand>(command =>
             command.FhaRisksOrIssuesRaised == true
             && command.AdditionalInformation == "A deficit is forecast"
-            && command.SupportingEvidence == "Financial forecast")), Times.Once);
+            && command.SupportingEvidence == "https://educationgovuk.sharepoint.com/sites/fha/forecast")), Times.Once);
    }
 
    [Fact]

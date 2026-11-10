@@ -26,7 +26,7 @@ public class InspectionQuestionModelTests
          new DateTime(2025, 9, 15),
          false,
          "Improvement actions are underway",
-         "School improvement plan");
+         "https://educationgovuk.sharepoint.com/sites/ofsted/improvement-plan");
       SetInspection(session, id, inspection);
       InspectionQuestionModel sut = BuildModel(repository.Object, session);
 
@@ -68,12 +68,12 @@ public class InspectionQuestionModelTests
          new DateTime(2025, 9, 15),
          null,
          "Previous information",
-         "Inspection report");
+         "https://educationgovuk.sharepoint.com/sites/ofsted/inspection-report");
       SetInspection(session, id, inspection);
       InspectionQuestionModel sut = BuildModel(repository.Object, session);
       sut.MeetsOfstedStandards = true;
       sut.AdditionalInformation = "This should be cleared";
-      sut.SupportingEvidence = "Updated evidence";
+      sut.SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/ofsted/updated-evidence";
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -86,7 +86,7 @@ public class InspectionQuestionModelTests
                command.InspectionDate == inspection.InspectionDate
                && command.MeetsOfstedStandards == true
                && command.AdditionalInformation == null
-               && command.SupportingEvidence == "Updated evidence")),
+               && command.SupportingEvidence == "https://educationgovuk.sharepoint.com/sites/ofsted/updated-evidence")),
          Times.Once);
       GetInspection(session, id).Should().BeNull();
    }
@@ -109,7 +109,7 @@ public class InspectionQuestionModelTests
       InspectionQuestionModel sut = BuildModel(repository.Object, session);
       sut.MeetsOfstedStandards = false;
       sut.AdditionalInformation = "Improvement actions are underway";
-      sut.SupportingEvidence = "School improvement plan";
+      sut.SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/ofsted/improvement-plan";
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -121,7 +121,7 @@ public class InspectionQuestionModelTests
                command.InspectionDate == inspection.InspectionDate
                && command.MeetsOfstedStandards == false
                && command.AdditionalInformation == "Improvement actions are underway"
-               && command.SupportingEvidence == "School improvement plan")),
+               && command.SupportingEvidence == "https://educationgovuk.sharepoint.com/sites/ofsted/improvement-plan")),
          Times.Once);
       GetInspection(session, id).Should().BeNull();
    }

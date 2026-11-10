@@ -2,6 +2,7 @@
 import significantChangeOfsted from '../../pages/significantChangeOfsted';
 import significantChangeTaskList from '../../pages/significantChangeTaskList';
 import { Logger } from '../../support/logger';
+import { invalidSharePointLinks, verifySharePointLinkValidation } from '../../support/sharePointLinkValidation';
 
 const TASK_LIST_URL = /\/significant-change\/task-list\/\d+(\?.*)?$/;
 const projectIdFrom = (url: string): string => url.split('?')[0].split('/').pop() as string;
@@ -40,6 +41,15 @@ describe('Significant change - Ofsted inspection', () => {
         significantChangeOfsted.enterInspectionDate('15', '9', '2025').continueToQuestion();
     };
 
+    invalidSharePointLinks.forEach(({ name, value, error }) => {
+        it(`rejects ${name} as supporting evidence`, () => {
+            withProject((projectId) => {
+                setInspectionDate(projectId);
+                verifySharePointLinkValidation('SupportingEvidence', value, error);
+            });
+        });
+    });
+
     it('Should open Ofsted from the task list and continue from the inspection date', () => {
         withProject((_projectId) => {
             significantChangeTaskList.openOfstedTask();
@@ -63,7 +73,7 @@ describe('Significant change - Ofsted inspection', () => {
                 .selectMeetsStandards(false)
                 .verifyAdditionalInformationVisible()
                 .enterAdditionalInformation('Improvement actions are underway')
-                .enterSupportingEvidence('School improvement plan')
+                .enterSupportingEvidence('https://educationgovuk.sharepoint.com/sites/ofsted/improvement-plan')
                 .saveQuestion();
 
             cy.url().should('match', TASK_LIST_URL);
@@ -78,7 +88,7 @@ describe('Significant change - Ofsted inspection', () => {
             significantChangeOfsted
                 .selectMeetsStandards(true)
                 .verifyAdditionalInformationHidden()
-                .enterSupportingEvidence('Inspection report')
+                .enterSupportingEvidence('https://educationgovuk.sharepoint.com/sites/ofsted/inspection-report')
                 .saveQuestion();
 
             cy.url().should('match', TASK_LIST_URL);
