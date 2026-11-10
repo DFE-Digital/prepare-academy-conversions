@@ -4,12 +4,13 @@ using System.Reflection;
 
 namespace Dfe.PrepareConversions.Models
 {
+   [AttributeUsage(AttributeTargets.Property)]
    public class SharePointLinkAttribute : ValidationAttribute
    {
       protected override ValidationResult IsValid(object value, ValidationContext validationContext)
       {
          // Fetch the display name if it is provided
-         var property = validationContext.ObjectType.GetProperty(validationContext.MemberName!);
+         var property = validationContext.ObjectType.GetProperty(validationContext.MemberName);
          var displayAttribute = property?.GetCustomAttribute<DisplayAttribute>();
          var displayName = displayAttribute?.GetName() ?? validationContext.DisplayName;
 
@@ -17,7 +18,7 @@ namespace Dfe.PrepareConversions.Models
 
          if (string.IsNullOrEmpty(link))
          {
-            return ValidationResult.Success!;
+            return ValidationResult.Success;
          }
 
          if (!link.StartsWith("https://"))
@@ -34,7 +35,7 @@ namespace Dfe.PrepareConversions.Models
          }
 
          // If valid, return success
-         return ValidationResult.Success!;
+         return ValidationResult.Success;
       }
    }
 }

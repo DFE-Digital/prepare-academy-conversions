@@ -13,7 +13,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SignificantChange.TaskList;
 
 public class SharePointLinkPageModelTests
 {
-   public static IEnumerable<object[]> EvidenceValidationCases()
+   public static TheoryData<Type, string, string, string> EvidenceValidationCases()
    {
       (Type ModelType, string PropertyName)[] properties =
       [
@@ -43,13 +43,16 @@ public class SharePointLinkPageModelTests
          ("https://example.com/evidence", domainError)
       ];
 
+      var cases = new TheoryData<Type, string, string, string>();
       foreach (var property in properties)
       {
          foreach (var link in links)
          {
-            yield return [property.ModelType, property.PropertyName, link.Link, link.Error];
+            cases.Add(property.ModelType, property.PropertyName, link.Link, link.Error);
          }
       }
+
+      return cases;
    }
 
    [Theory]
