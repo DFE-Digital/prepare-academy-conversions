@@ -18,7 +18,7 @@ public class LocalAuthorityObjectionsIntegrationTests(IntegrationTestingWebAppli
       SignificantChangeProjectResponse project = BuildProject(id: 701);
       project.LocalAuthorityObjections.LocalAuthorityRaisedObjections = true;
       project.LocalAuthorityObjections.LocalAuthorityObjectionsFurtherInformation = "Objections have been raised about timing";
-      project.LocalAuthorityObjections.SupportingEvidenceLink = "https://example.org/evidence";
+      project.LocalAuthorityObjections.SupportingEvidenceLink = "https://educationgovuk.sharepoint.com/sites/local-authority/evidence";
 
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
@@ -29,7 +29,7 @@ public class LocalAuthorityObjectionsIntegrationTests(IntegrationTestingWebAppli
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='local-authority-objections-further-information']").Value
          .Should().Be("Objections have been raised about timing");
       Document.QuerySelector<IHtmlInputElement>("[data-test='local-authority-objections-supporting-evidence-link']").Value
-         .Should().Be("https://example.org/evidence");
+         .Should().Be("https://educationgovuk.sharepoint.com/sites/local-authority/evidence");
    }
 
    [Fact]
@@ -40,14 +40,14 @@ public class LocalAuthorityObjectionsIntegrationTests(IntegrationTestingWebAppli
 
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeLocalAuthorityObjections, project.Id),
-         new SetSignificantChangeLocalAuthorityObjectionsCommand(true, "Objection details", "https://example.org/evidence"),
+         new SetSignificantChangeLocalAuthorityObjectionsCommand(true, "Objection details", "https://educationgovuk.sharepoint.com/sites/local-authority/evidence"),
          new object());
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/local-authority-objections");
 
       Document.QuerySelector<IHtmlInputElement>("#local-authority-objections-yes").IsChecked = true;
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='local-authority-objections-further-information']").Value = "Objection details";
-      Document.QuerySelector<IHtmlInputElement>("[data-test='local-authority-objections-supporting-evidence-link']").Value = "https://example.org/evidence";
+      Document.QuerySelector<IHtmlInputElement>("[data-test='local-authority-objections-supporting-evidence-link']").Value = "https://educationgovuk.sharepoint.com/sites/local-authority/evidence";
       await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
       Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}");
@@ -61,13 +61,13 @@ public class LocalAuthorityObjectionsIntegrationTests(IntegrationTestingWebAppli
 
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeLocalAuthorityObjections, project.Id),
-         new SetSignificantChangeLocalAuthorityObjectionsCommand(false, null, "https://example.org/evidence"),
+         new SetSignificantChangeLocalAuthorityObjectionsCommand(false, null, "https://educationgovuk.sharepoint.com/sites/local-authority/evidence"),
          new object());
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/local-authority-objections");
 
       Document.QuerySelector<IHtmlInputElement>("#local-authority-objections-no").IsChecked = true;
-      Document.QuerySelector<IHtmlInputElement>("[data-test='local-authority-objections-supporting-evidence-link']").Value = "https://example.org/evidence";
+      Document.QuerySelector<IHtmlInputElement>("[data-test='local-authority-objections-supporting-evidence-link']").Value = "https://educationgovuk.sharepoint.com/sites/local-authority/evidence";
       await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
       Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}");

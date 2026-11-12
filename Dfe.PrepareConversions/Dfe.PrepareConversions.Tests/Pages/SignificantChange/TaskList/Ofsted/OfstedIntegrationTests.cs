@@ -36,7 +36,7 @@ public class OfstedIntegrationTests(IntegrationTestingWebApplicationFactory fact
       SignificantChangeProjectResponse project = BuildProject(id: 922);
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
       DateTime inspectionDate = new(2025, 9, 15);
-      const string supportingEvidence = "School improvement plan";
+      const string supportingEvidence = "https://educationgovuk.sharepoint.com/sites/ofsted/improvement-plan";
 
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeOfstedInspection, project.Id),
@@ -76,7 +76,7 @@ public class OfstedIntegrationTests(IntegrationTestingWebApplicationFactory fact
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
       DateTime inspectionDate = new(2025, 9, 15);
       const string additionalInformation = "Improvement actions are underway";
-      const string supportingEvidence = "School improvement plan";
+      const string supportingEvidence = "https://educationgovuk.sharepoint.com/sites/ofsted/improvement-plan";
 
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeOfstedInspection, project.Id),

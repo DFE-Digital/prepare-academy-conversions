@@ -2,6 +2,7 @@
 import significantChangeTaskList from '../../pages/significantChangeTaskList';
 import significantChangeFunding from '../../pages/significantChangeFunding';
 import { Logger } from '../../support/logger';
+import { invalidSharePointLinks, verifySharePointLinkValidation } from '../../support/sharePointLinkValidation';
 
 describe('Significant change - funding', () => {
     beforeEach(() => {
@@ -32,6 +33,15 @@ describe('Significant change - funding', () => {
                 then();
             });
     };
+
+    invalidSharePointLinks.forEach(({ name, value, error }) => {
+        it(`rejects ${name} as supporting evidence`, () => {
+            openTaskList(() => {
+                significantChangeTaskList.openFundingTask();
+                verifySharePointLinkValidation('SupportingEvidence', value, error);
+            });
+        });
+    });
 
     it('Should show all three options and hide the additional information box until No is selected', () => {
         openTaskList(() => {
@@ -75,10 +85,25 @@ describe('Significant change - funding', () => {
         openTaskList(() => {
             significantChangeTaskList.openFundingTask();
 
-            significantChangeFunding.selectNotApplicable().save();
+            significantChangeFunding.selectNotApplicable();
+            cy.getByDataTest('funding-supporting-evidence').clear();
+            significantChangeFunding.save();
 
             cy.url().should('match', /\/significant-change\/task-list\/\d+$/);
             significantChangeTaskList.verifyFundingTaskVisible();
+        });
+    });
+
+    it('Should save a personal SharePoint link and retain it when reopening the task', () => {
+        openTaskList(() => {
+            significantChangeTaskList.openFundingTask();
+            const evidence = 'https://educationgovuk-my.sharepoint.com/personal/user/funding-evidence';
+
+            significantChangeFunding.selectYes().enterSupportingEvidence(evidence).save();
+
+            cy.url().should('match', /\/significant-change\/task-list\/\d+$/);
+            significantChangeTaskList.openFundingTask();
+            cy.getByDataTest('funding-supporting-evidence').should('have.value', evidence);
         });
     });
 });

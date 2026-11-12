@@ -2,6 +2,7 @@
 import significantChangeTaskList from '../../pages/significantChangeTaskList';
 import admissionsVariationDetails from '../../pages/admissionsVariationDetails';
 import { Logger } from '../../support/logger';
+import { invalidSharePointLinks, verifySharePointLinkValidation } from '../../support/sharePointLinkValidation';
 
 describe('Significant change - admissions variation details', () => {
     beforeEach(() => {
@@ -26,6 +27,7 @@ describe('Significant change - admissions variation details', () => {
                 }
 
                 cy.getById('school-name-0').click();
+                cy.url().should('match', /\/significant-change\/task-list\/\d+(\?.*)?$/);
                 cy.url().then((url) => {
                     const projectId = url.split('?')[0].split('/').pop() as string;
                     significantChangeTaskList.openAdmissionsVariationDetailsTask();
@@ -54,12 +56,21 @@ describe('Significant change - admissions variation details', () => {
             });
     });
 
+    invalidSharePointLinks.forEach(({ name, value, error }) => {
+        it(`rejects ${name} as supporting evidence`, () => {
+            openTask(() => {
+                admissionsVariationDetails.verifyFirstPage();
+                verifySharePointLinkValidation('SupportingEvidence', value, error);
+            });
+        });
+    });
+
     it('saves No with optional evidence and does not show the second page', () => {
         openTask(() => {
             admissionsVariationDetails
                 .verifyFirstPage()
                 .chooseNo()
-                .enterSupportingEvidence('Admissions policy reviewed')
+                .enterSupportingEvidence('https://educationgovuk.sharepoint.com/sites/admissions/policy')
                 .continue();
 
             cy.url().should('match', /\/significant-change\/task-list\/\d+(\?.*)?$/);

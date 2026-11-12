@@ -2,6 +2,7 @@
 import significantChangePlanningPermission from '../../pages/significantChangePlanningPermission';
 import significantChangeTaskList from '../../pages/significantChangeTaskList';
 import { Logger } from '../../support/logger';
+import { invalidSharePointLinks, verifySharePointLinkValidation } from '../../support/sharePointLinkValidation';
 
 const TASK_LIST_URL = /\/significant-change\/task-list\/\d+(\?.*)?$/;
 
@@ -35,6 +36,15 @@ describe('Significant change - planning permission', () => {
                 cy.url().then((taskListUrl) => then(projectIdFrom(taskListUrl)));
             });
     };
+
+    invalidSharePointLinks.forEach(({ name, value, error }) => {
+        it(`rejects ${name} as supporting evidence`, () => {
+            withProject((projectId) => {
+                cy.visit(`/significant-change/task-list/${projectId}/planning-permission`);
+                verifySharePointLinkValidation('PlanningPermissionSupportingEvidence', value, error);
+            });
+        });
+    });
 
     it('Should open the planning permission page from the significant change task list', () => {
         withProject(() => {

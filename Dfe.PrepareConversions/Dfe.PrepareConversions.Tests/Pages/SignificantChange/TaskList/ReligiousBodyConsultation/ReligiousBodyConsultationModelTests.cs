@@ -34,7 +34,7 @@ public class ReligiousBodyConsultationModelTests
          ReligiousBodyRaisedObjectionReason = "Objection details",
          ReligiousBodyConsentGranted = YesNoNotApplicableAnswer.No,
          ReligiousBodyConsentNotGrantedReason = "Consent is pending",
-         SupportingEvidence = "https://example.test/evidence"
+         SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/religious-bodies/evidence"
       };
       Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, project);
       IndexModel sut = BuildModel(repository.Object);
@@ -48,7 +48,7 @@ public class ReligiousBodyConsultationModelTests
       sut.ReligiousBodyRaisedObjectionReason.Should().Be("Objection details");
       sut.ReligiousBodyConsentGranted.Should().Be(YesNoNotApplicableAnswer.No);
       sut.ReligiousBodyConsentNotGrantedReason.Should().Be("Consent is pending");
-      sut.SupportingEvidence.Should().Be("https://example.test/evidence");
+      sut.SupportingEvidence.Should().Be("https://educationgovuk.sharepoint.com/sites/religious-bodies/evidence");
    }
 
    [Fact]
@@ -66,7 +66,7 @@ public class ReligiousBodyConsultationModelTests
       sut.ReligiousBodyRaisedObjectionReason = "Cleared";
       sut.ReligiousBodyConsentGranted = YesNoNotApplicableAnswer.NotApplicable;
       sut.ReligiousBodyConsentNotGrantedReason = "Discarded";
-      sut.SupportingEvidence = "https://example.test/evidence";
+      sut.SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/religious-bodies/evidence";
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -81,7 +81,7 @@ public class ReligiousBodyConsultationModelTests
             && command.ReligiousBodyRaisedObjectionReason == "Cleared"
             && command.ReligiousBodyConsentGranted == YesNoNotApplicableAnswer.NotApplicable
             && command.ReligiousBodyConsentNotGrantedReason == null
-            && command.SupportingEvidence == "https://example.test/evidence")), Times.Once);
+            && command.SupportingEvidence == "https://educationgovuk.sharepoint.com/sites/religious-bodies/evidence")), Times.Once);
    }
 
    [Theory]

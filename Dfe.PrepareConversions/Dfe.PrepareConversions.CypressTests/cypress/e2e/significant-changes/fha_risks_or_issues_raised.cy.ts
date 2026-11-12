@@ -2,6 +2,7 @@
 import significantChangeFhaRisksOrIssuesRaised from '../../pages/significantChangeFhaRisksOrIssuesRaised';
 import significantChangeTaskList from '../../pages/significantChangeTaskList';
 import { Logger } from '../../support/logger';
+import { invalidSharePointLinks, verifySharePointLinkValidation } from '../../support/sharePointLinkValidation';
 
 const TASK_LIST_URL = /\/significant-change\/task-list\/\d+(\?.*)?$/;
 const projectIdFrom = (url: string): string => url.split('?')[0].split('/').pop() as string;
@@ -34,6 +35,15 @@ describe('Significant change - FHA risks or issues raised', () => {
                 cy.url().then((taskListUrl) => then(projectIdFrom(taskListUrl)));
             });
     };
+
+    invalidSharePointLinks.forEach(({ name, value, error }) => {
+        it(`rejects ${name} as supporting evidence`, () => {
+            withProject((projectId) => {
+                cy.visit(`/significant-change/task-list/${projectId}/fha-risks-or-issues-raised`);
+                verifySharePointLinkValidation('SupportingEvidence', value, error);
+            });
+        });
+    });
 
     it('opens from the significant change task list', () => {
         withProject((_projectId) => {
@@ -68,7 +78,7 @@ describe('Significant change - FHA risks or issues raised', () => {
             significantChangeFhaRisksOrIssuesRaised
                 .selectYes()
                 .enterAdditionalInformation('A deficit is forecast')
-                .enterSupportingEvidence('Financial forecast')
+                .enterSupportingEvidence('https://educationgovuk.sharepoint.com/sites/fha/forecast')
                 .save();
 
             cy.url().should('match', TASK_LIST_URL);
@@ -83,7 +93,7 @@ describe('Significant change - FHA risks or issues raised', () => {
             significantChangeFhaRisksOrIssuesRaised
                 .verifyPageLoaded()
                 .selectNo()
-                .enterSupportingEvidence('No risks or issues identified')
+                .enterSupportingEvidence('https://educationgovuk.sharepoint.com/sites/fha/no-issues')
                 .save();
 
             cy.url().should('match', TASK_LIST_URL);

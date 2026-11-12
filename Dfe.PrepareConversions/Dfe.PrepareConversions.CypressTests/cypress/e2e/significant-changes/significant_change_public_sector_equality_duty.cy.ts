@@ -2,6 +2,7 @@
 import significantChangePublicSectorEqualityDuty from '../../pages/significantChangePublicSectorEqualityDuty';
 import significantChangeTaskList from '../../pages/significantChangeTaskList';
 import { Logger } from '../../support/logger';
+import { invalidSharePointLinks, verifySharePointLinkValidation } from '../../support/sharePointLinkValidation';
 
 const TASK_LIST_URL = /\/significant-change\/task-list\/\d+(\?.*)?$/;
 
@@ -35,6 +36,15 @@ describe('Significant change - public sector equality duty', () => {
                 cy.url().then((taskListUrl) => then(projectIdFrom(taskListUrl)));
             });
     };
+
+    invalidSharePointLinks.forEach(({ name, value, error }) => {
+        it(`rejects ${name} as supporting evidence`, () => {
+            withProject((projectId) => {
+                cy.visit(`/significant-change/task-list/${projectId}/public-sector-equality-duty`);
+                verifySharePointLinkValidation('SupportingEvidence', value, error);
+            });
+        });
+    });
 
     it('Should open the public sector equality duty page from the significant change task list', () => {
         withProject(() => {
@@ -85,7 +95,7 @@ describe('Significant change - public sector equality duty', () => {
             cy.visit(`/significant-change/task-list/${projectId}/public-sector-equality-duty`);
 
             const additionalInformation = 'Pupils with SEND will receive additional transitional support';
-            const supportingEvidence = `Likely evidence ${Date.now()}`;
+            const supportingEvidence = `https://educationgovuk.sharepoint.com/sites/equalities/likely-${Date.now()}`;
 
             significantChangePublicSectorEqualityDuty
                 .verifyPageLoaded()
@@ -113,7 +123,7 @@ describe('Significant change - public sector equality duty', () => {
             cy.visit(`/significant-change/task-list/${projectId}/public-sector-equality-duty`);
 
             const additionalInformation = 'Some impact on pupils with EAL - monitoring planned';
-            const supportingEvidence = `Some impact evidence ${Date.now()}`;
+            const supportingEvidence = `https://educationgovuk.sharepoint.com/sites/equalities/some-impact-${Date.now()}`;
 
             significantChangePublicSectorEqualityDuty
                 .verifyPageLoaded()
@@ -140,7 +150,7 @@ describe('Significant change - public sector equality duty', () => {
         withProject((projectId) => {
             cy.visit(`/significant-change/task-list/${projectId}/public-sector-equality-duty`);
 
-            const supportingEvidence = `Unlikely evidence ${Date.now()}`;
+            const supportingEvidence = `https://educationgovuk.sharepoint.com/sites/equalities/unlikely-${Date.now()}`;
 
             significantChangePublicSectorEqualityDuty
                 .verifyPageLoaded()
@@ -165,7 +175,7 @@ describe('Significant change - public sector equality duty', () => {
             cy.visit(`/significant-change/task-list/${projectId}/public-sector-equality-duty`);
 
             const additionalInformation = 'Some impact on pupils with EAL - monitoring planned';
-            const supportingEvidence = `Some impact evidence ${Date.now()}`;
+            const supportingEvidence = `https://educationgovuk.sharepoint.com/sites/equalities/some-impact-${Date.now()}`;
 
             significantChangePublicSectorEqualityDuty
                 .verifyPageLoaded()
@@ -194,7 +204,7 @@ describe('Significant change - public sector equality duty', () => {
             cy.visit(`/significant-change/task-list/${projectId}/public-sector-equality-duty`);
 
             const additionalInformation = 'Pupils with SEND will receive additional transitional support';
-            const supportingEvidence = `Likely evidence ${Date.now()}`;
+            const supportingEvidence = `https://educationgovuk.sharepoint.com/sites/equalities/likely-${Date.now()}`;
 
             significantChangePublicSectorEqualityDuty
                 .verifyPageLoaded()

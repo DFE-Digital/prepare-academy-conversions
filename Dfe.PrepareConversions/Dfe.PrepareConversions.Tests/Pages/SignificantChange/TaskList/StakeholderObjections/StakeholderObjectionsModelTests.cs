@@ -34,7 +34,7 @@ public class StakeholderObjectionsModelTests
          StakeholderObjectionsDetails = "Objections were raised",
          RelevantStakeholdersNotifiedOfAdmissionsChanges = YesNoNotApplicableAnswer.No,
          RelevantStakeholdersNotifiedOfAdmissionsChangesReason = "Notifications are pending",
-         SupportingEvidence = "https://example.test/evidence"
+         SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/stakeholders/evidence"
       };
       Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, project);
       IndexModel sut = BuildModel(repository.Object);
@@ -48,7 +48,7 @@ public class StakeholderObjectionsModelTests
       sut.StakeholderObjectionsDetails.Should().Be("Objections were raised");
       sut.RelevantStakeholdersNotifiedOfAdmissionsChanges.Should().Be(YesNoNotApplicableAnswer.No);
       sut.RelevantStakeholdersNotifiedOfAdmissionsChangesReason.Should().Be("Notifications are pending");
-      sut.SupportingEvidence.Should().Be("https://example.test/evidence");
+      sut.SupportingEvidence.Should().Be("https://educationgovuk.sharepoint.com/sites/stakeholders/evidence");
    }
 
    [Fact]
@@ -66,7 +66,7 @@ public class StakeholderObjectionsModelTests
       sut.StakeholderObjectionsDetails = "Objections addressed";
       sut.RelevantStakeholdersNotifiedOfAdmissionsChanges = YesNoNotApplicableAnswer.NotApplicable;
       sut.RelevantStakeholdersNotifiedOfAdmissionsChangesReason = "Discarded";
-      sut.SupportingEvidence = "https://example.test/evidence";
+      sut.SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/stakeholders/evidence";
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -81,7 +81,7 @@ public class StakeholderObjectionsModelTests
             && command.StakeholderObjectionsDetails == "Objections addressed"
             && command.RelevantStakeholdersNotifiedOfAdmissionsChanges == YesNoNotApplicableAnswer.NotApplicable
             && command.RelevantStakeholdersNotifiedOfAdmissionsChangesReason == null
-            && command.SupportingEvidence == "https://example.test/evidence")), Times.Once);
+            && command.SupportingEvidence == "https://educationgovuk.sharepoint.com/sites/stakeholders/evidence")), Times.Once);
    }
 
    [Theory]

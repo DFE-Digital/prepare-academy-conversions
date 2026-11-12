@@ -32,20 +32,24 @@ public class FundingIntegrationTests(IntegrationTestingWebApplicationFactory fac
          .Should().Be("https://educationgovuk.sharepoint.com/sites/funding/board-minutes");
    }
 
-   [Fact]
-   public async Task Should_save_yes_answer_and_redirect_to_task_list()
+   [Theory]
+   [InlineData(null)]
+   [InlineData("https://educationgovuk.sharepoint.com/sites/funding/evidence")]
+   [InlineData("https://educationgovuk-my.sharepoint.com/personal/user/funding-evidence")]
+   public async Task Should_save_yes_answer_and_redirect_to_task_list(string supportingEvidence)
    {
       SignificantChangeProjectResponse project = BuildProject(id: 712);
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeFunding, project.Id),
-         new SetSignificantChangeFundingCommand(FundingAnswer.Yes, null, null),
+         new SetSignificantChangeFundingCommand(FundingAnswer.Yes, null, supportingEvidence),
          new object());
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/funding");
 
       Document.QuerySelector<IHtmlInputElement>("#funding-yes")!.IsChecked = true;
+      Document.QuerySelector<IHtmlInputElement>("[data-test='funding-supporting-evidence']")!.Value = supportingEvidence ?? string.Empty;
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}");

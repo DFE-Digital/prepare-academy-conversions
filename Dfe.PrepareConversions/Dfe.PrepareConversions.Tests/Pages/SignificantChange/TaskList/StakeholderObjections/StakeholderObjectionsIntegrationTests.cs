@@ -23,7 +23,7 @@ public class StakeholderObjectionsIntegrationTests(IntegrationTestingWebApplicat
          WereThereAnyObjectionsRaised = true,
          StakeholderObjectionsDetails = "Objection details",
          RelevantStakeholdersNotifiedOfAdmissionsChanges = YesNoNotApplicableAnswer.NotApplicable,
-         SupportingEvidence = "https://example.test/evidence"
+         SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/stakeholders/evidence"
       };
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
@@ -34,7 +34,7 @@ public class StakeholderObjectionsIntegrationTests(IntegrationTestingWebApplicat
       Document.QuerySelector<IHtmlInputElement>("#objections-raised-yes")!.IsChecked.Should().BeTrue();
       Document.QuerySelector<IHtmlInputElement>("#stakeholders-notified-NotApplicable")!.IsChecked.Should().BeTrue();
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='stakeholder-objections-details']")!.Value.Should().Be("Objection details");
-      Document.QuerySelector<IHtmlInputElement>("[data-test='other-stakeholder-supporting-evidence']")!.Value.Should().Be("https://example.test/evidence");
+      Document.QuerySelector<IHtmlInputElement>("[data-test='other-stakeholder-supporting-evidence']")!.Value.Should().Be("https://educationgovuk.sharepoint.com/sites/stakeholders/evidence");
    }
 
    [Fact]
@@ -43,7 +43,7 @@ public class StakeholderObjectionsIntegrationTests(IntegrationTestingWebApplicat
       SignificantChangeProjectResponse project = BuildProject(602);
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
       const string reason = "Additional details";
-      const string evidence = "https://example.test/evidence";
+      const string evidence = "https://educationgovuk.sharepoint.com/sites/stakeholders/evidence";
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeOtherStakeholderEngagement, project.Id),
          new SetSignificantChangeOtherStakeholderEngagementCommand(

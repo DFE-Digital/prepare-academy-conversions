@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+import { invalidSharePointLinks, verifySharePointLinkValidation } from '../../support/sharePointLinkValidation';
 
 describe('Land Transaction Form', () => {
     const TASK_LIST_URL = /^.*\/significant-change\/task-list\/\d+(\?.*)?$/;
@@ -80,8 +81,8 @@ describe('Land Transaction Form', () => {
     });
 
     it('should associate the supporting evidence label with its input and focus it when clicked', () => {
-        cy.get('label[for="supporting-evidence"]').should('contain.text', 'Supporting Evidence').click();
-        cy.getById('supporting-evidence').should('have.focus');
+        cy.get('label[for="LandTransactionSupportingEvidence"]').should('contain.text', 'Supporting evidence').click();
+        cy.getById('LandTransactionSupportingEvidence').should('have.focus');
     });
 
     it('should have no detectable WCAG 2.1 AA or 2.2 AA violations', () => {
@@ -119,7 +120,9 @@ describe('Land Transaction Form', () => {
         cy.getByDataTest('land-transction-consent-fieldset').contains('label', 'No').click();
         cy.get('textarea[name="LandTransactionConsentAdditionalInfo"]').should('be.visible').clear();
         cy.get('textarea[name="LandTransactionConsentAdditionalInfo"]').type('Consent details');
-        cy.getById('supporting-evidence').type('https://educationgovuk.sharepoint.com/sites/land-transaction/evidence');
+        cy.getById('LandTransactionSupportingEvidence').type(
+            'https://educationgovuk.sharepoint.com/sites/land-transaction/evidence'
+        );
 
         cy.contains('button', 'Save and continue').click();
         cy.urlPath().should('match', TASK_LIST_URL);
@@ -133,15 +136,11 @@ describe('Land Transaction Form', () => {
         cy.urlPath().should('match', TASK_LIST_URL);
     });
 
-    it('should reject a supporting evidence link from an unapproved domain', () => {
-        cy.getByDataTest('land-transction-application-fieldset').contains('label', 'Yes').click();
-        cy.getByDataTest('land-transction-consent-fieldset').contains('label', 'Yes').click();
-        cy.getById('supporting-evidence').type('https://other.sharepoint.com/sites/team/evidence');
-
-        cy.contains('button', 'Save and continue').click();
-
-        cy.getById('supporting-evidence-error')
-            .should('be.visible')
-            .and('contain.text', 'Entry must be a valid gov uk SharePoint link');
+    invalidSharePointLinks.forEach(({ name, value, error }) => {
+        it(`rejects ${name} as supporting evidence`, () => {
+            cy.getByDataTest('land-transction-application-fieldset').contains('label', 'Yes').click();
+            cy.getByDataTest('land-transction-consent-fieldset').contains('label', 'Yes').click();
+            verifySharePointLinkValidation('LandTransactionSupportingEvidence', value, error);
+        });
     });
 });
