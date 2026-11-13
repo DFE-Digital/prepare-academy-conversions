@@ -15,14 +15,15 @@ public class SignificantChangeTaskListBuilderTests
    [InlineData(2, "admissions-variation", "Admissions variation", new[] { "admissions-variation-details" })]
    [InlineData(3, "consultation-details", "Consultation details", new[] { "consultation", "local-authority-objections", "religious-bodies", "other-stakeholder-engagement" })]
    [InlineData(4, "academy-performance", "Academy performance", new[] { "ofsted" })]
-   [InlineData(5, "public-sector-equality-duty", "Public Sector Equality Duty", new[] { "public-sector-equality-duty" })]
-   [InlineData(6, "land-transaction-application-and-planning-permission", "Land transaction application and planning permission", new[] { "planning-permission", "land-transaction-application" })]
-   [InlineData(7, "financial-details", "Financial details", new[] { "funding", "fha-risks-or-issues-raised" })]
-   [InlineData(8, "high-quality-trust-framework", "High Quality Trust Framework", new[] { "hqtf-consideration" })]
-   [InlineData(9, "recommendation-on-how-to-proceed", "Recommendation on how to proceed", new[] { "significant-change-recommendation", "admissions-variation-recommendation" })]
+   [InlineData(5, "sen-considerations", "SEN and alternative provision considerations", new[] { "special-school-satellite-site-considerations" })]
+   [InlineData(6, "public-sector-equality-duty", "Public Sector Equality Duty", new[] { "public-sector-equality-duty" })]
+   [InlineData(7, "land-transaction-application-and-planning-permission", "Land transaction application and planning permission", new[] { "planning-permission", "land-transaction-application" })]
+   [InlineData(8, "financial-details", "Financial details", new[] { "funding", "fha-risks-or-issues-raised" })]
+   [InlineData(9, "high-quality-trust-framework", "High Quality Trust Framework", new[] { "hqtf-consideration" })]
+   [InlineData(10, "recommendation-on-how-to-proceed", "Recommendation on how to proceed", new[] { "significant-change-recommendation", "admissions-variation-recommendation" })]
    public void Build_includes_ordered_sections_and_tasks_when_supplied(int sectionDisplayOrder, string sectionKey, string sectionTitle, string[] taskKeys)
    {
-      const int expectedSectionCount = 9;
+      const int expectedSectionCount = 10;
 
       SignificantChangeProjectViewBaseModel project = BuildProject();
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
@@ -201,6 +202,23 @@ public class SignificantChangeTaskListBuilderTests
       const string taskKey = "fha-risks-or-issues-raised";
 
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.FHARisksOrIssuesRaisedStatus = taskStatus);
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
+      var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
+
+      task.Status.Status.Should().Be(expectedTaskStatus);
+   }
+
+   [Theory]
+   [MemberData(nameof(StatusCases))]
+   public void Build_maps_special_school_satellite_considerations_status_to_task_status(
+      SignificantChangeTaskStatus taskStatus, string expectedTaskStatus)
+   {
+      const string sectionKey = "sen-considerations";
+      const string taskKey = "special-school-satellite-site-considerations";
+
+      SignificantChangeProjectViewBaseModel project = BuildProject(p => p.SpecialSchoolSatelliteConsiderationsStatus = taskStatus);
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
       var section = Assert.Single(result.Sections, s => s.Key == sectionKey);

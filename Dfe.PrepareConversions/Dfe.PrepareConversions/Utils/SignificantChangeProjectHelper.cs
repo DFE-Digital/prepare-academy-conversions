@@ -97,6 +97,11 @@ public static class SignificantChangeProjectHelper
          LocalAuthorityRaisedObjections = significantChangeProject.LocalAuthorityObjections?.LocalAuthorityRaisedObjections,
          LocalAuthorityObjectionsFurtherInformation = significantChangeProject.LocalAuthorityObjections?.LocalAuthorityObjectionsFurtherInformation ?? string.Empty,
          LocalAuthorityObjectionsSupportingEvidenceLink = significantChangeProject.LocalAuthorityObjections?.SupportingEvidenceLink ?? string.Empty,
+         SpecialSchoolSatelliteConsiderationsStatus = significantChangeProject.SpecialSchoolSatelliteConsiderations?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         SpecialSchoolSatelliteConsiderationsAnswer = significantChangeProject.SpecialSchoolSatelliteConsiderations?.Answer,
+         SpecialSchoolSatelliteConsiderationsAdditionalInformation = significantChangeProject.SpecialSchoolSatelliteConsiderations?.AdditionalInformation,
+         SpecialSchoolSatelliteConsiderationsSupportingEvidenceLink = significantChangeProject.SpecialSchoolSatelliteConsiderations?.SupportingEvidence ?? string.Empty
+
       };
    }
 }

@@ -49,7 +49,7 @@ namespace Dfe.PrepareConversions.Pages.SignificantChange.TaskList.SpecialSchoolS
          if (!ModelState.IsValid)
          {
             errorService.AddErrors(
-               [nameof(FundingAnswer), nameof(AdditionalInformation), nameof(SupportingEvidence)],
+                  [nameof(Answer), nameof(AdditionalInformation), nameof(SupportingEvidence)],
                ModelState);
 
             return Page();
@@ -68,7 +68,7 @@ namespace Dfe.PrepareConversions.Pages.SignificantChange.TaskList.SpecialSchoolS
       private void Validate()
       {
          if (!Answer.HasValue)
-            ModelState.AddModelError(nameof(FundingAnswer), "Select an option");
+            ModelState.AddModelError(nameof(Answer), "Select an option");
 
          if (Answer == YesNoNotApplicableAnswer.No && string.IsNullOrWhiteSpace(AdditionalInformation))
             ModelState.AddModelError(nameof(AdditionalInformation), "Add additional information");
