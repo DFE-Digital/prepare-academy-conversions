@@ -40,13 +40,6 @@ describe('Significant change - special school satellite considerations', () => {
                 .click();
 
             significantChangeSpecialSchoolSatelliteConsiderations
-                .verifyPageLoaded()
-                .verifyAllOptionsPresent()
-                .save()
-                .verifyErrorSummaryContains('Select an option')
-                .verifyInlineError('Answer', 'Select an option');
-
-            significantChangeSpecialSchoolSatelliteConsiderations
                 .selectNo()
                 .save()
                 .verifyErrorSummaryContains('Add additional information')

@@ -23,7 +23,7 @@
             <div class="govuk-radios__item">
                 <input asp-for="@Model.Answer" class="govuk-radios__input"
                        id="answer-yes" type="radio"
-                       value="@nameof(FundingAnswer.Yes)"
+                       value="@nameof(YesNoNotApplicableAnswer.Yes)"
                        data-test="answer-yes" />
                 <label class="govuk-label govuk-radios__label" for="answer-yes">
                     Yes
@@ -33,7 +33,7 @@
             <div class="govuk-radios__item">
                 <input asp-for="@Model.Answer" class="govuk-radios__input"
                        id="answer-no" type="radio"
-                       value="@nameof(FundingAnswer.No)"
+                       value="@nameof(YesNoNotApplicableAnswer.No)"
                        aria-controls="conditional-additional-information"
                        data-test="additional-info" />
                 <label class="govuk-label govuk-radios__label" for="answer-no">
@@ -49,15 +49,15 @@
                     <inline-error for="@nameof(Model.AdditionalInformation)" />
                     <textarea asp-for="@Model.AdditionalInformation"
                               class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.AdditionalInformation))"
-                              rows="5" data-test="funding-additional-information"></textarea>
+                              rows="5" data-test="additional-information"></textarea>
                 </div>
             </div>
 
             <div class="govuk-radios__item">
                 <input asp-for="@Model.Answer" class="govuk-radios__input"
                        id="answer-not-applicable" type="radio"
-                       value="@nameof(FundingAnswer.NotApplicable)"
-                       data-test="funding-not-applicable" />
+                       value="@nameof(YesNoNotApplicableAnswer.NotApplicable)"
+                       data-test="not-applicable" />
                 <label class="govuk-label govuk-radios__label" for="answer-not-applicable">
                     Not applicable
                 </label>

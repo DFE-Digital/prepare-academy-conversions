@@ -17,7 +17,7 @@ class SignificantChangeSpecialSchoolSatelliteConsiderations extends BasePage {
     public verifyAllOptionsPresent(): this {
         cy.getByDataTest('answer-yes').should('exist');
         cy.getByDataTest('additional-info').should('exist');
-        cy.getByDataTest('funding-not-applicable').should('exist');
+        cy.getByDataTest('not-applicable').should('exist');
         return this;
     }
 
@@ -27,8 +27,8 @@ class SignificantChangeSpecialSchoolSatelliteConsiderations extends BasePage {
     }
 
     public enterAdditionalInformation(value: string): this {
-        cy.getByDataTest('funding-additional-information').clear();
-        cy.getByDataTest('funding-additional-information').type(value);
+        cy.getByDataTest('additional-information').clear();
+        cy.getByDataTest('additional-information').type(value);
         return this;
     }
 
