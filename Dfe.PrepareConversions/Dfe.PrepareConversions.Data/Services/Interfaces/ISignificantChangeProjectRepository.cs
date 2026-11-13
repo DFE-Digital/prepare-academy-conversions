@@ -49,4 +49,5 @@ public interface ISignificantChangeProjectRepository
    Task SetFhaRisksOrIssuesRaised(int id, SetSignificantChangeFhaRisksOrIssuesRaisedCommand command);
    Task SetAdmissionsVariation(int id, SetSignificantChangeAdmissionsVariationCommand command);
 
+   Task SetSpecialSchoolSatelliteConsiderations(int id, SetSignificantChangeSpecialSchoolSatelliteConsiderationsCommand command);
 }

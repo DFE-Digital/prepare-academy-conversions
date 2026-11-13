@@ -416,4 +416,21 @@ public class SignificantChangeProjectRepository(
          throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
       }
    }
+
+   public async Task SetSpecialSchoolSatelliteConsiderations(int id, SetSignificantChangeSpecialSchoolSatelliteConsiderationsCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeSpecialSchoolSatelliteConsiderations, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeSpecialSchoolSatelliteConsiderationsCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
 }

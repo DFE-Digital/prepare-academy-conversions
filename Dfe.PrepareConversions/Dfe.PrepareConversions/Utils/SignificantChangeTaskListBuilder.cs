@@ -15,11 +15,12 @@ public static class SignificantChangeTaskListBuilder
       AdmissionsVariationSection(2),
       ConsultationDetailsSection(3),
       AcademyPerformanceSection(4),
-      PublicSectorEqualityDutySection(5),
-      LandTransactionAndPlanningPermissionSection(6),
-      FinancialDetailsSection(7),
-      HighQualityTrustFrameworkSection(8),
-      RecommendationOnHowToProceedSection(9),
+      SenConsiderationsSection(5),
+      PublicSectorEqualityDutySection(6),
+      LandTransactionAndPlanningPermissionSection(7),
+      FinancialDetailsSection(8),
+      HighQualityTrustFrameworkSection(9),
+      RecommendationOnHowToProceedSection(10),
    ];
 
    private static SignificantChangeTaskSectionDefinition KeyProjectsDatesSection(int displayOrder)
@@ -104,6 +105,23 @@ public static class SignificantChangeTaskListBuilder
                1,
                Links.SignificantChange.OfstedInspection,
                project => GetTaskStatus(project.OfstedInspectionStatus))
+         ]
+      );
+   }
+
+   private static SignificantChangeTaskSectionDefinition SenConsiderationsSection(int displayOrder)
+   {
+      return new SignificantChangeTaskSectionDefinition(
+         "sen-considerations",
+         "SEN and alternative provision considerations",
+         displayOrder,
+         [
+            new SignificantChangeTaskDefinition(
+               "special-school-satellite-site-considerations",
+               "Special school satellite site considerations",
+               4,
+               Links.SignificantChange.SpecialSchoolSatelliteConsiderations,
+               project => GetTaskStatus(project.SpecialSchoolSatelliteConsiderationsStatus))
          ]
       );
    }

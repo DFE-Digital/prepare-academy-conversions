@@ -245,6 +245,40 @@ public class SignificantChangeProjectHelperTests
    }
 
    [Fact]
+   public void Build_Maps_nested_special_school_satellite_considerations_values()
+   {
+      SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
+      response.SpecialSchoolSatelliteConsiderations = new SignificantChangeSpecialSchoolSatelliteConsiderationsResponse
+      {
+         Answer = YesNoNotApplicableAnswer.No,
+         AdditionalInformation = "Requirements gap identified",
+         SupportingEvidence = "Satellite site review",
+         Status = SignificantChangeTaskStatus.InProgress
+      };
+
+      var viewModel = SignificantChangeProjectHelper.Build(response);
+
+      Assert.Equal(YesNoNotApplicableAnswer.No, viewModel.SpecialSchoolSatelliteConsiderationsAnswer);
+      Assert.Equal("Requirements gap identified", viewModel.SpecialSchoolSatelliteConsiderationsAdditionalInformation);
+      Assert.Equal("Satellite site review", viewModel.SpecialSchoolSatelliteConsiderationsSupportingEvidenceLink);
+      Assert.Equal(SignificantChangeTaskStatus.InProgress, viewModel.SpecialSchoolSatelliteConsiderationsStatus);
+   }
+
+   [Fact]
+   public void Build_Defaults_special_school_satellite_considerations_when_section_is_missing()
+   {
+      SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
+      response.SpecialSchoolSatelliteConsiderations = null;
+
+      var viewModel = SignificantChangeProjectHelper.Build(response);
+
+      Assert.Null(viewModel.SpecialSchoolSatelliteConsiderationsAnswer);
+      Assert.Null(viewModel.SpecialSchoolSatelliteConsiderationsAdditionalInformation);
+      Assert.Equal(string.Empty, viewModel.SpecialSchoolSatelliteConsiderationsSupportingEvidenceLink);
+      Assert.Equal(SignificantChangeTaskStatus.NotStarted, viewModel.SpecialSchoolSatelliteConsiderationsStatus);
+   }
+
+   [Fact]
    public void Build_Maps_nested_recommendation_values()
    {
       SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
