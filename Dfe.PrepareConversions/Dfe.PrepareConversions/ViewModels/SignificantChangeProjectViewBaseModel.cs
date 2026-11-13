@@ -99,4 +99,8 @@ public class SignificantChangeProjectViewBaseModel
    public YesNoNotApplicableAnswer? SpecialSchoolSatelliteConsiderationsAnswer { get; set; }
    public string SpecialSchoolSatelliteConsiderationsAdditionalInformation { get; set; } = string.Empty;
    public string SpecialSchoolSatelliteConsiderationsSupportingEvidenceLink { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus SatelliteSiteArrangementStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public YesNoNotApplicableAnswer? SatelliteSiteArrangementAnswer { get; set; }
+   public string SatelliteSiteArrangementAdditionalInformation { get; set; } = string.Empty;
+   public string SatelliteSiteArrangementSupportingEvidence { get; set; } = string.Empty;
 }

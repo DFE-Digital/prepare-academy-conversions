@@ -417,6 +417,22 @@ public class SignificantChangeProjectRepository(
       }
    }
 
+   public async Task SetSatelliteSiteArrangement(int id, SetSignificantChangeSatelliteSiteArrangementCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeSatelliteSiteArrangement, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeSatelliteSiteArrangementCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
    public async Task SetSpecialSchoolSatelliteConsiderations(int id, SetSignificantChangeSpecialSchoolSatelliteConsiderationsCommand command)
    {
       HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
