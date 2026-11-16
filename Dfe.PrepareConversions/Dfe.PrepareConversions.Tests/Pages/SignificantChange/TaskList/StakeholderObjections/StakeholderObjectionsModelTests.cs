@@ -81,7 +81,7 @@ public class StakeholderObjectionsModelTests
             && command.StakeholderObjectionsDetails == "Objections addressed"
             && command.RelevantStakeholdersNotifiedOfAdmissionsChanges == YesNoNotApplicableAnswer.NotApplicable
             && command.RelevantStakeholdersNotifiedOfAdmissionsChangesReason == null
-            && command.SupportingEvidence == "https://educationgovuk.sharepoint.com/sites/stakeholders/evidence")), Times.Once);
+            && command.SupportingEvidenceSharepointLink == "https://educationgovuk.sharepoint.com/sites/stakeholders/evidence")), Times.Once);
    }
 
    [Theory]

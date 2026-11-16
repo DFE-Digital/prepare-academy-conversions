@@ -35,7 +35,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
       SetSignificantChangeAdmissionsVariationCommand draft = GetDraft(id);
       AdmissionsVariationRequired = draft?.AdmissionsVariationRequired
          ?? Project.AdmissionsVariationRequired;
-      SupportingEvidence = draft?.AdmissionsVariationSupportingEvidence
+      SupportingEvidence = draft?.AdmissionsVariationSupportingEvidenceSharepointLink
          ?? Project.AdmissionsVariationSupportingEvidence;
 
       return Page();

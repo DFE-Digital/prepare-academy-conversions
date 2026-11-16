@@ -7,7 +7,7 @@ public class SetSignificantChangeOtherStakeholderEngagementCommand(
    string stakeholderObjectionsDetails,
    YesNoNotApplicableAnswer? relevantStakeholdersNotifiedOfAdmissionsChanges,
    string relevantStakeholdersNotifiedOfAdmissionsChangesReason,
-   string supportingEvidence)
+   string supportingEvidenceSharepointLink)
 {
    public bool? TrustConsultedStakeholders { get; set; } = trustConsultedStakeholders;
    public string TrustConsultedStakeholdersNotConsultedReason { get; set; } = trustConsultedStakeholdersNotConsultedReason;
@@ -15,5 +15,5 @@ public class SetSignificantChangeOtherStakeholderEngagementCommand(
    public string StakeholderObjectionsDetails { get; set; } = stakeholderObjectionsDetails;
    public YesNoNotApplicableAnswer? RelevantStakeholdersNotifiedOfAdmissionsChanges { get; set; } = relevantStakeholdersNotifiedOfAdmissionsChanges;
    public string RelevantStakeholdersNotifiedOfAdmissionsChangesReason { get; set; } = relevantStakeholdersNotifiedOfAdmissionsChangesReason;
-   public string SupportingEvidence { get; set; } = supportingEvidence;
+   public string SupportingEvidenceSharepointLink { get; set; } = supportingEvidenceSharepointLink;
 }

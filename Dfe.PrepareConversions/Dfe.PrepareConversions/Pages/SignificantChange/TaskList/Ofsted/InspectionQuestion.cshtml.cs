@@ -54,7 +54,7 @@ public class InspectionQuestionModel(
 
       MeetsOfstedStandards = Inspection.MeetsOfstedStandards;
       AdditionalInformation = Inspection.AdditionalInformation;
-      SupportingEvidence = Inspection.SupportingEvidence;
+      SupportingEvidence = Inspection.SupportingEvidenceSharepointLink;
       DateOfInspection = Inspection.InspectionDate;
 
       return Page();
@@ -94,7 +94,7 @@ public class InspectionQuestionModel(
       {
          MeetsOfstedStandards = MeetsOfstedStandards,
          AdditionalInformation = MeetsOfstedStandards == false ? AdditionalInformation : null,
-         SupportingEvidence = SupportingEvidence
+         SupportingEvidenceSharepointLink = SupportingEvidence
       };
 
       SetOfstedInspectionInSession(id, Inspection);

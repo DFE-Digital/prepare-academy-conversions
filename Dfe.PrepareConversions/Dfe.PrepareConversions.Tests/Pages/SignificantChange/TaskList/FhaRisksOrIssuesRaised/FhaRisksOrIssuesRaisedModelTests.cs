@@ -68,7 +68,7 @@ public class FhaRisksOrIssuesRaisedModelTests
          It.Is<SetSignificantChangeFhaRisksOrIssuesRaisedCommand>(command =>
             command.FhaRisksOrIssuesRaised == true
             && command.AdditionalInformation == "A deficit is forecast"
-            && command.SupportingEvidence == "https://educationgovuk.sharepoint.com/sites/fha/forecast")), Times.Once);
+            && command.SupportingEvidenceSharepointLink == "https://educationgovuk.sharepoint.com/sites/fha/forecast")), Times.Once);
    }
 
    [Fact]

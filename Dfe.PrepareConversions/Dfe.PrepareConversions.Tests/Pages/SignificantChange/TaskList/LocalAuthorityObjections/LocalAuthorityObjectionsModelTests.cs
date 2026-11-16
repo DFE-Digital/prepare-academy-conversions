@@ -75,7 +75,7 @@ public class LocalAuthorityObjectionsModelTests
          It.Is<SetSignificantChangeLocalAuthorityObjectionsCommand>(command =>
             command.LocalAuthorityRaisedObjections == localAuthorityRaisedObjections
             && command.LocalAuthorityObjectionsFurtherInformation == expectedFurtherInformation
-            && command.LocalAuthoritySupportingEvidenceLink == expectedEvidenceLink)), Times.Once);
+            && command.LocalAuthoritySupportingEvidenceLinkSharepointLink == expectedEvidenceLink)), Times.Once);
    }
 
    [Fact]
@@ -141,7 +141,7 @@ public class LocalAuthorityObjectionsModelTests
             command.LocalAuthorityRaisedObjections.HasValue
             && command.LocalAuthorityRaisedObjections.Value
             && command.LocalAuthorityObjectionsFurtherInformation == "Objection details"
-            && command.LocalAuthoritySupportingEvidenceLink == null)), Times.Once);
+            && command.LocalAuthoritySupportingEvidenceLinkSharepointLink == null)), Times.Once);
    }
 
    private static Mock<ISignificantChangeProjectRepository> BuildRepository(int id, SignificantChangeProjectResponse project)

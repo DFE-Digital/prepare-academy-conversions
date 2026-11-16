@@ -36,7 +36,7 @@ public class InspectionQuestionModelTests
       sut.DateOfInspection.Should().Be(inspection.InspectionDate);
       sut.MeetsOfstedStandards.Should().BeFalse();
       sut.AdditionalInformation.Should().Be(inspection.AdditionalInformation);
-      sut.SupportingEvidence.Should().Be(inspection.SupportingEvidence);
+      sut.SupportingEvidence.Should().Be(inspection.SupportingEvidenceSharepointLink);
    }
 
    [Fact]
@@ -86,7 +86,7 @@ public class InspectionQuestionModelTests
                command.InspectionDate == inspection.InspectionDate
                && command.MeetsOfstedStandards == true
                && command.AdditionalInformation == null
-               && command.SupportingEvidence == "https://educationgovuk.sharepoint.com/sites/ofsted/updated-evidence")),
+               && command.SupportingEvidenceSharepointLink == "https://educationgovuk.sharepoint.com/sites/ofsted/updated-evidence")),
          Times.Once);
       GetInspection(session, id).Should().BeNull();
    }
@@ -121,7 +121,7 @@ public class InspectionQuestionModelTests
                command.InspectionDate == inspection.InspectionDate
                && command.MeetsOfstedStandards == false
                && command.AdditionalInformation == "Improvement actions are underway"
-               && command.SupportingEvidence == "https://educationgovuk.sharepoint.com/sites/ofsted/improvement-plan")),
+               && command.SupportingEvidenceSharepointLink == "https://educationgovuk.sharepoint.com/sites/ofsted/improvement-plan")),
          Times.Once);
       GetInspection(session, id).Should().BeNull();
    }

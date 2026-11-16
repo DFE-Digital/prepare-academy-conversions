@@ -81,7 +81,7 @@ public class ReligiousBodyConsultationModelTests
             && command.ReligiousBodyRaisedObjectionReason == "Cleared"
             && command.ReligiousBodyConsentGranted == YesNoNotApplicableAnswer.NotApplicable
             && command.ReligiousBodyConsentNotGrantedReason == null
-            && command.SupportingEvidence == "https://educationgovuk.sharepoint.com/sites/religious-bodies/evidence")), Times.Once);
+            && command.SupportingEvidenceSharepointLink == "https://educationgovuk.sharepoint.com/sites/religious-bodies/evidence")), Times.Once);
    }
 
    [Theory]

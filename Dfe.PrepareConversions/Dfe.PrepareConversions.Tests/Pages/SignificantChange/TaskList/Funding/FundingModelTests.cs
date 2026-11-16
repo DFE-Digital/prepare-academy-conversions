@@ -80,7 +80,7 @@ public class FundingModelTests
          It.Is<SetSignificantChangeFundingCommand>(command =>
             command.FundingAnswer == answer
             && command.AdditionalInformation == null
-            && command.SupportingEvidence == "https://educationgovuk.sharepoint.com/sites/funding/evidence")), Times.Once);
+            && command.SupportingEvidenceSharepointLink == "https://educationgovuk.sharepoint.com/sites/funding/evidence")), Times.Once);
    }
 
    [Fact]
@@ -107,7 +107,7 @@ public class FundingModelTests
          It.Is<SetSignificantChangeFundingCommand>(command =>
             command.FundingAnswer == FundingAnswer.No
             && command.AdditionalInformation == "Funding gap identified"
-            && command.SupportingEvidence == "https://educationgovuk.sharepoint.com/sites/funding/board-minutes")), Times.Once);
+            && command.SupportingEvidenceSharepointLink == "https://educationgovuk.sharepoint.com/sites/funding/board-minutes")), Times.Once);
    }
 
    [Fact]

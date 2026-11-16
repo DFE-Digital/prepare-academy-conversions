@@ -75,7 +75,7 @@ public class HqtfConsiderationModelTests
          It.Is<SetSignificantChangeHqtfConsiderationCommand>(command =>
             command.HqtfConsiderationAnswer == HqtfConsiderationAnswer.Yes
             && command.AdditionalInformation == "Workforce capacity risk"
-            && command.SupportingEvidence == "https://educationgovuk.sharepoint.com/sites/hqtf/board-minutes")), Times.Once);
+            && command.SupportingEvidenceSharepointLink == "https://educationgovuk.sharepoint.com/sites/hqtf/board-minutes")), Times.Once);
    }
 
    [Fact]
