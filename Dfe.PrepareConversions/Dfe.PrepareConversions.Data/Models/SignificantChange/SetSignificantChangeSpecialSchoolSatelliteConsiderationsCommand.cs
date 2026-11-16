@@ -3,5 +3,5 @@
    public record SetSignificantChangeSpecialSchoolSatelliteConsiderationsCommand(
       YesNoNotApplicableAnswer? Answer,
       string AdditionalInformation,
-      string SupportingEvidence);
+      string SupportingEvidenceSharepointLink);
 }

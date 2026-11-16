@@ -48,7 +48,7 @@ describe('Significant change - special school satellite considerations', () => {
             significantChangeSpecialSchoolSatelliteConsiderations
                 .selectNo()
                 .enterAdditionalInformation('Satellite site requirements are being addressed')
-                .enterSupportingEvidence('https://example.test/satellite-site-review')
+                .enterSupportingEvidence('https://sharepoint.edu.gov.uk/evidence')
                 .save();
 
             cy.url().should('match', /\/significant-change\/task-list\/\d+$/);
