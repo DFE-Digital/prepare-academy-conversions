@@ -42,8 +42,8 @@ describe('Significant change - special school satellite considerations', () => {
             significantChangeSpecialSchoolSatelliteConsiderations
                 .selectNo()
                 .save()
-                .verifyErrorSummaryContains('Add additional information')
-                .verifyInlineError('AdditionalInformation', 'Add additional information');
+                .verifyErrorSummaryContains('Enter details')
+                .verifyInlineError('AdditionalInformation', 'Enter details');
 
             significantChangeSpecialSchoolSatelliteConsiderations
                 .selectNo()

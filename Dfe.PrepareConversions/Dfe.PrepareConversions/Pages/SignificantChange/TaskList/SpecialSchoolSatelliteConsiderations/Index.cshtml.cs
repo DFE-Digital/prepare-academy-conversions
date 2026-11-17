@@ -68,10 +68,10 @@ namespace Dfe.PrepareConversions.Pages.SignificantChange.TaskList.SpecialSchoolS
       private void Validate()
       {
          if (!Answer.HasValue)
-            ModelState.AddModelError(nameof(Answer), "Select an option");
+            ModelState.AddModelError(nameof(Answer), "Select whether the proposal meets the requirements set out for satellite sites in the operational guidance");
 
          if (Answer == YesNoNotApplicableAnswer.No && string.IsNullOrWhiteSpace(AdditionalInformation))
-            ModelState.AddModelError(nameof(AdditionalInformation), "Add additional information");
+            ModelState.AddModelError(nameof(AdditionalInformation), "Enter details");
       }
    }
 }
