@@ -117,17 +117,17 @@ public static class SignificantChangeTaskListBuilder
          displayOrder,
          [
             new SignificantChangeTaskDefinition(
-               "special-school-satellite-site-considerations",
-               "Special school satellite site considerations",
-               4,
-               Links.SignificantChange.SpecialSchoolSatelliteConsiderations,
-               project => GetTaskStatus(project.SpecialSchoolSatelliteConsiderationsStatus)),
-            new SignificantChangeTaskDefinition(
                "satellite-site-arrangement",
                "Satellite site arrangement",
                3,
                Links.SignificantChange.SatelliteSiteArrangement,
-               project => GetTaskStatus(project.SatelliteSiteArrangementStatus))
+               project => GetTaskStatus(project.SatelliteSiteArrangementStatus)),
+            new SignificantChangeTaskDefinition(
+               "special-school-satellite-site-considerations",
+               "Special school satellite site considerations",
+               4,
+               Links.SignificantChange.SpecialSchoolSatelliteConsiderations,
+               project => GetTaskStatus(project.SpecialSchoolSatelliteConsiderationsStatus))
          ]
       );
    }
