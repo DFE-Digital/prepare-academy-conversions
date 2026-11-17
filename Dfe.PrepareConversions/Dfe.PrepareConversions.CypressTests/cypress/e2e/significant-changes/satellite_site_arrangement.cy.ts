@@ -59,12 +59,12 @@ describe('Significant change - satellite site arrangement', () => {
             satelliteSiteArrangement.save();
             cy.get('.govuk-error-summary')
                 .should('be.visible')
-                .and('contain.text', 'Add additional information');
-            cy.getById('AdditionalInformation-error').should('contain.text', 'Add additional information');
+                .and('contain.text', 'Enter details');
+            cy.getById('AdditionalInformation-error').should('contain.text', 'Enter details');
 
             satelliteSiteArrangement
                 .enterAdditionalInformation('Further investigation of the proposed expansion is required')
-                .enterSupportingEvidence('https://example.test/satellite-arrangement')
+                .enterSupportingEvidence('https://sharepoint.edu.gov.uk/evidence')
                 .save();
 
             cy.url().should('match', /\/significant-change\/task-list\/\d+$/);
@@ -76,7 +76,7 @@ describe('Significant change - satellite site arrangement', () => {
                 'have.value',
                 'Further investigation of the proposed expansion is required'
             );
-            cy.getByDataTest('supporting-evidence').should('have.value', 'https://example.test/satellite-arrangement');
+            cy.getByDataTest('supporting-evidence').should('have.value', 'https://sharepoint.edu.gov.uk/evidence');
         });
     });
 });

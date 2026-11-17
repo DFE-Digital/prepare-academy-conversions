@@ -44,11 +44,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
          return result;
       }
 
-      if (!Answer.HasValue)
-         ModelState.AddModelError(nameof(Answer), "Select an option");
-
-      if (Answer == YesNoNotApplicableAnswer.No && string.IsNullOrWhiteSpace(AdditionalInformation))
-         ModelState.AddModelError(nameof(AdditionalInformation), "Add additional information");
+      Validate();
 
       if (!ModelState.IsValid)
       {
@@ -67,5 +63,14 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
       await repository.SetSatelliteSiteArrangement(id, command);
 
       return RedirectToTaskListOrReturnPage(id);
+   }
+
+   private void Validate()
+   {
+      if (!Answer.HasValue)
+         ModelState.AddModelError(nameof(Answer), "Select whether this is a genuine expansion of the special school that does not constitute a new school");
+
+      if (Answer == YesNoNotApplicableAnswer.No && string.IsNullOrWhiteSpace(AdditionalInformation))
+         ModelState.AddModelError(nameof(AdditionalInformation), "Enter details");
    }
 }

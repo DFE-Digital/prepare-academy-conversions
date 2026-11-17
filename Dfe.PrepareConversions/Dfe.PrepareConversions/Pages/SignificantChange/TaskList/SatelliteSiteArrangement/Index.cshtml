@@ -44,7 +44,7 @@
             <div class="govuk-radios__conditional" id="conditional-additional-information">
                 <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
                     <label class="govuk-label" for="AdditionalInformation">
-                        Use this area for additional information relating to mitigations, actions and further investigations.
+                        Give details
                     </label>
                     <inline-error for="@nameof(Model.AdditionalInformation)" />
                     <textarea asp-for="@Model.AdditionalInformation"

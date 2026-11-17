@@ -42,9 +42,9 @@ public class SatelliteSiteArrangementModelTests
    }
 
    [Theory]
-   [InlineData(null, null, "Answer", "Select an option")]
-   [InlineData(YesNoNotApplicableAnswer.No, null, "AdditionalInformation", "Add additional information")]
-   [InlineData(YesNoNotApplicableAnswer.No, " ", "AdditionalInformation", "Add additional information")]
+   [InlineData(null, null, "Answer", "Select whether this is a genuine expansion of the special school that does not constitute a new school")]
+   [InlineData(YesNoNotApplicableAnswer.No, null, "AdditionalInformation", "Enter details")]
+   [InlineData(YesNoNotApplicableAnswer.No, " ", "AdditionalInformation", "Enter details")]
    public async Task OnPost_InvalidAssessment_DoesNotSave(
       YesNoNotApplicableAnswer? answer, string information, string field, string message)
    {
@@ -78,7 +78,7 @@ public class SatelliteSiteArrangementModelTests
       Assert.Equal(ProjectId, redirect.RouteValues["id"]);
       _repository.Verify(x => x.SetSatelliteSiteArrangement(ProjectId,
          It.Is<SetSignificantChangeSatelliteSiteArrangementCommand>(command =>
-            command.Answer == answer && command.AdditionalInformation == information && command.SupportingEvidence == "Evidence")), Times.Once);
+            command.Answer == answer && command.AdditionalInformation == information && command.SupportingEvidenceSharepointLink == "Evidence")), Times.Once);
    }
 
    [Theory]
