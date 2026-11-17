@@ -107,8 +107,4 @@
    </fieldset>
 </div>
 
-<div class="govuk-form-group">
-   <label class="govuk-label govuk-label--m" for="SupportingEvidence">Supporting evidence</label>
-   <div class="govuk-hint">Add a link to supporting evidence.</div>
-   <input asp-for="SupportingEvidence" class="govuk-input" type="text" data-test="other-stakeholder-supporting-evidence" />
-</div>
+<supporting-evidence-input asp-for="@Model.SupportingEvidence" data-test="other-stakeholder-supporting-evidence" />

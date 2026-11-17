@@ -74,7 +74,7 @@ public class LandTransactionModelTests
             && command.LandTransactionApplicationAdditionalInfo == "Application details"
             && command.LandTransactionConsent == YesNoNotApplicableAnswer.No
             && command.LandTransactionConsentAdditionalInfo == "Consent details"
-            && command.LandTransactionSupportingEvidence == "https://educationgovuk.sharepoint.com/sites/land-transaction/evidence")), Times.Once);
+            && command.LandTransactionSupportingEvidenceSharepointLink == "https://educationgovuk.sharepoint.com/sites/land-transaction/evidence")), Times.Once);
    }
 
    [Theory]

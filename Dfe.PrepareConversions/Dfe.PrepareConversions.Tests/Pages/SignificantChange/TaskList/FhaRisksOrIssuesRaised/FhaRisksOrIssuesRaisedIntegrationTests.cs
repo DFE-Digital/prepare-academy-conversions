@@ -18,7 +18,7 @@ public class FhaRisksOrIssuesRaisedIntegrationTests(IntegrationTestingWebApplica
       SignificantChangeProjectResponse project = BuildProject(id: 931);
       project.FHARisksOrIssuesRaised.FhaRisksOrIssuesRaised = true;
       project.FHARisksOrIssuesRaised.AdditionalInformation = "A deficit is forecast";
-      project.FHARisksOrIssuesRaised.SupportingEvidence = "Financial forecast";
+      project.FHARisksOrIssuesRaised.SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/fha/forecast";
 
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
@@ -30,7 +30,7 @@ public class FhaRisksOrIssuesRaisedIntegrationTests(IntegrationTestingWebApplica
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='fha-risks-or-issues-raised-additional-information']")!.Value
          .Should().Be("A deficit is forecast");
       Document.QuerySelector<IHtmlInputElement>("[data-test='fha-risks-or-issues-raised-supporting-evidence']")!.Value
-         .Should().Be("Financial forecast");
+         .Should().Be("https://educationgovuk.sharepoint.com/sites/fha/forecast");
    }
 
    [Fact]
@@ -40,7 +40,7 @@ public class FhaRisksOrIssuesRaisedIntegrationTests(IntegrationTestingWebApplica
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
       const string additionalInformation = "A deficit is forecast";
-      const string supportingEvidence = "Financial forecast";
+      const string supportingEvidence = "https://educationgovuk.sharepoint.com/sites/fha/forecast";
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeFhaRisksOrIssuesRaised, project.Id),
          new SetSignificantChangeFhaRisksOrIssuesRaisedCommand(true, additionalInformation, supportingEvidence),
@@ -64,14 +64,14 @@ public class FhaRisksOrIssuesRaisedIntegrationTests(IntegrationTestingWebApplica
 
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeFhaRisksOrIssuesRaised, project.Id),
-         new SetSignificantChangeFhaRisksOrIssuesRaisedCommand(false, null, "No issues evidence"),
+         new SetSignificantChangeFhaRisksOrIssuesRaisedCommand(false, null, "https://educationgovuk.sharepoint.com/sites/fha/no-issues"),
          new object());
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/fha-risks-or-issues-raised");
 
       Document.QuerySelector<IHtmlInputElement>("#fha-risks-or-issues-raised-no")!.IsChecked = true;
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='fha-risks-or-issues-raised-additional-information']")!.Value = "Clear this";
-      Document.QuerySelector<IHtmlInputElement>("[data-test='fha-risks-or-issues-raised-supporting-evidence']")!.Value = "No issues evidence";
+      Document.QuerySelector<IHtmlInputElement>("[data-test='fha-risks-or-issues-raised-supporting-evidence']")!.Value = "https://educationgovuk.sharepoint.com/sites/fha/no-issues";
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}");

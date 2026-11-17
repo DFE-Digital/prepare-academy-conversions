@@ -5,6 +5,7 @@ using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.SignificantChange.TaskList.Ofsted;
@@ -22,6 +23,8 @@ public class InspectionQuestionModel(
 
 
    [BindProperty]
+   [SharePointLink]
+   [Display(Name = "Supporting Evidence")]
    public string SupportingEvidence { get; set; }
 
    public DateTime? DateOfInspection { get; private set; }
@@ -51,7 +54,7 @@ public class InspectionQuestionModel(
 
       MeetsOfstedStandards = Inspection.MeetsOfstedStandards;
       AdditionalInformation = Inspection.AdditionalInformation;
-      SupportingEvidence = Inspection.SupportingEvidence;
+      SupportingEvidence = Inspection.SupportingEvidenceSharepointLink;
       DateOfInspection = Inspection.InspectionDate;
 
       return Page();
@@ -91,7 +94,7 @@ public class InspectionQuestionModel(
       {
          MeetsOfstedStandards = MeetsOfstedStandards,
          AdditionalInformation = MeetsOfstedStandards == false ? AdditionalInformation : null,
-         SupportingEvidence = SupportingEvidence
+         SupportingEvidenceSharepointLink = SupportingEvidence
       };
 
       SetOfstedInspectionInSession(id, Inspection);

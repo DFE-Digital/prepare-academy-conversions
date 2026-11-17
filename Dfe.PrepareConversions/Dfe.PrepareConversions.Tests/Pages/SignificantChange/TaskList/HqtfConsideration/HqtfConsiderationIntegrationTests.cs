@@ -19,7 +19,7 @@ public class HqtfConsiderationIntegrationTests(IntegrationTestingWebApplicationF
       SignificantChangeProjectResponse project = BuildProject(id: 911);
       project.HQTFConsideration.HqtfConsiderationAnswer = HqtfConsiderationAnswer.Yes;
       project.HQTFConsideration.AdditionalInformation = "Finance and operations risk";
-      project.HQTFConsideration.SupportingEvidence = "Audit report";
+      project.HQTFConsideration.SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/hqtf/audit";
 
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
@@ -31,7 +31,7 @@ public class HqtfConsiderationIntegrationTests(IntegrationTestingWebApplicationF
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='hqtf-consideration-additional-information']")!.Value
          .Should().Be("Finance and operations risk");
       Document.QuerySelector<IHtmlInputElement>("[data-test='hqtf-consideration-supporting-evidence']")!.Value
-         .Should().Be("Audit report");
+         .Should().Be("https://educationgovuk.sharepoint.com/sites/hqtf/audit");
    }
 
    [Fact]
@@ -41,7 +41,7 @@ public class HqtfConsiderationIntegrationTests(IntegrationTestingWebApplicationF
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
       const string additionalInformation = "School improvement capacity risk";
-      const string supportingEvidence = "Trust development plan";
+      const string supportingEvidence = "https://educationgovuk.sharepoint.com/sites/hqtf/development-plan";
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeHqtfConsideration, project.Id),
          new SetSignificantChangeHqtfConsiderationCommand(HqtfConsiderationAnswer.Yes, additionalInformation, supportingEvidence),
@@ -65,14 +65,14 @@ public class HqtfConsiderationIntegrationTests(IntegrationTestingWebApplicationF
 
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeHqtfConsideration, project.Id),
-         new SetSignificantChangeHqtfConsiderationCommand(HqtfConsiderationAnswer.No, null, "No issues evidence"),
+         new SetSignificantChangeHqtfConsiderationCommand(HqtfConsiderationAnswer.No, null, "https://educationgovuk.sharepoint.com/sites/hqtf/no-issues"),
          new object());
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/hqtf-consideration");
 
       Document.QuerySelector<IHtmlInputElement>("#hqtf-consideration-no")!.IsChecked = true;
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='hqtf-consideration-additional-information']")!.Value = "This should be cleared";
-      Document.QuerySelector<IHtmlInputElement>("[data-test='hqtf-consideration-supporting-evidence']")!.Value = "No issues evidence";
+      Document.QuerySelector<IHtmlInputElement>("[data-test='hqtf-consideration-supporting-evidence']")!.Value = "https://educationgovuk.sharepoint.com/sites/hqtf/no-issues";
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}");
@@ -86,13 +86,13 @@ public class HqtfConsiderationIntegrationTests(IntegrationTestingWebApplicationF
 
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeHqtfConsideration, project.Id),
-         new SetSignificantChangeHqtfConsiderationCommand(HqtfConsiderationAnswer.NotApplicable, null, "Not applicable evidence"),
+         new SetSignificantChangeHqtfConsiderationCommand(HqtfConsiderationAnswer.NotApplicable, null, "https://educationgovuk.sharepoint.com/sites/hqtf/not-applicable"),
          new object());
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/hqtf-consideration");
 
       Document.QuerySelector<IHtmlInputElement>("#hqtf-consideration-not-applicable")!.IsChecked = true;
-      Document.QuerySelector<IHtmlInputElement>("[data-test='hqtf-consideration-supporting-evidence']")!.Value = "Not applicable evidence";
+      Document.QuerySelector<IHtmlInputElement>("[data-test='hqtf-consideration-supporting-evidence']")!.Value = "https://educationgovuk.sharepoint.com/sites/hqtf/not-applicable";
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}");

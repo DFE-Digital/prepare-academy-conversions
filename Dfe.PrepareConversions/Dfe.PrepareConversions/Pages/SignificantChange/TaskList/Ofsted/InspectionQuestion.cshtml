@@ -39,10 +39,4 @@
    </fieldset>
 </div>
 
-<div class="govuk-form-group">
-    <label class="govuk-label govuk-label--m" for="SupportingEvidence">
-        Supporting Evidence
-    </label>
-    <input asp-for="@Model.SupportingEvidence" class="govuk-input" type="text"
-           data-test="ofsted-supporting-evidence" />
-</div>
+<supporting-evidence-input asp-for="@Model.SupportingEvidence" data-test="ofsted-supporting-evidence" />
