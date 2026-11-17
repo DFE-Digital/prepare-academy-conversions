@@ -57,9 +57,7 @@ describe('Significant change - satellite site arrangement', () => {
 
             cy.getByDataTest('additional-information').clear();
             satelliteSiteArrangement.save();
-            cy.get('.govuk-error-summary')
-                .should('be.visible')
-                .and('contain.text', 'Enter details');
+            cy.get('.govuk-error-summary').should('be.visible').and('contain.text', 'Enter details');
             cy.getById('AdditionalInformation-error').should('contain.text', 'Enter details');
 
             satelliteSiteArrangement
