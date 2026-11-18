@@ -81,6 +81,7 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
             "Admissions variation",
             "Consultation details",
             "Academy performance",
+            "SEN and alternative provision considerations",
             "Public Sector Equality Duty",
             "Land transaction application and planning permission",
             "Financial details",

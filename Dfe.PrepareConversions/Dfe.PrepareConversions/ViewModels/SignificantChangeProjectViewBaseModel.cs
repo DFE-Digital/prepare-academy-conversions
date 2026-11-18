@@ -95,4 +95,8 @@ public class SignificantChangeProjectViewBaseModel
    public bool? LocalAuthorityRaisedObjections { get; set; }
    public string LocalAuthorityObjectionsFurtherInformation { get; set; } = string.Empty;
    public string LocalAuthorityObjectionsSupportingEvidenceLink { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus SpecialSchoolSatelliteConsiderationsStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public YesNoNotApplicableAnswer? SpecialSchoolSatelliteConsiderationsAnswer { get; set; }
+   public string SpecialSchoolSatelliteConsiderationsAdditionalInformation { get; set; } = string.Empty;
+   public string SpecialSchoolSatelliteConsiderationsSupportingEvidenceLink { get; set; } = string.Empty;
 }

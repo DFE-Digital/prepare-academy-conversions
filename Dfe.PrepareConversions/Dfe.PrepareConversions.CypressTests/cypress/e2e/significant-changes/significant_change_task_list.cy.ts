@@ -30,10 +30,16 @@ describe('Significant change task list', () => {
                     cy.get('h3.app-task-list__section').then(($sections) => {
                         const sectionTitles = [...$sections].map((section) => section.textContent?.trim());
                         expect(sectionTitles).to.deep.equal([
-                            'Consultation',
-                            'Proposed decision and conversion dates',
+                            'Key project dates',
+                            'Admissions variation',
+                            'Consultation details',
+                            'Academy performance',
+                            'SEN and alternative provision considerations',
                             'Public Sector Equality Duty',
                             'Land transaction application and planning permission',
+                            'Financial details',
+                            'High Quality Trust Framework',
+                            'Recommendation on how to proceed',
                         ]);
                     });
 

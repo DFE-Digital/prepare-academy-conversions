@@ -19,6 +19,7 @@ public class SignificantChangeProjectResponse : SignificantChangeProjectSearchRe
    public SignificantChangeHqtfConsiderationResponse HQTFConsideration { get; set; } = new();
    public SignificantChangeOfstedInspectionResponse OfstedInspection { get; set; } = new();
    public SignificantChangeFhaRisksOrIssuesRaisedResponse FHARisksOrIssuesRaised { get; set; } = new();
+   public SignificantChangeSpecialSchoolSatelliteConsiderationsResponse SpecialSchoolSatelliteConsiderations { get; set; } = new();
    public SignificantChangeDecisions? Decision { get; set; }
    public DateTime? DecisionDate { get; set; }
 }

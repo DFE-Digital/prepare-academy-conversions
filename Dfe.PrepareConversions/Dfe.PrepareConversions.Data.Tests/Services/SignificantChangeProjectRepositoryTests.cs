@@ -1229,4 +1229,57 @@ public class SignificantChangeProjectRepositoryTests
 
       exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
    }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetSpecialSchoolSatelliteConsiderations_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 82;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeSpecialSchoolSatelliteConsiderations, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeSpecialSchoolSatelliteConsiderationsCommand command = new(
+         YesNoNotApplicableAnswer.No,
+         "Requirements gap identified",
+         "Satellite site review");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeSpecialSchoolSatelliteConsiderationsCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetSpecialSchoolSatelliteConsiderations(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeSpecialSchoolSatelliteConsiderationsCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetSpecialSchoolSatelliteConsiderations_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 82;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeSpecialSchoolSatelliteConsiderations, id);
+      SetSignificantChangeSpecialSchoolSatelliteConsiderationsCommand command = new(
+         YesNoNotApplicableAnswer.Yes,
+         string.Empty,
+         string.Empty);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeSpecialSchoolSatelliteConsiderationsCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(
+         () => sut.SetSpecialSchoolSatelliteConsiderations(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
 }
