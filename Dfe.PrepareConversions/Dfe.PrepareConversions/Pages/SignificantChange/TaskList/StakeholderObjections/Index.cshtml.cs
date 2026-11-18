@@ -1,7 +1,9 @@
-using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
+using Dfe.PrepareConversions.Data.Services.Interfaces;
+using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.SignificantChange.TaskList.StakeholderObjections;
@@ -30,6 +32,8 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
    public string RelevantStakeholdersNotifiedOfAdmissionsChangesReason { get; set; }
 
    [BindProperty]
+   [SharePointLink]
+   [Display(Name = "Supporting Evidence")]
    public string SupportingEvidence { get; set; }
 
    protected override string TaskTitle => "Other stakeholder engagement";

@@ -5,7 +5,7 @@ public class SetSignificantChangeLandTransactionCommand(
    string landTransactionApplicationAdditionalInfo,
    YesNoNotApplicableAnswer? landTransactionConsent,
    string landTransactionConsentAdditionalInfo, 
-   string landTransactionSupportingEvidence)
+   string landTransactionSupportingEvidenceSharepointLink)
 {
    public YesNoNotApplicableAnswer? LandTransactionApplication { get; set; } = landTransactionApplication;
    public string LandTransactionApplicationAdditionalInfo { get; set; } = landTransactionApplicationAdditionalInfo;
@@ -13,5 +13,5 @@ public class SetSignificantChangeLandTransactionCommand(
    public YesNoNotApplicableAnswer? LandTransactionConsent { get; set; } = landTransactionConsent;
    public string LandTransactionConsentAdditionalInfo { get; set; } = landTransactionConsentAdditionalInfo;
 
-   public string LandTransactionSupportingEvidence { get; set; } = landTransactionSupportingEvidence;
+   public string LandTransactionSupportingEvidenceSharepointLink { get; set; } = landTransactionSupportingEvidenceSharepointLink;
 }

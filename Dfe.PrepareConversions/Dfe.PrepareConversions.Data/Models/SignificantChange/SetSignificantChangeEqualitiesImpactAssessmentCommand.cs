@@ -6,4 +6,4 @@ public record SetSignificantChangeEqualitiesImpactAssessmentCommand(
    EqualitiesImpact? EqualitiesImpactIdentified,
    string EqualitiesLikelyDetails,
    string EqualitiesSomeImpactDetails,
-   string EqualitiesImpactSupportingEvidence);
+   string EqualitiesImpactSupportingEvidenceSharepointLink);

@@ -7,7 +7,7 @@ public class SetSignificantChangeReligiousBodyConsultationCommand(
    string religiousBodyRaisedObjectionReason,
    YesNoNotApplicableAnswer? religiousBodyConsentGranted,
    string religiousBodyConsentNotGrantedReason,
-   string supportingEvidence)
+   string supportingEvidenceSharepointLink)
 {
    public YesNoNotApplicableAnswer? TrustConsultedReligiousBody { get; set; } = trustConsultedReligiousBody;
    public string TrustConsultedReligiousBodyNotConsultedReason { get; set; } = trustConsultedReligiousBodyNotConsultedReason;
@@ -15,5 +15,5 @@ public class SetSignificantChangeReligiousBodyConsultationCommand(
    public string ReligiousBodyRaisedObjectionReason { get; set; } = religiousBodyRaisedObjectionReason;
    public YesNoNotApplicableAnswer? ReligiousBodyConsentGranted { get; set; } = religiousBodyConsentGranted;
    public string ReligiousBodyConsentNotGrantedReason { get; set; } = religiousBodyConsentNotGrantedReason;
-   public string SupportingEvidence { get; set; } = supportingEvidence;
+   public string SupportingEvidenceSharepointLink { get; set; } = supportingEvidenceSharepointLink;
 }

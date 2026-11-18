@@ -53,12 +53,4 @@
    </fieldset>
 </div>
 
-<div class="govuk-form-group @ModelState.GetErrorStyleClass()">
-   <label class="govuk-label" for="LocalAuthorityObjectionsSupportingEvidenceLink">
-      Supporting evidence link (optional)
-   </label>
-   <input asp-for="@Model.LocalAuthorityObjectionsSupportingEvidenceLink"
-          class="govuk-input"
-          type="text"
-          data-test="local-authority-objections-supporting-evidence-link" />
-</div>
+<supporting-evidence-input asp-for="@Model.LocalAuthorityObjectionsSupportingEvidenceLink" data-test="local-authority-objections-supporting-evidence-link" />

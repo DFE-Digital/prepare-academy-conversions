@@ -2,6 +2,7 @@
 import significantChangeHqtfConsideration from '../../pages/significantChangeHqtfConsideration';
 import significantChangeTaskList from '../../pages/significantChangeTaskList';
 import { Logger } from '../../support/logger';
+import { invalidSharePointLinks, verifySharePointLinkValidation } from '../../support/sharePointLinkValidation';
 
 const TASK_LIST_URL = /\/significant-change\/task-list\/\d+(\?.*)?$/;
 
@@ -35,6 +36,15 @@ describe('Significant change - HQTF consideration', () => {
                 cy.url().then((taskListUrl) => then(projectIdFrom(taskListUrl)));
             });
     };
+
+    invalidSharePointLinks.forEach(({ name, value, error }) => {
+        it(`rejects ${name} as supporting evidence`, () => {
+            withProject((projectId) => {
+                cy.visit(`/significant-change/task-list/${projectId}/hqtf-consideration`);
+                verifySharePointLinkValidation('SupportingEvidence', value, error);
+            });
+        });
+    });
 
     it('Should open the HQTF consideration page from the significant change task list', () => {
         withProject(() => {
@@ -72,7 +82,7 @@ describe('Significant change - HQTF consideration', () => {
             significantChangeHqtfConsideration
                 .selectHqtfYes()
                 .enterHqtfAdditionalInformation('Workforce capacity risk identified against HQTF pillars')
-                .enterHqtfSupportingEvidence('Trust board minutes')
+                .enterHqtfSupportingEvidence('https://educationgovuk.sharepoint.com/sites/hqtf/board-minutes')
                 .save();
 
             cy.url().should('match', TASK_LIST_URL);
@@ -87,7 +97,7 @@ describe('Significant change - HQTF consideration', () => {
             significantChangeHqtfConsideration
                 .verifyPageLoaded()
                 .selectHqtfNo()
-                .enterHqtfSupportingEvidence('No issues identified evidence')
+                .enterHqtfSupportingEvidence('https://educationgovuk.sharepoint.com/sites/hqtf/no-issues')
                 .save();
 
             cy.url().should('match', TASK_LIST_URL);

@@ -75,7 +75,7 @@ public class PlanningPermissionModelTests
          It.Is<SetSignificantChangePlanningPermissionCommand>(command =>
             command.PlanningPermissionAnswer == PlanningPermissionAnswer.Yes
             && command.AdditionalInformation == null
-            && command.SupportingEvidence == "https://educationgovuk.sharepoint.com/sites/planning/approval/12345")), Times.Once);
+            && command.SupportingEvidenceSharepointLink == "https://educationgovuk.sharepoint.com/sites/planning/approval/12345")), Times.Once);
    }
 
    [Fact]
@@ -107,7 +107,7 @@ public class PlanningPermissionModelTests
          It.Is<SetSignificantChangePlanningPermissionCommand>(command =>
             command.PlanningPermissionAnswer == PlanningPermissionAnswer.No
             && command.AdditionalInformation == "Planning permission is under review"
-            && command.SupportingEvidence == "https://educationgovuk-my.sharepoint.com/personal/planning/application/67890")), Times.Once);
+            && command.SupportingEvidenceSharepointLink == "https://educationgovuk-my.sharepoint.com/personal/planning/application/67890")), Times.Once);
    }
 
    [Fact]

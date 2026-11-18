@@ -6,4 +6,4 @@ public record SetSignificantChangeOfstedInspectionCommand(
    DateTime? InspectionDate,
    bool? MeetsOfstedStandards,
    string AdditionalInformation,
-   string SupportingEvidence);
+   string SupportingEvidenceSharepointLink);

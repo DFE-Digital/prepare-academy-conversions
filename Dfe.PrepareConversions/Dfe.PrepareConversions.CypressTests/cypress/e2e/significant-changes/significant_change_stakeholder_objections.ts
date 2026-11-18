@@ -1,4 +1,6 @@
 /// <reference types="cypress" />
+import { invalidSharePointLinks, verifySharePointLinkValidation } from '../../support/sharePointLinkValidation';
+
 const TASK_LIST_URL = /^.*\/significant-change\/task-list\/\d+(\?.*)?$/;
 
 const navigateToTaskPage = () => {
@@ -12,6 +14,12 @@ const navigateToTaskPage = () => {
 describe('Other stakeholder engagement form', () => {
     beforeEach(() => {
         navigateToTaskPage();
+    });
+
+    invalidSharePointLinks.forEach(({ name, value, error }) => {
+        it(`rejects ${name} as supporting evidence`, () => {
+            verifySharePointLinkValidation('SupportingEvidence', value, error);
+        });
     });
 
     it('shows details only for the answers that require them', () => {
@@ -46,7 +54,10 @@ describe('Other stakeholder engagement form', () => {
         cy.getById('StakeholderObjectionsDetails-error').should('contain.text', 'Add details');
 
         cy.getByDataTest('stakeholder-objections-details').type('Objections were addressed.');
-        cy.getByDataTest('other-stakeholder-supporting-evidence').type('https://example.test/evidence');
+        cy.getByDataTest('other-stakeholder-supporting-evidence').clear();
+        cy.getByDataTest('other-stakeholder-supporting-evidence').type(
+            'https://educationgovuk.sharepoint.com/sites/stakeholders/evidence'
+        );
         cy.contains('button', 'Save and return').click();
         cy.urlPath().should('match', TASK_LIST_URL);
     });
