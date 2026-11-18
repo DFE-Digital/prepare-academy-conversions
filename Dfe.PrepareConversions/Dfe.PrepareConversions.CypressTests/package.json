@@ -75,7 +75,7 @@
         "cypress-file-upload": "5.0.8",
         "cypress-localstorage-commands": "2.3.0",
         "cypress-multi-reporters": "2.0.5",
-        "cypress-slack-reporter": "1.5.4",
+        "cypress-slack-reporter": "1.5.5",
         "dayjs": "1.11.23",
         "eslint": "10.9.1",
         "eslint-config-prettier": "10.1.8",
