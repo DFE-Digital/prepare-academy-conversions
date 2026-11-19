@@ -121,7 +121,13 @@ public static class SignificantChangeTaskListBuilder
                "Special school satellite site considerations",
                4,
                Links.SignificantChange.SpecialSchoolSatelliteConsiderations,
-               project => GetTaskStatus(project.SpecialSchoolSatelliteConsiderationsStatus))
+               project => GetTaskStatus(project.SpecialSchoolSatelliteConsiderationsStatus)),
+             new SignificantChangeTaskDefinition(
+               "mainstream-school-satellite-considerations",
+               "Mainstream school satellite considerations",
+               5,
+               Links.SignificantChange.MainstreamSchoolSatelliteConsiderations,
+               project => GetTaskStatus(project.MainstreamSchoolSatelliteConsiderationsStatus))
          ]
       );
    }

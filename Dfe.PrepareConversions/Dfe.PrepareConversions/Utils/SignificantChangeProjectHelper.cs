@@ -100,7 +100,11 @@ public static class SignificantChangeProjectHelper
          SpecialSchoolSatelliteConsiderationsStatus = significantChangeProject.SpecialSchoolSatelliteConsiderations?.Status ?? SignificantChangeTaskStatus.NotStarted,
          SpecialSchoolSatelliteConsiderationsAnswer = significantChangeProject.SpecialSchoolSatelliteConsiderations?.Answer,
          SpecialSchoolSatelliteConsiderationsAdditionalInformation = significantChangeProject.SpecialSchoolSatelliteConsiderations?.AdditionalInformation,
-         SpecialSchoolSatelliteConsiderationsSupportingEvidenceLink = significantChangeProject.SpecialSchoolSatelliteConsiderations?.SupportingEvidence ?? string.Empty
+         SpecialSchoolSatelliteConsiderationsSupportingEvidenceLink = significantChangeProject.SpecialSchoolSatelliteConsiderations?.SupportingEvidence ?? string.Empty,
+         MainstreamSchoolSatelliteConsiderationsStatus = significantChangeProject.MainstreamSchoolSatelliteConsiderations?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         MainstreamSchoolSatelliteConsiderationsAnswer = significantChangeProject.MainstreamSchoolSatelliteConsiderations?.Answer,
+         MainstreamSchoolSatelliteConsiderationsAdditionalInformation = significantChangeProject.MainstreamSchoolSatelliteConsiderations?.AdditionalInformation,
+         MainstreamSchoolSatelliteConsiderationsSupportingEvidenceLink = significantChangeProject.MainstreamSchoolSatelliteConsiderations?.SupportingEvidence ?? string.Empty
 
       };
    }
