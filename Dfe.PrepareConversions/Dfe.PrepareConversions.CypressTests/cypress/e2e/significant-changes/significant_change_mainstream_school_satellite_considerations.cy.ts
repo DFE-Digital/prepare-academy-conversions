@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-import { link } from 'fs/promises';
 import significantChangeMainstreamSchoolSatelliteConsiderations from '../../pages/significantChangeMainstreamSchoolSatelliteConsiderations';
 import { Logger } from '../../support/logger';
 import { invalidSharePointLinks, verifySharePointLinkValidation } from 'cypress/support/sharePointLinkValidation';
