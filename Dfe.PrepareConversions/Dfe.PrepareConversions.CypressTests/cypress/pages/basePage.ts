@@ -8,6 +8,38 @@ export default class BasePage {
         return this;
     }
 
+    public openTask(title: string): this {
+        cy.contains('a', title).click();
+        return this;
+    }
+
+    public verifyAllOptionsPresent(options: string[]): this {
+        options.forEach((option) => {
+            cy.getByDataTest(option).should('exist');
+        });
+        return this;
+    }
+
+    public selectNo(): this {
+        cy.getByDataTest('answer-no').check();
+        return this;
+    }
+
+    public selectYes(): this {
+        cy.getByDataTest('answer-yes').check();
+        return this;
+    }
+
+    public verifyErrorSummaryContains(message: string): this {
+        cy.get('.govuk-error-summary').should('be.visible').and('contain.text', message);
+        return this;
+    }
+
+    public verifyInlineError(field: string, message: string): this {
+        cy.getById(`${field}-error`).should('contain.text', message);
+        return this;
+    }
+
     public continue(): this {
         cy.get('button').contains('Continue').click();
         return this;

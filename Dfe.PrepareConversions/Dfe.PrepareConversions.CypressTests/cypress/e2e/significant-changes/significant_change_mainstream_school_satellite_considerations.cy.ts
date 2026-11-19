@@ -1,6 +1,8 @@
 /// <reference types="cypress" />
+import { link } from 'fs/promises';
 import significantChangeMainstreamSchoolSatelliteConsiderations from '../../pages/significantChangeMainstreamSchoolSatelliteConsiderations';
 import { Logger } from '../../support/logger';
+import { invalidSharePointLinks, verifySharePointLinkValidation } from 'cypress/support/sharePointLinkValidation';
 
 describe('Significant change - mainstream school satellite considerations', () => {
     beforeEach(() => {
@@ -33,22 +35,27 @@ describe('Significant change - mainstream school satellite considerations', () =
 
     it('Should show all fields', () => {
         openTaskList(() => {
-            significantChangeMainstreamSchoolSatelliteConsiderations.openTask();
+            significantChangeMainstreamSchoolSatelliteConsiderations.openTask(
+                'Mainstream school satellite considerations'
+            );
+
             significantChangeMainstreamSchoolSatelliteConsiderations
                 .verifyPageLoaded()
-                .verifyAllOptionsPresent()
+                .verifyAllOptionsPresent(['answer-yes', 'answer-no', 'not-applicable'])
                 .verifySupportingEvidencePresent();
         });
     });
 
     it('Should show the task and require additional information when No is selected', () => {
         openTaskList(() => {
-            significantChangeMainstreamSchoolSatelliteConsiderations.openTask();
+            significantChangeMainstreamSchoolSatelliteConsiderations.openTask(
+                'Mainstream school satellite considerations'
+            );
 
             significantChangeMainstreamSchoolSatelliteConsiderations
                 .selectNo()
                 .enterAdditionalInformation(' ')
-                .save()
+                .clickSaveButton()
                 .verifyErrorSummaryContains('Enter details')
                 .verifyInlineError('AdditionalInformation', 'Enter details');
 
@@ -56,10 +63,22 @@ describe('Significant change - mainstream school satellite considerations', () =
                 .selectNo()
                 .enterAdditionalInformation('Satellite site requirements are being addressed')
                 .enterSupportingEvidence('https://educationgovuk.sharepoint.com/sites/satellite/evidence')
-                .save();
+                .clickSaveButton();
 
             cy.url().should('match', /\/significant-change\/task-list\/\d+$/);
             cy.contains('a', 'Mainstream school satellite considerations').should('be.visible');
+        });
+    });
+
+    invalidSharePointLinks.forEach(({ name, value, error }) => {
+        it(`rejects ${name} as supporting evidence`, () => {
+            openTaskList(() => {
+                significantChangeMainstreamSchoolSatelliteConsiderations.openTask(
+                    'Mainstream school satellite considerations'
+                );
+                significantChangeMainstreamSchoolSatelliteConsiderations.selectYes();
+                verifySharePointLinkValidation('SupportingEvidence', value, error);
+            });
         });
     });
 });
