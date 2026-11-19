@@ -2,7 +2,7 @@ namespace Dfe.PrepareConversions.Data.Models.SignificantChange;
 
 public record SetSignificantChangeAdmissionsVariationCommand(
    bool? AdmissionsVariationRequired,
-   string? AdmissionsVariationSupportingEvidence,
+   string? AdmissionsVariationSupportingEvidenceSharepointLink,
    bool? AdmissionsVariationLocalAuthoritySupportive,
    bool? AdmissionsVariationPupilPlacePlanningSupportive,
    bool? AdmissionsVariationAdmissionsTeamSupportive,

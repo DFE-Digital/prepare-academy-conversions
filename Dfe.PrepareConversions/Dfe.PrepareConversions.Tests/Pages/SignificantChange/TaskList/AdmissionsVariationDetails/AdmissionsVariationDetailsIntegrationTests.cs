@@ -17,7 +17,7 @@ public class AdmissionsVariationDetailsIntegrationTests(IntegrationTestingWebApp
    {
       SignificantChangeProjectResponse project = BuildProject(701);
       project.AdmissionsVariation.AdmissionsVariationRequired = false;
-      project.AdmissionsVariation.AdmissionsVariationSupportingEvidence = "Admissions policy";
+      project.AdmissionsVariation.AdmissionsVariationSupportingEvidence = "https://educationgovuk.sharepoint.com/sites/admissions/policy";
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admissions-variation-details");
@@ -25,7 +25,7 @@ public class AdmissionsVariationDetailsIntegrationTests(IntegrationTestingWebApp
       Document.QuerySelector("h1")!.TextContent.Trim().Should().Be("Admissions variation details");
       Document.QuerySelector<IHtmlInputElement>("#admissions-variation-required-no")!.IsChecked.Should().BeTrue();
       Document.QuerySelector<IHtmlInputElement>("[data-test='admissions-variation-supporting-evidence']")!
-         .Value.Should().Be("Admissions policy");
+         .Value.Should().Be("https://educationgovuk.sharepoint.com/sites/admissions/policy");
    }
 
    [Theory]
@@ -37,13 +37,13 @@ public class AdmissionsVariationDetailsIntegrationTests(IntegrationTestingWebApp
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeAdmissionsVariation, project.Id),
-         new SetSignificantChangeAdmissionsVariationCommand(false, "Admissions policy", null, null, null, null, null, null),
+         new SetSignificantChangeAdmissionsVariationCommand(false, "https://educationgovuk.sharepoint.com/sites/admissions/policy", null, null, null, null, null, null),
          new object());
 
       string query = returnToDecision ? "?return=%2FSignificantChange%2FDecision%2FRecordDecision" : "";
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admissions-variation-details{query}");
       Document.QuerySelector<IHtmlInputElement>("#admissions-variation-required-no")!.IsChecked = true;
-      Document.QuerySelector<IHtmlInputElement>("[data-test='admissions-variation-supporting-evidence']")!.Value = "Admissions policy";
+      Document.QuerySelector<IHtmlInputElement>("[data-test='admissions-variation-supporting-evidence']")!.Value = "https://educationgovuk.sharepoint.com/sites/admissions/policy";
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().EndWith(returnToDecision
@@ -59,7 +59,7 @@ public class AdmissionsVariationDetailsIntegrationTests(IntegrationTestingWebApp
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admissions-variation-details");
       Document.QuerySelector<IHtmlInputElement>("#admissions-variation-required-yes")!.IsChecked = true;
-      Document.QuerySelector<IHtmlInputElement>("[data-test='admissions-variation-supporting-evidence']")!.Value = "Admissions policy";
+      Document.QuerySelector<IHtmlInputElement>("[data-test='admissions-variation-supporting-evidence']")!.Value = "https://educationgovuk.sharepoint.com/sites/admissions/policy";
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().EndWith($"/significant-change/task-list/{project.Id}/admissions-variation-details/support");
@@ -90,7 +90,7 @@ public class AdmissionsVariationDetailsIntegrationTests(IntegrationTestingWebApp
          string.Format(PathFor.SetSignificantChangeAdmissionsVariation, project.Id),
          new SetSignificantChangeAdmissionsVariationCommand(
             true,
-            "Admissions policy",
+            "https://educationgovuk.sharepoint.com/sites/admissions/policy",
             true,
             false,
             true,
@@ -102,7 +102,7 @@ public class AdmissionsVariationDetailsIntegrationTests(IntegrationTestingWebApp
       string query = returnToDecision ? "?return=%2FSignificantChange%2FDecision%2FRecordDecision" : "";
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admissions-variation-details{query}");
       Document.QuerySelector<IHtmlInputElement>("#admissions-variation-required-yes")!.IsChecked = true;
-      Document.QuerySelector<IHtmlInputElement>("[data-test='admissions-variation-supporting-evidence']")!.Value = "Admissions policy";
+      Document.QuerySelector<IHtmlInputElement>("[data-test='admissions-variation-supporting-evidence']")!.Value = "https://educationgovuk.sharepoint.com/sites/admissions/policy";
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
       Document.Url.Should().EndWith($"/significant-change/task-list/{project.Id}/admissions-variation-details/support{query}");
       Document.QuerySelector(".govuk-back-link").GetAttribute("href")

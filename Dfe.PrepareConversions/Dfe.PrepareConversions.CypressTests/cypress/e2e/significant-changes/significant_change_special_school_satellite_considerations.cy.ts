@@ -42,13 +42,13 @@ describe('Significant change - special school satellite considerations', () => {
             significantChangeSpecialSchoolSatelliteConsiderations
                 .selectNo()
                 .save()
-                .verifyErrorSummaryContains('Add additional information')
-                .verifyInlineError('AdditionalInformation', 'Add additional information');
+                .verifyErrorSummaryContains('Enter details')
+                .verifyInlineError('AdditionalInformation', 'Enter details');
 
             significantChangeSpecialSchoolSatelliteConsiderations
                 .selectNo()
                 .enterAdditionalInformation('Satellite site requirements are being addressed')
-                .enterSupportingEvidence('https://example.test/satellite-site-review')
+                .enterSupportingEvidence('https://sharepoint.edu.gov.uk/evidence')
                 .save();
 
             cy.url().should('match', /\/significant-change\/task-list\/\d+$/);

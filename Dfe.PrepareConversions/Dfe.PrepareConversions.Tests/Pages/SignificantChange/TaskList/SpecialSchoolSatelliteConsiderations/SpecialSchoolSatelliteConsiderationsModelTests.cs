@@ -60,7 +60,7 @@ public class SpecialSchoolSatelliteConsiderationsModelTests
       IndexModel sut = BuildModel(repository.Object);
       sut.Answer = answer;
       sut.AdditionalInformation = string.Empty;
-      sut.SupportingEvidence = "https://example.test/evidence";
+      sut.SupportingEvidence = "https://sharepoint.edu.gov.uk/evidence";
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -72,7 +72,7 @@ public class SpecialSchoolSatelliteConsiderationsModelTests
          It.Is<SetSignificantChangeSpecialSchoolSatelliteConsiderationsCommand>(command =>
             command.Answer == answer
             && command.AdditionalInformation == string.Empty
-            && command.SupportingEvidence == "https://example.test/evidence")), Times.Once);
+            && command.SupportingEvidenceSharepointLink == "https://sharepoint.edu.gov.uk/evidence")), Times.Once);
    }
 
    [Fact]

@@ -37,7 +37,7 @@ public class PublicSectorEqualityDutyIntegrationTests(IntegrationTestingWebAppli
       SignificantChangeProjectResponse project = BuildProject(id: 702);
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
-      const string supportingEvidence = "sharepoint.edu.gov.uk/evidence";
+      const string supportingEvidence = "https://educationgovuk.sharepoint.com/sites/equalities/evidence";
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeEqualitiesImpactAssessment, project.Id),
          new SetSignificantChangeEqualitiesImpactAssessmentCommand(true, null, EqualitiesImpact.Unlikely, null, null, supportingEvidence),
@@ -60,7 +60,7 @@ public class PublicSectorEqualityDutyIntegrationTests(IntegrationTestingWebAppli
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
       const string groups = "Pupils with SEND - additional transitional support planned";
-      const string supportingEvidence = "sharepoint.edu.gov.uk/evidence";
+      const string supportingEvidence = "https://educationgovuk.sharepoint.com/sites/equalities/evidence";
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeEqualitiesImpactAssessment, project.Id),
          new SetSignificantChangeEqualitiesImpactAssessmentCommand(true, null, EqualitiesImpact.Likely, groups, null, supportingEvidence),
