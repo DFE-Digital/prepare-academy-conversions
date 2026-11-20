@@ -31,7 +31,7 @@ public class SignificantChangeTaskListBuilderTests
    [InlineData(2, "admissions-variation", "Admissions variation", new[] { "admissions-variation-details" })]
    [InlineData(3, "consultation-details", "Consultation details", new[] { "consultation", "local-authority-objections", "religious-bodies", "other-stakeholder-engagement" })]
    [InlineData(4, "academy-performance", "Academy performance", new[] { "ofsted" })]
-   [InlineData(5, "sen-considerations", "SEN and alternative provision considerations", new[] { "satellite-site-arrangement", "special-school-satellite-site-considerations", "mainstream-school-satellite-considerations" })]
+   [InlineData(5, "sen-considerations", "SEN and alternative provision considerations", new[] { "local-sen-plans", "satellite-site-arrangement", "special-school-satellite-site-considerations", "mainstream-school-satellite-considerations" })]
    [InlineData(6, "public-sector-equality-duty", "Public Sector Equality Duty", new[] { "public-sector-equality-duty" })]
    [InlineData(7, "land-transaction-application-and-planning-permission", "Land transaction application and planning permission", new[] { "planning-permission", "land-transaction-application" })]
    [InlineData(8, "financial-details", "Financial details", new[] { "funding", "fha-risks-or-issues-raised" })]
