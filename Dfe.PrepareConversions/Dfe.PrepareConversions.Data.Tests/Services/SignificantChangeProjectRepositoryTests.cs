@@ -20,6 +20,41 @@ public class SignificantChangeProjectRepositoryTests
 {
    [Theory]
    [AutoMoqData]
+   public async Task SetSatelliteSiteArrangement_PutsToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      HttpClient client = new();
+      SetSignificantChangeSatelliteSiteArrangementCommand command = new(YesNoNotApplicableAnswer.No, "Mitigation", "Evidence");
+      httpClientFactory.Setup(x => x.CreateAcademisationClient()).Returns(client);
+      httpClientService.Setup(x => x.Put<SetSignificantChangeSatelliteSiteArrangementCommand, object>(
+            client, "/significant-change/82/SatelliteSiteArrangement", command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetSatelliteSiteArrangement(82, command);
+
+      httpClientService.Verify(x => x.Put<SetSignificantChangeSatelliteSiteArrangementCommand, object>(
+         client, "/significant-change/82/SatelliteSiteArrangement", command), Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetSatelliteSiteArrangement_WhenApiFails_Throws(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      httpClientService.Setup(x => x.Put<SetSignificantChangeSatelliteSiteArrangementCommand, object>(
+            It.IsAny<HttpClient>(), "/significant-change/82/SatelliteSiteArrangement",
+            It.IsAny<SetSignificantChangeSatelliteSiteArrangementCommand>()))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetSatelliteSiteArrangement(82,
+         new SetSignificantChangeSatelliteSiteArrangementCommand(YesNoNotApplicableAnswer.Yes, null, null)));
+   }
+
+   [Theory]
+   [AutoMoqData]
    public async Task CreateProject_ShouldPostToApiAndReturnResponse(
       [Frozen] Mock<IHttpClientService> httpClientService,
       [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
