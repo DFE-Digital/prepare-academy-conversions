@@ -3,14 +3,13 @@ import BasePage from './basePage';
 
 class SignificantChangePublicSectorEqualityDuty extends BasePage {
     public path = 'public-sector-equality-duty';
+    public supportingEvidenceSelector = '[data-test="psed-supporting-evidence"]';
 
     public verifyPageLoaded(): this {
-        cy.checkPath(this.path);
-        this.verifyHeading('Public Sector Equality Duty');
-        cy.contains(
-            'legend',
+        this.verifyPageLoadedWithLegend(
+            'Public Sector Equality Duty',
             'Has the Public Sector Equality Duty been considered and an Equalities Impact Assessment been completed?'
-        ).should('be.visible');
+        );
         cy.contains(
             'legend',
             'Is the decision likely to disproportionately affect any particular person or group who share protected characteristics?'
@@ -114,12 +113,6 @@ class SignificantChangePublicSectorEqualityDuty extends BasePage {
 
     public clearSomeImpactAdditionalInformation(): this {
         cy.getByDataTest('some-impact-details').clear();
-        return this;
-    }
-
-    public enterSupportingEvidence(text: string): this {
-        cy.getByDataTest('psed-supporting-evidence').clear();
-        cy.getByDataTest('psed-supporting-evidence').type(text);
         return this;
     }
 

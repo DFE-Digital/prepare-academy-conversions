@@ -3,14 +3,14 @@ import BasePage from './basePage';
 
 class SignificantChangeFhaRisksOrIssuesRaised extends BasePage {
     public path = 'fha-risks-or-issues-raised';
+    public additionalInformationSelector = '[data-test="fha-risks-or-issues-raised-additional-information"]';
+    public supportingEvidenceSelector = '[data-test="fha-risks-or-issues-raised-supporting-evidence"]';
 
     public verifyPageLoaded(): this {
-        cy.checkPath(this.path);
-        this.verifyHeading('Financial health assessment (FHA) risks or issues raised');
-        cy.contains('legend', 'Have any risks or issues been raised in the Financial Health Assessment (FHA)?').should(
-            'be.visible'
+        return this.verifyPageLoadedWithLegend(
+            'Financial health assessment (FHA) risks or issues raised',
+            'Have any risks or issues been raised in the Financial Health Assessment (FHA)?'
         );
-        return this;
     }
 
     public selectYes(): this {
@@ -30,18 +30,6 @@ class SignificantChangeFhaRisksOrIssuesRaised extends BasePage {
 
     public verifyAdditionalInformationVisible(): this {
         cy.getByDataTest('fha-risks-or-issues-raised-additional-information').should('be.visible');
-        return this;
-    }
-
-    public enterAdditionalInformation(text: string): this {
-        cy.getByDataTest('fha-risks-or-issues-raised-additional-information').clear();
-        cy.getByDataTest('fha-risks-or-issues-raised-additional-information').type(text);
-        return this;
-    }
-
-    public enterSupportingEvidence(text: string): this {
-        cy.getByDataTest('fha-risks-or-issues-raised-supporting-evidence').clear();
-        cy.getByDataTest('fha-risks-or-issues-raised-supporting-evidence').type(text);
         return this;
     }
 
