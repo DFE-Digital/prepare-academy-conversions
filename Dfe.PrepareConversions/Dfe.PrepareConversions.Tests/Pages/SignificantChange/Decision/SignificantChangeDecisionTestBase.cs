@@ -50,7 +50,8 @@ public abstract class SignificantChangeDecisionTestBase : BaseIntegrationTests
          LocalAuthorityObjections = new() { Status = taskStatus },
          LandTransaction = new() { Status = taskStatus },
          SpecialSchoolSatelliteConsiderations = new () { Status = taskStatus },
-         SatelliteSiteArrangement = new() { Status = taskStatus }
+         SatelliteSiteArrangement = new() { Status = taskStatus },
+         LocalSenPlans = new() { Status = taskStatus }
       };
 
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, id), project);

@@ -104,7 +104,11 @@ public static class SignificantChangeProjectHelper
          SatelliteSiteArrangementStatus = significantChangeProject.SatelliteSiteArrangement?.Status ?? SignificantChangeTaskStatus.NotStarted,
          SatelliteSiteArrangementAnswer = significantChangeProject.SatelliteSiteArrangement?.Answer,
          SatelliteSiteArrangementAdditionalInformation = significantChangeProject.SatelliteSiteArrangement?.AdditionalInformation ?? string.Empty,
-         SatelliteSiteArrangementSupportingEvidence = significantChangeProject.SatelliteSiteArrangement?.SupportingEvidence ?? string.Empty
+         SatelliteSiteArrangementSupportingEvidence = significantChangeProject.SatelliteSiteArrangement?.SupportingEvidence ?? string.Empty,
+         LocalSenPlansStatus = significantChangeProject.LocalSenPlans?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         LocalSenPlansAnswer = significantChangeProject.LocalSenPlans?.Answer,
+         LocalSenPlansAdditionalInformation = significantChangeProject.LocalSenPlans?.AdditionalInformation,
+         LocalSenPlansSupportingEvidenceLink = significantChangeProject.LocalSenPlans?.SupportingEvidence ?? string.Empty
 
       };
    }

@@ -21,6 +21,7 @@ public class SignificantChangeProjectResponse : SignificantChangeProjectSearchRe
    public SignificantChangeFhaRisksOrIssuesRaisedResponse FHARisksOrIssuesRaised { get; set; } = new();
    public SignificantChangeSpecialSchoolSatelliteConsiderationsResponse SpecialSchoolSatelliteConsiderations { get; set; } = new();
    public SignificantChangeSatelliteSiteArrangementResponse SatelliteSiteArrangement { get; set; } = new();
+   public SignificantChangeLocalSenPlansResponse LocalSenPlans { get; set; } = new();
    public SignificantChangeDecisions? Decision { get; set; }
    public DateTime? DecisionDate { get; set; }
 }

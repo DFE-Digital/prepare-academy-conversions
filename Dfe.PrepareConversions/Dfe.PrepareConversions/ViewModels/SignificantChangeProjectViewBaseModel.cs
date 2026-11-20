@@ -103,4 +103,8 @@ public class SignificantChangeProjectViewBaseModel
    public YesNoNotApplicableAnswer? SatelliteSiteArrangementAnswer { get; set; }
    public string SatelliteSiteArrangementAdditionalInformation { get; set; } = string.Empty;
    public string SatelliteSiteArrangementSupportingEvidence { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus LocalSenPlansStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public YesNoNotApplicableAnswer? LocalSenPlansAnswer { get; set; }
+   public string LocalSenPlansAdditionalInformation { get; set; } = string.Empty;
+   public string LocalSenPlansSupportingEvidenceLink { get; set; } = string.Empty;
 }
