@@ -51,4 +51,5 @@ public interface ISignificantChangeProjectRepository
 
    Task SetSpecialSchoolSatelliteConsiderations(int id, SetSignificantChangeSpecialSchoolSatelliteConsiderationsCommand command);
    Task SetSatelliteSiteArrangement(int id, SetSignificantChangeSatelliteSiteArrangementCommand command);
+   Task SetMainstreamSchoolSatelliteConsiderations(int id, SetSignificantChangeMainstreamSchoolSatelliteConsiderationsCommand command);
 }

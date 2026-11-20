@@ -279,6 +279,34 @@ public class SignificantChangeProjectHelperTests
    }
 
    [Fact]
+   public void Build_Maps_mainstream_satellite_considerations_and_defaults_missing_section()
+   {
+      var response = BuildSignificantChangeProjectResponse();
+      response.MainstreamSchoolSatelliteConsiderations = new()
+      {
+         Answer = YesNoNotApplicableAnswer.No,
+         AdditionalInformation = "Requirements gap",
+         SupportingEvidence = "Evidence",
+         Status = SignificantChangeTaskStatus.InProgress
+      };
+
+      var model = SignificantChangeProjectHelper.Build(response);
+
+      Assert.Equal(YesNoNotApplicableAnswer.No, model.MainstreamSchoolSatelliteConsiderationsAnswer);
+      Assert.Equal("Requirements gap", model.MainstreamSchoolSatelliteConsiderationsAdditionalInformation);
+      Assert.Equal("Evidence", model.MainstreamSchoolSatelliteConsiderationsSupportingEvidenceLink);
+      Assert.Equal(SignificantChangeTaskStatus.InProgress, model.MainstreamSchoolSatelliteConsiderationsStatus);
+
+      response.MainstreamSchoolSatelliteConsiderations = null;
+      model = SignificantChangeProjectHelper.Build(response);
+
+      Assert.Null(model.MainstreamSchoolSatelliteConsiderationsAnswer);
+      Assert.Null(model.MainstreamSchoolSatelliteConsiderationsAdditionalInformation);
+      Assert.Equal(string.Empty, model.MainstreamSchoolSatelliteConsiderationsSupportingEvidenceLink);
+      Assert.Equal(SignificantChangeTaskStatus.NotStarted, model.MainstreamSchoolSatelliteConsiderationsStatus);
+   }
+
+   [Fact]
    public void Build_Maps_nested_recommendation_values()
    {
       SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
