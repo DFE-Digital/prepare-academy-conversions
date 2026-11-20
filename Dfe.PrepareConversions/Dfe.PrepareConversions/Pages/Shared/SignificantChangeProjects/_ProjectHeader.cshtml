@@ -15,18 +15,9 @@
    <p class="govuk-body govuk-!-margin-bottom-1">
       Tier: @Model.Tier
    </p>
-   <p class="govuk-body govuk-!-margin-bottom-5">
-      Project owner:
-
-         @if (Model.AssignedUser == null || string.IsNullOrWhiteSpace(Model?.AssignedUser.FullName))
-         {
-               <span data-id="assigned-user" class="empty">Empty</span>
-         }
-         else
-         {
-               <strong data-id="assigned-user">@Model.AssignedUser.FullName</strong>
-         }
-         <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.SignificantChange.SignificantChangeProjectAssignment.Page" asp-route-id="@Model.Id">Change</a>
+   <p class="govuk-body govuk-!-margin-bottom-1">
+      Project owner: <stringsummary value="@Model.AssignedUser?.FullName"></stringsummary>
+      <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.SignificantChange.SignificantChangeProjectAssignment.Page" asp-route-id="@Model.Id">Change</a>
    </p>
    <p class="govuk-body govuk-!-margin-bottom-1">
       Regions Group clearance: <stringsummary value="@Model.RegionsGroupClearance"></stringsummary>
