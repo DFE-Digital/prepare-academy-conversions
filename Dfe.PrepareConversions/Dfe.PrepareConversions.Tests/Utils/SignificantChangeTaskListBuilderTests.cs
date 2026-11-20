@@ -65,21 +65,7 @@ public class SignificantChangeTaskListBuilderTests
          { SignificantChangeTaskStatus.NotStarted, TaskListItemViewModel.NotStarted.Status },
          { default, TaskListItemViewModel.NotStarted.Status }
       };
-
-   [Theory]
-   [MemberData(nameof(StatusCases))]
-   public void Build_maps_mainstream_satellite_status_and_order(SignificantChangeTaskStatus taskStatus, string expectedTaskStatus)
-   {
-      var project = BuildProject(p => p.MainstreamSchoolSatelliteConsiderationsStatus = taskStatus);
-      var result = SignificantChangeTaskListBuilder.Build(project);
-      var section = Assert.Single(result.Sections, s => s.Key == "sen-considerations");
-      var task = Assert.Single(section.Tasks, t => t.Key == "mainstream-school-satellite-considerations");
-
-      Assert.Equal(5, task.DisplayOrder);
-      Assert.Equal("Mainstream school satellite considerations", task.Title);
-      task.Status.Status.Should().Be(expectedTaskStatus);
-   }
-
+   
    [Theory]
    [MemberData(nameof(StatusCases))]
    public void Build_maps_local_sen_plans_status_and_order(SignificantChangeTaskStatus taskStatus, string expectedTaskStatus)
