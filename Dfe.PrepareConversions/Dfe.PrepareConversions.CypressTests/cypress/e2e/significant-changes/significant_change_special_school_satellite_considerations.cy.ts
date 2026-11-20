@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+import { invalidSharePointLinks, verifySharePointLinkValidation } from 'cypress/support/sharePointLinkValidation';
 import significantChangeSpecialSchoolSatelliteConsiderations from '../../pages/significantChangeSpecialSchoolSatelliteConsiderations';
 import { Logger } from '../../support/logger';
 
@@ -31,28 +32,50 @@ describe('Significant change - special school satellite considerations', () => {
             });
     };
 
+    it('Should show all fields', () => {
+        openTaskList(() => {
+            significantChangeSpecialSchoolSatelliteConsiderations.openTask(
+                'Special school satellite site considerations'
+            );
+            significantChangeSpecialSchoolSatelliteConsiderations
+                .verifyPageLoaded()
+                .verifySupportingEvidencePresent()
+                .verifyAllOptionsPresent(['answer-yes', 'answer-no', 'not-applicable']);
+        });
+    });
+
     it('Should show the task and require an answer and additional information when No is selected', () => {
         openTaskList(() => {
-            cy.contains('h3.app-task-list__section', 'SEN and alternative provision considerations')
-                .next('.app-task-list')
-                .contains('a', 'Special school satellite site considerations')
-                .should('be.visible')
-                .click();
+            significantChangeSpecialSchoolSatelliteConsiderations.openTask(
+                'Special school satellite site considerations'
+            );
 
             significantChangeSpecialSchoolSatelliteConsiderations
                 .selectNo()
-                .save()
+                .clickSaveButton()
                 .verifyErrorSummaryContains('Enter details')
                 .verifyInlineError('AdditionalInformation', 'Enter details');
 
             significantChangeSpecialSchoolSatelliteConsiderations
                 .selectNo()
                 .enterAdditionalInformation('Satellite site requirements are being addressed')
-                .enterSupportingEvidence('https://sharepoint.edu.gov.uk/evidence')
-                .save();
+                .enterSupportingEvidence('https://educationgovuk.sharepoint.com/sites/satellite/evidence')
+                .clickSaveButton();
 
             cy.url().should('match', /\/significant-change\/task-list\/\d+$/);
             cy.contains('a', 'Special school satellite site considerations').should('be.visible');
+        });
+    });
+
+    invalidSharePointLinks.forEach(({ name, value, error }) => {
+        it(`rejects ${name} as supporting evidence`, () => {
+            openTaskList(() => {
+                significantChangeSpecialSchoolSatelliteConsiderations.openTask(
+                    'Special school satellite site considerations'
+                );
+                significantChangeSpecialSchoolSatelliteConsiderations.selectYes();
+                verifySharePointLinkValidation('SupportingEvidence', value, error);
+            });
         });
     });
 });
