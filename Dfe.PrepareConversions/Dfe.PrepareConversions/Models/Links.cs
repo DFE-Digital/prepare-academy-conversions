@@ -121,6 +121,7 @@ public static class Links
       public static readonly LinkItem FhaRisksOrIssuesRaised = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/FhaRisksOrIssuesRaised/Index");
       public static readonly LinkItem SpecialSchoolSatelliteConsiderations = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/SpecialSchoolSatelliteConsiderations/Index");
       public static readonly LinkItem SatelliteSiteArrangement = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/SatelliteSiteArrangement/Index");
+      public static readonly LinkItem MainstreamSchoolSatelliteConsiderations = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/MainstreamSchoolSatelliteConsiderations/Index");
    }
 
     public static class SignificantChangeDecision

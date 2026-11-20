@@ -14,21 +14,8 @@ class SignificantChangeSpecialSchoolSatelliteConsiderations extends BasePage {
         return this;
     }
 
-    public verifyAllOptionsPresent(): this {
-        cy.getByDataTest('answer-yes').should('exist');
-        cy.getByDataTest('additional-info').should('exist');
-        cy.getByDataTest('not-applicable').should('exist');
-        return this;
-    }
-
-    public selectNo(): this {
-        cy.getByDataTest('additional-info').check();
-        return this;
-    }
-
-    public enterAdditionalInformation(value: string): this {
-        cy.getByDataTest('additional-information').clear();
-        cy.getByDataTest('additional-information').type(value);
+    public verifySupportingEvidencePresent(): this {
+        cy.getByDataTest('supporting-evidence').should('exist');
         return this;
     }
 
@@ -38,18 +25,9 @@ class SignificantChangeSpecialSchoolSatelliteConsiderations extends BasePage {
         return this;
     }
 
-    public save(): this {
-        cy.getById('save-and-continue-button').click();
-        return this;
-    }
-
-    public verifyErrorSummaryContains(message: string): this {
-        cy.get('.govuk-error-summary').should('be.visible').and('contain.text', message);
-        return this;
-    }
-
-    public verifyInlineError(field: string, message: string): this {
-        cy.getById(`${field}-error`).should('contain.text', message);
+    public enterAdditionalInformation(value: string): this {
+        cy.getByDataTest('additional-information').clear();
+        cy.getByDataTest('additional-information').type(value);
         return this;
     }
 }
