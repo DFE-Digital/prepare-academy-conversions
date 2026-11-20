@@ -107,4 +107,8 @@ public class SignificantChangeProjectViewBaseModel
    public YesNoNotApplicableAnswer? MainstreamSchoolSatelliteConsiderationsAnswer { get; set; }
    public string MainstreamSchoolSatelliteConsiderationsAdditionalInformation { get; set; } = string.Empty;
    public string MainstreamSchoolSatelliteConsiderationsSupportingEvidenceLink { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus TrustExperienceAndGovernanceStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public YesNoNotApplicableAnswer? TrustExperienceAndGovernanceAnswer { get; set; }
+   public string TrustExperienceAndGovernanceAdditionalInformation { get; set; } = string.Empty;
+   public string TrustExperienceAndGovernanceSupportingEvidenceLink { get; set; } = string.Empty;
 }
