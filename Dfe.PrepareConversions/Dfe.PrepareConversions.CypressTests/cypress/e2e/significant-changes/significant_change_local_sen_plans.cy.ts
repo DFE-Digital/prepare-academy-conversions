@@ -32,7 +32,6 @@ describe('Significant change - local SEN plans', () => {
             });
     };
 
-
     it('Should show all fields', () => {
         openTaskList(() => {
             significantChangeLocalSenPlans.openTask('Local SEN plans');
@@ -46,9 +45,7 @@ describe('Significant change - local SEN plans', () => {
 
     it('Should show the task and require additional information when Yes is selected', () => {
         openTaskList(() => {
-            significantChangeLocalSenPlans.openTask(
-                'Local SEN plans'
-            );
+            significantChangeLocalSenPlans.openTask('Local SEN plans');
 
             significantChangeLocalSenPlans
                 .selectYes()
