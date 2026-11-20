@@ -16,7 +16,7 @@
 
 <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
    <label class="govuk-label govuk-label--m" for="RegionsGroupClearance">
-      Enter who cleared the significant change in Regions Group
+      Enter the full name of the person who cleared the significant change in Regions Group
    </label>
    <inline-error for="@nameof(Model.RegionsGroupClearance)" />
    <input asp-for="@Model.RegionsGroupClearance" type="text"
@@ -26,7 +26,7 @@
 
 <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
    <label class="govuk-label govuk-label--m" for="TrustRegulationClearance">
-      Enter who cleared the significant change from Trust Regulation (formerly known as SFSO)
+      Enter the full name of the person who cleared the significant change from Trust Regulation (formerly known as SFSO)
    </label>
    <inline-error for="@nameof(Model.TrustRegulationClearance)" />
    <input asp-for="@Model.TrustRegulationClearance" type="text"
