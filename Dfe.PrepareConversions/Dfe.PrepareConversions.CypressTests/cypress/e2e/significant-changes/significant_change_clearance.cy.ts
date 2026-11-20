@@ -38,9 +38,7 @@ describe('Significant change - clearance details', () => {
             significantChangeTaskList.verifyClearanceDetailsTaskVisible();
             significantChangeTaskList.openClearanceDetailsTask();
 
-            significantChangeClearance
-                .verifyPageLoaded()
-                .verifyClearanceFieldsVisible();
+            significantChangeClearance.verifyPageLoaded().verifyClearanceFieldsVisible();
         });
     });
 
@@ -54,7 +52,10 @@ describe('Significant change - clearance details', () => {
                 .verifyErrorSummaryContains('Enter who cleared the significant change in Regions Group')
                 .verifyErrorSummaryContains('Enter who cleared the significant change from Trust Regulation')
                 .verifyInlineError('RegionsGroupClearance', 'Enter who cleared the significant change in Regions Group')
-                .verifyInlineError('TrustRegulationClearance', 'Enter who cleared the significant change from Trust Regulation');
+                .verifyInlineError(
+                    'TrustRegulationClearance',
+                    'Enter who cleared the significant change from Trust Regulation'
+                );
 
             cy.url().should('match', /\/significant-change\/task-list\/\d+\/clearance-details$/);
         });
