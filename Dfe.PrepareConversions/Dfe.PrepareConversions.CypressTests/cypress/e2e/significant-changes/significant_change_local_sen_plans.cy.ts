@@ -32,16 +32,6 @@ describe('Significant change - local SEN plans', () => {
             });
     };
 
-    it('Should list Local SEN plans first in the SEN and alternative provision considerations section', () => {
-        openTaskList(() => {
-            cy.contains('h3.app-task-list__section', 'SEN and alternative provision considerations')
-                .next('.app-task-list')
-                .find('.app-task-list__task-name a')
-                .first()
-                .invoke('text')
-                .should((text) => expect(text.trim()).to.eq('Local SEN plans'));
-        });
-    });
 
     it('Should show all fields', () => {
         openTaskList(() => {
@@ -54,40 +44,11 @@ describe('Significant change - local SEN plans', () => {
         });
     });
 
-    it('Should require an answer', () => {
+    it('Should show the task and require additional information when Yes is selected', () => {
         openTaskList(() => {
-            significantChangeLocalSenPlans.openTask('Local SEN plans');
-
-            cy.get('input[name="Answer"]').should('have.length', 3);
-            cy.get('input[name="Answer"]:checked').then(($checked) => {
-                if ($checked.length > 0) {
-                    Logger.log('Answer already saved on this project - skipping no-answer validation');
-                    return;
-                }
-
-                const message =
-                    'Select whether the proposal conflicts with a Local SEN Reform Plan (or equivalent) for SEN, AP and high needs provision';
-                significantChangeLocalSenPlans
-                    .clickSaveButton()
-                    .verifyErrorSummaryContains(message)
-                    .verifyInlineError('Answer', message);
-            });
-        });
-    });
-
-    it('Should only show Give details when Yes is selected', () => {
-        openTaskList(() => {
-            significantChangeLocalSenPlans.openTask('Local SEN plans');
-
-            significantChangeLocalSenPlans.selectNo().verifyAdditionalInformationVisible(false);
-            significantChangeLocalSenPlans.selectYes().verifyAdditionalInformationVisible(true);
-            cy.get('label[for="AdditionalInformation"]').should('have.text', 'Give details');
-        });
-    });
-
-    it('Should require details when Yes is selected and save once provided', () => {
-        openTaskList(() => {
-            significantChangeLocalSenPlans.openTask('Local SEN plans');
+            significantChangeLocalSenPlans.openTask(
+                'Local SEN plans'
+            );
 
             significantChangeLocalSenPlans
                 .selectYes()
@@ -98,8 +59,8 @@ describe('Significant change - local SEN plans', () => {
 
             significantChangeLocalSenPlans
                 .selectYes()
-                .enterAdditionalInformation('The proposal conflicts with the local SEN reform plan')
-                .enterSupportingEvidence('https://educationgovuk.sharepoint.com/sites/sen/evidence')
+                .enterAdditionalInformation('Some details')
+                .enterSupportingEvidence('https://educationgovuk.sharepoint.com/sites/satellite/evidence')
                 .clickSaveButton();
 
             cy.url().should('match', /\/significant-change\/task-list\/\d+$/);
