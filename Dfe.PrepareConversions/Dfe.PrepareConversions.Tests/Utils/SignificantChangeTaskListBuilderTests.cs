@@ -11,11 +11,27 @@ namespace Dfe.PrepareConversions.Tests.Utils;
 public class SignificantChangeTaskListBuilderTests
 {
    [Theory]
+   [MemberData(nameof(StatusCases))]
+   public void Build_maps_satellite_site_arrangement_status_and_display_order(
+      SignificantChangeTaskStatus taskStatus, string expectedTaskStatus)
+   {
+      var project = BuildProject(p => p.SatelliteSiteArrangementStatus = taskStatus);
+      var result = SignificantChangeTaskListBuilder.Build(project);
+      var section = Assert.Single(result.Sections, s => s.Key == "sen-considerations");
+      var task = Assert.Single(section.Tasks, t => t.Key == "satellite-site-arrangement");
+
+      Assert.Equal(3, task.DisplayOrder);
+      Assert.Equal("Satellite site arrangement", task.Title);
+      Assert.Equal(Dfe.PrepareConversions.Models.Links.SignificantChange.SatelliteSiteArrangement.Page, task.Page);
+      Assert.Equal(expectedTaskStatus, task.Status.Status);
+   }
+
+   [Theory]
    [InlineData(1, "key-project-dates", "Key project dates", new[] { "confirm-project-dates" })]
    [InlineData(2, "admissions-variation", "Admissions variation", new[] { "admissions-variation-details" })]
    [InlineData(3, "consultation-details", "Consultation details", new[] { "consultation", "local-authority-objections", "religious-bodies", "other-stakeholder-engagement" })]
    [InlineData(4, "academy-performance", "Academy performance", new[] { "ofsted" })]
-   [InlineData(5, "sen-considerations", "SEN and alternative provision considerations", new[] { "special-school-satellite-site-considerations", "mainstream-school-satellite-considerations" })]
+   [InlineData(5, "sen-considerations", "SEN and alternative provision considerations", new[] { "satellite-site-arrangement", "special-school-satellite-site-considerations", "mainstream-school-satellite-considerations" })]
    [InlineData(6, "public-sector-equality-duty", "Public Sector Equality Duty", new[] { "public-sector-equality-duty" })]
    [InlineData(7, "land-transaction-application-and-planning-permission", "Land transaction application and planning permission", new[] { "planning-permission", "land-transaction-application" })]
    [InlineData(8, "financial-details", "Financial details", new[] { "funding", "fha-risks-or-issues-raised" })]
