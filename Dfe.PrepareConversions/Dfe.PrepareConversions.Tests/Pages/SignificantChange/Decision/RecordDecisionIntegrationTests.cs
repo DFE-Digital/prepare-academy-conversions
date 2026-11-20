@@ -78,7 +78,7 @@ public class RecordDecisionIntegrationTests(IntegrationTestingWebApplicationFact
       await Wizard.StartFor(ProjectId);
       await Wizard.SetDecisionToAndContinue(SignificantChangeDecisions.Approved);
 
-      Document.Url.Should().Be(BuildRequestAddress(PathTo("record-decision")));
+      Document.Url.Should().Be(BuildRequestAddress(PathTo("record-decision"))); 
       var errors = Document.QuerySelectorAll("[data-cy='error-summary'] a");
       errors.Should().HaveCount(taskLinks.Count);
       foreach (var task in taskLinks)
