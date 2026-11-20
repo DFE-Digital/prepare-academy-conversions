@@ -55,6 +55,48 @@ public class SignificantChangeProjectRepositoryTests
 
    [Theory]
    [AutoMoqData]
+   public async Task SetClearance_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 82;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeClearance, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeClearanceCommand command = new("Regions Group clearer", "Trust Regulation clearer");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeClearanceCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetClearance(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeClearanceCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetClearance_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeClearanceCommand, object>(
+            It.IsAny<HttpClient>(), It.IsAny<string>(), It.IsAny<SetSignificantChangeClearanceCommand>()))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetClearance(82,
+         new SetSignificantChangeClearanceCommand("Regions Group clearer", "Trust Regulation clearer")));
+   }
+
+   [Theory]
+   [AutoMoqData]
    public async Task CreateProject_ShouldPostToApiAndReturnResponse(
       [Frozen] Mock<IHttpClientService> httpClientService,
       [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,

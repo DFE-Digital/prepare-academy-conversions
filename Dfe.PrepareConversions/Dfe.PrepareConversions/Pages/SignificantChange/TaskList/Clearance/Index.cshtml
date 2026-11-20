@@ -1,0 +1,35 @@
+@page "/significant-change/task-list/{id:int}/clearance-details"
+@model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.Clearance.IndexModel
+@{
+   Layout = "_SignificantChangeTaskLayout";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Links.SignificantChange.SignificantChangeTaskList.Page" asp-route-id="@Model.Project.Id"
+      class="govuk-back-link">Back</a>
+}
+
+<p class="govuk-body">
+   Clearance is given after a review. In Regions Group and Trust Regulation this would typically be by a Grade 7.
+</p>
+
+<div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+   <label class="govuk-label govuk-label--m" for="RegionsGroupClearance">
+      Enter who cleared the significant change in Regions Group
+   </label>
+   <inline-error for="@nameof(Model.RegionsGroupClearance)" />
+   <input asp-for="@Model.RegionsGroupClearance" type="text"
+          class="govuk-input govuk-!-width-two-thirds @(ModelState[nameof(Model.RegionsGroupClearance)]?.Errors.Count > 0 ? "govuk-input--error" : "")"
+          data-test="regions-group-clearance" />
+</div>
+
+<div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+   <label class="govuk-label govuk-label--m" for="TrustRegulationClearance">
+      Enter who cleared the significant change from Trust Regulation (formerly known as SFSO)
+   </label>
+   <inline-error for="@nameof(Model.TrustRegulationClearance)" />
+   <input asp-for="@Model.TrustRegulationClearance" type="text"
+          class="govuk-input govuk-!-width-two-thirds @(ModelState[nameof(Model.TrustRegulationClearance)]?.Errors.Count > 0 ? "govuk-input--error" : "")"
+          data-test="trust-regulation-clearance" />
+</div>

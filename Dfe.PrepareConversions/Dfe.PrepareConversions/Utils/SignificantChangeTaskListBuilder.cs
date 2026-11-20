@@ -215,8 +215,8 @@ public static class SignificantChangeTaskListBuilder
    private static SignificantChangeTaskSectionDefinition RecommendationOnHowToProceedSection(int displayOrder)
    {
       return new SignificantChangeTaskSectionDefinition(
-         "recommendation-on-how-to-proceed",
-         "Recommendation on how to proceed",
+         "recommendation-and-clearance",
+         "Recommendation and clearance",
          displayOrder,
          [
             new SignificantChangeTaskDefinition(
@@ -230,7 +230,13 @@ public static class SignificantChangeTaskListBuilder
                "Admission Variation recommendation",
                2,
                Links.SignificantChange.AdmissionsVariationRecommendation,
-               project => GetTaskStatus(project.AdmissionsVariationRecommendationStatus))
+               project => GetTaskStatus(project.AdmissionsVariationRecommendationStatus)),
+            new SignificantChangeTaskDefinition(
+               "clearance-details",
+               "Clearance Details",
+               3,
+               Links.SignificantChange.ClearanceDetails,
+               project => GetTaskStatus(project.ClearanceStatus))
          ]
       );
    }

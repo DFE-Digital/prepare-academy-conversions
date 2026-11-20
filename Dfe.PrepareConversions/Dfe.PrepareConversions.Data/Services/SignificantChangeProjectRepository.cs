@@ -337,6 +337,22 @@ public class SignificantChangeProjectRepository(
       }
    }
 
+   public async Task SetClearance(int id, SetSignificantChangeClearanceCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeClearance, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeClearanceCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
    public async Task SetOfstedInspection(int id, SetSignificantChangeOfstedInspectionCommand command)
    {
       HttpClient httpClient = httpClientFactory.CreateAcademisationClient();

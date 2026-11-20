@@ -80,6 +80,9 @@ public class SignificantChangeProjectViewBaseModel
    public SignificantChangeTaskStatus RecommendationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public SignificantChangeRecommendation? Recommendation { get; set; }
    public string RecommendationMoreInformation { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus ClearanceStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public string RegionsGroupClearance { get; set; } = string.Empty;
+   public string TrustRegulationClearance { get; set; } = string.Empty;
    public SignificantChangeTaskStatus HQTFConsiderationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public HqtfConsiderationAnswer? HQTFConsiderationAnswer { get; set; }
    public string HQTFConsiderationAdditionalInformation { get; set; } = string.Empty;
