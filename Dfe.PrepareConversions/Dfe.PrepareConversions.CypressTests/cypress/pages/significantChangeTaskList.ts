@@ -145,7 +145,7 @@ class SignificantChangeTaskList extends BasePage {
     }
 
     public verifyAdmissionsVariationRecommendationTaskVisible(): this {
-        cy.contains('h3.app-task-list__section', 'Recommendation and clearance')
+        cy.contains('h3.app-task-list__section', 'Clearance and recommendations')
             .next('.app-task-list')
             .contains('a', 'Recommendation')
             .should('be.visible');
@@ -154,7 +154,7 @@ class SignificantChangeTaskList extends BasePage {
     }
 
     public openAdmissionsVariationRecommendationTask(): this {
-        cy.contains('h3.app-task-list__section', 'Recommendation and clearance')
+        cy.contains('h3.app-task-list__section', 'Clearance and recommendations')
             .next('.app-task-list')
             .contains('a', 'Recommendation')
             .click();
@@ -162,7 +162,7 @@ class SignificantChangeTaskList extends BasePage {
     }
 
     public verifyClearanceDetailsTaskVisible(): this {
-        cy.contains('h3.app-task-list__section', 'Recommendation and clearance')
+        cy.contains('h3.app-task-list__section', 'Clearance and recommendations')
             .next('.app-task-list')
             .contains('a', 'Clearance Details')
             .should('be.visible');
@@ -171,7 +171,7 @@ class SignificantChangeTaskList extends BasePage {
     }
 
     public openClearanceDetailsTask(): this {
-        cy.contains('h3.app-task-list__section', 'Recommendation and clearance')
+        cy.contains('h3.app-task-list__section', 'Clearance and recommendations')
             .next('.app-task-list')
             .contains('a', 'Clearance Details')
             .click();

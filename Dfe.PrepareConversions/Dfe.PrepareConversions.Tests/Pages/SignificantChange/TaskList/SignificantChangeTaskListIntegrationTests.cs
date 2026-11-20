@@ -86,7 +86,7 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
             "Land transaction application and planning permission",
             "Financial details",
             "High Quality Trust Framework",
-            "Recommendation and clearance");
+            "Clearance and recommendations");
 
       var consultationLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Trim() == "Consultation");

@@ -215,8 +215,8 @@ public static class SignificantChangeTaskListBuilder
    private static SignificantChangeTaskSectionDefinition RecommendationOnHowToProceedSection(int displayOrder)
    {
       return new SignificantChangeTaskSectionDefinition(
-         "recommendation-and-clearance",
-         "Recommendation and clearance",
+         "clearance-and-recommendations",
+         "Clearance and recommendations",
          displayOrder,
          [
             new SignificantChangeTaskDefinition(

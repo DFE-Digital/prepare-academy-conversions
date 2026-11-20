@@ -39,7 +39,7 @@ describe('Significant change task list', () => {
                             'Land transaction application and planning permission',
                             'Financial details',
                             'High Quality Trust Framework',
-                            'Recommendation and clearance',
+                            'Clearance and recommendations',
                         ]);
                     });
 
