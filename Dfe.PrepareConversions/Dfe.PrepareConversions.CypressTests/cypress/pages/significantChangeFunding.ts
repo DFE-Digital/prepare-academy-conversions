@@ -3,12 +3,11 @@ import BasePage from './basePage';
 
 class SignificantChangeFunding extends BasePage {
     public path = 'funding';
+    public additionalInformationSelector = '[data-test="funding-additional-information"]';
+    public supportingEvidenceSelector = '[data-test="funding-supporting-evidence"]';
 
     public verifyPageLoaded(): this {
-        cy.checkPath(this.path);
-        this.verifyHeading('Funding');
-        cy.contains('legend', 'Has funding been secured?').should('be.visible');
-        return this;
+        return this.verifyPageLoadedWithLegend('Funding', 'Has funding been secured?');
     }
 
     public verifyAllOptionsPresent(): this {
@@ -40,16 +39,6 @@ class SignificantChangeFunding extends BasePage {
 
     public verifyFundingAdditionalInformationVisible(): this {
         cy.getByDataTest('funding-additional-information').should('be.visible');
-        return this;
-    }
-
-    public enterAdditionalInformation(additionalInformation: string): this {
-        cy.getByDataTest('funding-additional-information').clear().type(additionalInformation);
-        return this;
-    }
-
-    public enterSupportingEvidence(supportingEvidence: string): this {
-        cy.getByDataTest('funding-supporting-evidence').clear().type(supportingEvidence);
         return this;
     }
 

@@ -5,10 +5,7 @@ class SignificantChangeConsultationDuration extends BasePage {
     public path = 'consultation';
 
     public verifyPageLoaded(): this {
-        cy.checkPath(this.path);
-        this.verifyHeading('Consultation');
-        cy.contains('legend', 'Has a 3 week consultation been completed?').should('be.visible');
-        return this;
+        return this.verifyPageLoadedWithLegend('Consultation', 'Has a 3 week consultation been completed?');
     }
 
     public verifyAllOptionsPresent(): this {

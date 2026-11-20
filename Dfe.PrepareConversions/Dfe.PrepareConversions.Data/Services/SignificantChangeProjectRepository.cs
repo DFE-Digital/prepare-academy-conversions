@@ -465,4 +465,20 @@ public class SignificantChangeProjectRepository(
       }
    }
 
+   public async Task SetTrustExperienceAndGovernance(int id, SetSignificantChangeTrustExperienceAndGovernanceCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeTrustExperienceAndGovernance, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeTrustExperienceAndGovernanceCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
 }
