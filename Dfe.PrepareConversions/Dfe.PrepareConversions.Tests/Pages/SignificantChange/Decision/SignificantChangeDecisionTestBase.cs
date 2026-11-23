@@ -47,6 +47,7 @@ public abstract class SignificantChangeDecisionTestBase : BaseIntegrationTests
          HQTFConsideration = new() { Status = taskStatus },
          Recommendation = new() { Status = taskStatus },
          AdmissionsVariationRecommendation = new() { Status = taskStatus },
+         Clearance = new() { Status = taskStatus },
          LocalAuthorityObjections = new() { Status = taskStatus },
          LandTransaction = new() { Status = taskStatus },
          SpecialSchoolSatelliteConsiderations = new () { Status = taskStatus },
