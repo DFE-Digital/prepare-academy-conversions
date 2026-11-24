@@ -307,6 +307,34 @@ public class SignificantChangeProjectHelperTests
    }
 
    [Fact]
+   public void Build_Maps_local_sen_plans_and_defaults_missing_section()
+   {
+      var response = BuildSignificantChangeProjectResponse();
+      response.LocalSenPlans = new()
+      {
+         Answer = YesNoNotApplicableAnswer.Yes,
+         AdditionalInformation = "Conflicts with plan",
+         SupportingEvidence = "Evidence",
+         Status = SignificantChangeTaskStatus.Completed
+      };
+
+      var model = SignificantChangeProjectHelper.Build(response);
+
+      Assert.Equal(YesNoNotApplicableAnswer.Yes, model.LocalSenPlansAnswer);
+      Assert.Equal("Conflicts with plan", model.LocalSenPlansAdditionalInformation);
+      Assert.Equal("Evidence", model.LocalSenPlansSupportingEvidenceLink);
+      Assert.Equal(SignificantChangeTaskStatus.Completed, model.LocalSenPlansStatus);
+
+      response.LocalSenPlans = null;
+      model = SignificantChangeProjectHelper.Build(response);
+
+      Assert.Null(model.LocalSenPlansAnswer);
+      Assert.Null(model.LocalSenPlansAdditionalInformation);
+      Assert.Equal(string.Empty, model.LocalSenPlansSupportingEvidenceLink);
+      Assert.Equal(SignificantChangeTaskStatus.NotStarted, model.LocalSenPlansStatus);
+   }
+
+   [Fact]
    public void Build_Maps_nested_recommendation_values()
    {
       SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();

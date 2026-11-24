@@ -117,6 +117,12 @@ public static class SignificantChangeTaskListBuilder
          displayOrder,
          [
             new SignificantChangeTaskDefinition(
+               "local-sen-plans",
+               "Local SEN plans",
+               2,
+               Links.SignificantChange.LocalSenPlans,
+               project => GetTaskStatus(project.LocalSenPlansStatus)),
+            new SignificantChangeTaskDefinition(
                "satellite-site-arrangement",
                "Satellite site arrangement",
                3,

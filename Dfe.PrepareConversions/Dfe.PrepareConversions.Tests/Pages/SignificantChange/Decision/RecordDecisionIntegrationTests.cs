@@ -73,12 +73,12 @@ public class RecordDecisionIntegrationTests(IntegrationTestingWebApplicationFact
       var taskLinks = Document.QuerySelectorAll(".app-task-list__task-name a")
          .Select(link => new { Title = link.TextContent.Trim(), Url = link.GetAttribute("href") })
          .ToList();
-      taskLinks.Should().HaveCount(19);
+      taskLinks.Should().HaveCount(20);
 
       await Wizard.StartFor(ProjectId);
       await Wizard.SetDecisionToAndContinue(SignificantChangeDecisions.Approved);
 
-      Document.Url.Should().Be(BuildRequestAddress(PathTo("record-decision")));
+      Document.Url.Should().Be(BuildRequestAddress(PathTo("record-decision"))); 
       var errors = Document.QuerySelectorAll("[data-cy='error-summary'] a");
       errors.Should().HaveCount(taskLinks.Count);
       foreach (var task in taskLinks)
