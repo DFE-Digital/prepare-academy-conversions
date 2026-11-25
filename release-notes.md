@@ -5,7 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). To see an example from a mature product in the program [see the Complete products changelog that follows the same methodology](https://github.com/DFE-Digital/dfe-complete-conversions-transfers-and-changes/blob/main/CHANGELOG.md).
 
 
-## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-10-26.1292...main)
+## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-11-25.1347...main)
+- 
+NOTE: remember to update unreleased link when making a new release
+
+---
+
+## [1.32.0][1.32.0] - 2026-11-25
+### Added
 - [301987](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/301987) - SIG-Add local authority objections task for significant change
 - [304182](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/304182) Sig - Add clearance details task for significant change
 - [309557](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/304182) - Sig- Task - Record FHA outcomes
@@ -22,10 +29,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - [311061](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/311061) - Sig -  Task - mainstream school satellite considerations
 - [311058](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/311058) - Sig -  Task - Local SEN plans
 
-- 
-NOTE: remember to update unreleased link when making a new release
 
 ---
+
 ## [1.31.0][1.31.0] - 2026-10-26
 ### Added
 - [296559](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/296559) Sig- Add religious body consultation task for significant change
@@ -459,6 +465,10 @@ ___
 # 1.0.0 - Initial release of Prepare Conversions
 Initial Release of the Prepare-conversions system into production.
 
+[1.32.0]:
+  https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-11-25.1347
+[1.31.0]:
+  https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-10-26.1292
 [1.30.0]:
   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-08-26.1192
 [1.29.2]:
