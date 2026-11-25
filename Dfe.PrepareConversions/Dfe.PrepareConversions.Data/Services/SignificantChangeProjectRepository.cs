@@ -337,6 +337,22 @@ public class SignificantChangeProjectRepository(
       }
    }
 
+   public async Task SetClearance(int id, SetSignificantChangeClearanceCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeClearance, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeClearanceCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
    public async Task SetOfstedInspection(int id, SetSignificantChangeOfstedInspectionCommand command)
    {
       HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
@@ -471,6 +487,22 @@ public class SignificantChangeProjectRepository(
       string path = string.Format(PathFor.SetSignificantChangeTrustExperienceAndGovernance, id);
 
       var result = await httpClientService.Put<SetSignificantChangeTrustExperienceAndGovernanceCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
+   public async Task SetLocalSenPlans(int id, SetSignificantChangeLocalSenPlansCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeLocalSenPlans, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeLocalSenPlansCommand, object>(
          httpClient,
          path,
          command);

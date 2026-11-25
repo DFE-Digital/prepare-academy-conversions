@@ -47,12 +47,14 @@ public abstract class SignificantChangeDecisionTestBase : BaseIntegrationTests
          HQTFConsideration = new() { Status = taskStatus },
          Recommendation = new() { Status = taskStatus },
          AdmissionsVariationRecommendation = new() { Status = taskStatus },
+         Clearance = new() { Status = taskStatus },
          LocalAuthorityObjections = new() { Status = taskStatus },
          LandTransaction = new() { Status = taskStatus },
          SpecialSchoolSatelliteConsiderations = new () { Status = taskStatus },
          SatelliteSiteArrangement = new() { Status = taskStatus },
          MainstreamSchoolSatelliteConsiderations = new() { Status = taskStatus },
-         TrustExperienceAndGovernance = new() { Status = taskStatus }
+         TrustExperienceAndGovernance = new() { Status = taskStatus },
+         LocalSenPlans = new() { Status = taskStatus }
       };
 
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, id), project);

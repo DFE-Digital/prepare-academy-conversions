@@ -116,12 +116,14 @@ public static class Links
       public static readonly LinkItem OfstedInspectionQuestion = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/Ofsted/InspectionQuestion");
       public static readonly LinkItem AdmissionsVariationRecommendation = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/AdmissionsVariationRecommendation/Index");
       public static readonly LinkItem SignificantChangeRecommendation = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/Recommendation/Index");
+      public static readonly LinkItem ClearanceDetails = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/Clearance/Index");
       public static readonly LinkItem HqtfConsideration = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/HqtfConsideration/Index");
       public static readonly LinkItem FhaRisksOrIssuesRaised = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/FhaRisksOrIssuesRaised/Index");
       public static readonly LinkItem SpecialSchoolSatelliteConsiderations = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/SpecialSchoolSatelliteConsiderations/Index");
       public static readonly LinkItem SatelliteSiteArrangement = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/SatelliteSiteArrangement/Index");
       public static readonly LinkItem MainstreamSchoolSatelliteConsiderations = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/MainstreamSchoolSatelliteConsiderations/Index");
       public static readonly LinkItem TrustExperienceAndGovernance = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/TrustExperienceAndGovernance/Index");
+      public static readonly LinkItem LocalSenPlans = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/LocalSenPlans/Index");
    }
 
     public static class SignificantChangeDecision

@@ -45,6 +45,7 @@ public interface ISignificantChangeProjectRepository
    Task SetOfstedInspection(int id, SetSignificantChangeOfstedInspectionCommand command);
    Task SetAdmissionsVariationRecommendation(int id, SetAdmissionsVariationRecommendationCommand command);
    Task SetRecommendation(int id, SetSignificantChangeRecommendationCommand command);
+   Task SetClearance(int id, SetSignificantChangeClearanceCommand command);
    Task SetHQTFConsideration(int id, SetSignificantChangeHqtfConsiderationCommand command);
    Task SetFhaRisksOrIssuesRaised(int id, SetSignificantChangeFhaRisksOrIssuesRaisedCommand command);
    Task SetAdmissionsVariation(int id, SetSignificantChangeAdmissionsVariationCommand command);
@@ -53,4 +54,5 @@ public interface ISignificantChangeProjectRepository
    Task SetSatelliteSiteArrangement(int id, SetSignificantChangeSatelliteSiteArrangementCommand command);
    Task SetMainstreamSchoolSatelliteConsiderations(int id, SetSignificantChangeMainstreamSchoolSatelliteConsiderationsCommand command);
    Task SetTrustExperienceAndGovernance(int id, SetSignificantChangeTrustExperienceAndGovernanceCommand command);
+   Task SetLocalSenPlans(int id, SetSignificantChangeLocalSenPlansCommand command);
 }

@@ -76,6 +76,9 @@ public static class SignificantChangeProjectHelper
          RecommendationStatus = significantChangeProject.Recommendation?.Status ?? SignificantChangeTaskStatus.NotStarted,
          Recommendation = significantChangeProject.Recommendation?.Recommendation,
          RecommendationMoreInformation = significantChangeProject.Recommendation?.RecommendationMoreInformation ?? string.Empty,
+         ClearanceStatus = significantChangeProject.Clearance?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         RegionsGroupClearance = significantChangeProject.Clearance?.RegionsGroupClearance ?? string.Empty,
+         TrustRegulationClearance = significantChangeProject.Clearance?.TrustRegulationClearance ?? string.Empty,
          HQTFConsiderationStatus = significantChangeProject.HQTFConsideration?.Status ?? SignificantChangeTaskStatus.NotStarted,
          HQTFConsiderationAnswer = significantChangeProject.HQTFConsideration?.HqtfConsiderationAnswer,
          HQTFConsiderationAdditionalInformation = significantChangeProject.HQTFConsideration?.AdditionalInformation ?? string.Empty,
@@ -112,7 +115,11 @@ public static class SignificantChangeProjectHelper
          TrustExperienceAndGovernanceStatus = significantChangeProject.TrustExperienceAndGovernance?.Status ?? SignificantChangeTaskStatus.NotStarted,
          TrustExperienceAndGovernanceAnswer = significantChangeProject.TrustExperienceAndGovernance?.Answer,
          TrustExperienceAndGovernanceAdditionalInformation = significantChangeProject.TrustExperienceAndGovernance?.AdditionalInformation,
-         TrustExperienceAndGovernanceSupportingEvidenceLink = significantChangeProject.TrustExperienceAndGovernance?.SupportingEvidence ?? string.Empty
+         TrustExperienceAndGovernanceSupportingEvidenceLink = significantChangeProject.TrustExperienceAndGovernance?.SupportingEvidence ?? string.Empty,
+         LocalSenPlansStatus = significantChangeProject.LocalSenPlans?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         LocalSenPlansAnswer = significantChangeProject.LocalSenPlans?.Answer,
+         LocalSenPlansAdditionalInformation = significantChangeProject.LocalSenPlans?.AdditionalInformation,
+         LocalSenPlansSupportingEvidenceLink = significantChangeProject.LocalSenPlans?.SupportingEvidence ?? string.Empty
 
       };
    }

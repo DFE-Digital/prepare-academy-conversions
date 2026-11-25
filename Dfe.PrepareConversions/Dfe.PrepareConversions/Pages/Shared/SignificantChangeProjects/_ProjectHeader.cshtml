@@ -15,19 +15,17 @@
    <p class="govuk-body govuk-!-margin-bottom-1">
       Tier: @Model.Tier
    </p>
+   <p class="govuk-body govuk-!-margin-bottom-1">
+      Project owner: <stringsummary value="@Model.AssignedUser?.FullName"></stringsummary>
+      <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.SignificantChange.SignificantChangeProjectAssignment.Page" asp-route-id="@Model.Id">Change</a>
+   </p>
+   <p class="govuk-body govuk-!-margin-bottom-1">
+      Regions Group clearance: <stringsummary value="@Model.RegionsGroupClearance"></stringsummary>
+      <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.SignificantChange.ClearanceDetails.Page" asp-route-id="@Model.Id" asp-fragment="RegionsGroupClearance">Change<span class="govuk-visually-hidden"> Regions Group clearance</span></a>
+   </p>
    <p class="govuk-body govuk-!-margin-bottom-5">
-      Project owner:
-
-         @if (Model.AssignedUser == null || string.IsNullOrWhiteSpace(Model?.AssignedUser.FullName))
-         {
-               <span data-id="assigned-user" class="empty">Empty</span>
-         }
-         else
-         {
-               <strong data-id="assigned-user">@Model.AssignedUser.FullName</strong>
-         }
-         <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.SignificantChange.SignificantChangeProjectAssignment.Page" asp-route-id="@Model.Id">Change</a>
-
+      Trust Regulation (formerly known as SFSO) clearance: <stringsummary value="@Model.TrustRegulationClearance"></stringsummary>
+      <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.SignificantChange.ClearanceDetails.Page" asp-route-id="@Model.Id" asp-fragment="TrustRegulationClearance">Change<span class="govuk-visually-hidden"> Trust Regulation clearance</span></a>
    </p>
    <p class="govuk-!-margin-top-0  govuk-!-margin-bottom-5">
       <strong class="govuk-tag govuk-tag--@Model.StatusColour" id="project-status-@Model.Id">@Model.Status</strong>

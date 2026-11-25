@@ -62,6 +62,7 @@ public class PathFor
    public static string SetSignificantChangeOfstedInspection => "/significant-change/{0}/SetOfstedInspection";
    public static string AdmissionsVariationRecommendation => "/significant-change/{0}/AdmissionsVariationRecommendation";
    public static string SetSignificantChangeRecommendation => "/significant-change/{0}/SetRecommendation";
+   public static string SetSignificantChangeClearance => "/significant-change/{0}/SetClearance";
    public static string SetSignificantChangeHqtfConsideration => "/significant-change/{0}/SetHQTFConsideration";
    public static string SetSignificantChangeFhaRisksOrIssuesRaised => "/significant-change/{0}/SetFHARisksOrIssuesRaised";
    public static string SetSignificantChangeAdmissionsVariation => "/significant-change/{0}/SetAdmissionsVariation";
@@ -69,5 +70,6 @@ public class PathFor
    public static string SetSignificantChangeSatelliteSiteArrangement => "/significant-change/{0}/SatelliteSiteArrangement";
    public static string SetSignificantChangeMainstreamSchoolSatelliteConsiderations => "/significant-change/{0}/MainstreamSchoolSatelliteConsiderations";
    public static string SetSignificantChangeTrustExperienceAndGovernance => "/significant-change/{0}/TrustExperienceAndGovernance";
+   public static string SetSignificantChangeLocalSenPlans => "/significant-change/{0}/LocalSenPlans";
 
 }

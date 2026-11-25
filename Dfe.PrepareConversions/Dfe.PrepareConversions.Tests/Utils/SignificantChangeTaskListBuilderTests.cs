@@ -31,12 +31,12 @@ public class SignificantChangeTaskListBuilderTests
    [InlineData(2, "admissions-variation", "Admissions variation", new[] { "admissions-variation-details" })]
    [InlineData(3, "consultation-details", "Consultation details", new[] { "consultation", "local-authority-objections", "religious-bodies", "other-stakeholder-engagement" })]
    [InlineData(4, "academy-performance", "Academy performance", new[] { "ofsted" })]
-   [InlineData(5, "sen-considerations", "SEN and alternative provision considerations", new[] { "satellite-site-arrangement", "special-school-satellite-site-considerations", "mainstream-school-satellite-considerations", "trust-experience-and-governance" })]
+   [InlineData(5, "sen-considerations", "SEN and alternative provision considerations", new[] { "local-sen-plans", "satellite-site-arrangement", "special-school-satellite-site-considerations", "mainstream-school-satellite-considerations", "trust-experience-and-governance" })]
    [InlineData(6, "public-sector-equality-duty", "Public Sector Equality Duty", new[] { "public-sector-equality-duty" })]
    [InlineData(7, "land-transaction-application-and-planning-permission", "Land transaction application and planning permission", new[] { "planning-permission", "land-transaction-application" })]
    [InlineData(8, "financial-details", "Financial details", new[] { "funding", "fha-risks-or-issues-raised" })]
    [InlineData(9, "high-quality-trust-framework", "High Quality Trust Framework", new[] { "hqtf-consideration" })]
-   [InlineData(10, "recommendation-on-how-to-proceed", "Recommendation on how to proceed", new[] { "significant-change-recommendation", "admissions-variation-recommendation" })]
+   [InlineData(10, "clearance-and-recommendations", "Clearance and recommendations", new[] { "significant-change-recommendation", "admissions-variation-recommendation", "clearance-details" })]
    public void Build_includes_ordered_sections_and_tasks_when_supplied(int sectionDisplayOrder, string sectionKey, string sectionTitle, string[] taskKeys)
    {
       const int expectedSectionCount = 10;
@@ -274,7 +274,7 @@ public class SignificantChangeTaskListBuilderTests
    [MemberData(nameof(StatusCases))]
    public void Build_maps_recommendation_status_to_task_status(SignificantChangeTaskStatus taskStatus, string expectedTaskStatus)
    {
-      const string sectionKey = "recommendation-on-how-to-proceed";
+      const string sectionKey = "clearance-and-recommendations";
       const string taskKey = "significant-change-recommendation";
 
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.RecommendationStatus = taskStatus);
@@ -306,10 +306,26 @@ public class SignificantChangeTaskListBuilderTests
    [MemberData(nameof(StatusCases))]
    public void Build_maps_admissions_variations_recommendation_status_to_task_status(SignificantChangeTaskStatus taskStatus, string expectedTaskStatus)
    {
-      const string sectionKey = "recommendation-on-how-to-proceed";
+      const string sectionKey = "clearance-and-recommendations";
       const string taskKey = "admissions-variation-recommendation";
 
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.AdmissionsVariationRecommendationStatus = taskStatus);
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
+      var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
+
+      task.Status.Status.Should().Be(expectedTaskStatus);
+   }
+
+   [Theory]
+   [MemberData(nameof(StatusCases))]
+   public void Build_maps_clearance_status_to_task_status(SignificantChangeTaskStatus taskStatus, string expectedTaskStatus)
+   {
+      const string sectionKey = "clearance-and-recommendations";
+      const string taskKey = "clearance-details";
+
+      SignificantChangeProjectViewBaseModel project = BuildProject(p => p.ClearanceStatus = taskStatus);
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
       var section = Assert.Single(result.Sections, s => s.Key == sectionKey);

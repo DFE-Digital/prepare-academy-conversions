@@ -117,6 +117,12 @@ public static class SignificantChangeTaskListBuilder
          displayOrder,
          [
             new SignificantChangeTaskDefinition(
+               "local-sen-plans",
+               "Local SEN plans",
+               2,
+               Links.SignificantChange.LocalSenPlans,
+               project => GetTaskStatus(project.LocalSenPlansStatus)),
+            new SignificantChangeTaskDefinition(
                "satellite-site-arrangement",
                "Satellite site arrangement",
                3,
@@ -227,8 +233,8 @@ public static class SignificantChangeTaskListBuilder
    private static SignificantChangeTaskSectionDefinition RecommendationOnHowToProceedSection(int displayOrder)
    {
       return new SignificantChangeTaskSectionDefinition(
-         "recommendation-on-how-to-proceed",
-         "Recommendation on how to proceed",
+         "clearance-and-recommendations",
+         "Clearance and recommendations",
          displayOrder,
          [
             new SignificantChangeTaskDefinition(
@@ -242,7 +248,13 @@ public static class SignificantChangeTaskListBuilder
                "Admission Variation recommendation",
                2,
                Links.SignificantChange.AdmissionsVariationRecommendation,
-               project => GetTaskStatus(project.AdmissionsVariationRecommendationStatus))
+               project => GetTaskStatus(project.AdmissionsVariationRecommendationStatus)),
+            new SignificantChangeTaskDefinition(
+               "clearance-details",
+               "Clearance Details",
+               3,
+               Links.SignificantChange.ClearanceDetails,
+               project => GetTaskStatus(project.ClearanceStatus))
          ]
       );
    }
