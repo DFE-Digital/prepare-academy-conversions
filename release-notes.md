@@ -5,24 +5,44 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). To see an example from a mature product in the program [see the Complete products changelog that follows the same methodology](https://github.com/DFE-Digital/dfe-complete-conversions-transfers-and-changes/blob/main/CHANGELOG.md).
 
 
-## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-10-26.1292...main)
-- [301987](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/301987) - Add local authority objections task for significant change
-- [304182](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/304182) - Add clearance details task for significant change
-
+## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-11-25.1347...main)
+- 
 NOTE: remember to update unreleased link when making a new release
 
 ---
+
+## [1.32.0][1.32.0] - 2026-11-25
+### Added
+- [301987](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/301987) - SIG-Add local authority objections task for significant change
+- [304182](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/304182) Sig - Add clearance details task for significant change
+- [309557](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/304182) - Sig- Task - Record FHA outcomes
+- [303867](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/303867) Sig - Task - record recommendation - Admissions variation
+- [301988](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/301988) Sig - Task - Ofsted
+- [305725](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/305725) - Sig - consolidate consultation details
+- [311113](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/311113) - Sig - task return button doesn't match proto
+- [301992](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/301992) - Sig - Task - land transaction
+- [310801](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/310801) - Sig -  prevent decision until required info & tasks complete
+- [302150](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/302150) - Sig -  Tier 2 Identification
+- [313303](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/313303) - Sig -  Sharepoint evidence link SIG
+- [311060](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/311060) - Sig -  Task - Special school satellite site considerations
+- [311059](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/311059) - Sig -  Task - Satellite site arrangement
+- [311061](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/311061) - Sig -  Task - mainstream school satellite considerations
+- [311058](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/311058) - Sig -  Task - Local SEN plans
+
+
+---
+
 ## [1.31.0][1.31.0] - 2026-10-26
 ### Added
-- [296559](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/296559) - Add religious body consultation task for significant change
-- [296556](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/296556) - Add Task - Consultation duration
-- [305712](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/305712) - Add Task - Public-Sector-Equality-Duty
+- [296559](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/296559) Sig- Add religious body consultation task for significant change
+- [296556](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/296556) Sig - Add Task - Consultation duration
+- [305712](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/305712) Sig - Add Task - Public-Sector-Equality-Duty
 - [298244](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/298244) - FHA - add additional mandatory items
 - [298313](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/298313) - FHA - prevent requests inside 15 days
-- [296556](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/296556) - Task - Consultation duration
-- [303294](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/303294) - status not updating & duplicate decision
-- [301993](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/301993) - Task - planning permission
-- [300439](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/300439) - Receive FlexForms application into prepare (foundational)
+- [296556](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/296556) Sig - Task - Consultation duration
+- [303294](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/303294) Sig - status not updating & duplicate decision
+- [301993](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/301993) Sig - Task - planning permission
+- [300439](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/300439) Sig - Receive FlexForms application into prepare (foundational)
 - [301915](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/301915) - Sig - Filter By Tiers
 - [299268](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/299268) - Sig - filter by project status
 - [299264](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/299264) - Sig - filter by region
@@ -445,6 +465,10 @@ ___
 # 1.0.0 - Initial release of Prepare Conversions
 Initial Release of the Prepare-conversions system into production.
 
+[1.32.0]:
+  https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-11-25.1347
+[1.31.0]:
+  https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-10-26.1292
 [1.30.0]:
   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-08-26.1192
 [1.29.2]:
