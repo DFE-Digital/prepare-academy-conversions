@@ -32,7 +32,7 @@ describe('Significant change project list', () => {
                     cy.getById('urn-0').should('contain.text', 'URN:');
                     cy.getById('incoming-trust-0').should('contain.text', 'Trust:');
                     cy.getById('tier-0').should('contain.text', 'Tier:');
-                    cy.getById('type-and-route-0').should('contain.text', 'Route:');
+                    cy.getById('type-and-route-0').should('contain.text', 'Type:');
                     cy.getById('assigned-to-0').should('contain.text', 'Unassigned');
                     cy.get('strong[id^="project-status-"]')
                         .first()
