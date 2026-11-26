@@ -14,25 +14,8 @@ class SignificantChangeImpactOnSenProvision extends BasePage {
         return this;
     }
 
-    public verifySupportingEvidencePresent(): this {
-        cy.getByDataTest('supporting-evidence').should('exist');
-        return this;
-    }
-
     public verifyAdditionalInformationVisible(visible: boolean): this {
         cy.getByDataTest('additional-information').should(visible ? 'be.visible' : 'not.be.visible');
-        return this;
-    }
-
-    public enterAdditionalInformation(value: string): this {
-        cy.getByDataTest('additional-information').clear();
-        cy.getByDataTest('additional-information').type(value);
-        return this;
-    }
-
-    public enterSupportingEvidence(value: string): this {
-        cy.getByDataTest('supporting-evidence').clear();
-        cy.getByDataTest('supporting-evidence').type(value);
         return this;
     }
 }
