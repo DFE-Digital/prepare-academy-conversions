@@ -60,7 +60,6 @@ describe('Significant change - impact on SEN provision', () => {
             significantChangeImpactOnSenProvision.openTask(taskTitle);
 
             cy.get('input[name="Answer"]').then(($radios) => {
-
                 if ($radios.filter(':checked').length > 0) {
                     Logger.log('Task already answered - skipping empty answer validation');
                     return;
