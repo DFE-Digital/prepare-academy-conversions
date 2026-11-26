@@ -145,7 +145,13 @@ public static class SignificantChangeTaskListBuilder
                "Mainstream school satellite considerations",
                5,
                Links.SignificantChange.MainstreamSchoolSatelliteConsiderations,
-               project => GetTaskStatus(project.MainstreamSchoolSatelliteConsiderationsStatus))
+               project => GetTaskStatus(project.MainstreamSchoolSatelliteConsiderationsStatus)),
+            new SignificantChangeTaskDefinition(
+               "trust-experience-and-governance",
+               "Trust experience and governance",
+               6,
+               Links.SignificantChange.TrustExperienceAndGovernance,
+               project => GetTaskStatus(project.TrustExperienceAndGovernanceStatus))
          ]
       );
    }

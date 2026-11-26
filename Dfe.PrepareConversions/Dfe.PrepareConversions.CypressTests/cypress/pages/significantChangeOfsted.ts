@@ -3,6 +3,8 @@ import BasePage from './basePage';
 
 class SignificantChangeOfsted extends BasePage {
     public path = 'ofsted';
+    public additionalInformationSelector = '#AdditionalInformation';
+    public supportingEvidenceSelector = '[data-test="ofsted-supporting-evidence"]';
 
     public enterInspectionDate(day: string, month: string, year: string): this {
         this.enterDate('inspection-date', day, month, year);
@@ -33,18 +35,6 @@ class SignificantChangeOfsted extends BasePage {
 
     public verifyAdditionalInformationHidden(): this {
         cy.getById('AdditionalInformation').should('not.be.visible');
-        return this;
-    }
-
-    public enterAdditionalInformation(text: string): this {
-        cy.getById('AdditionalInformation').clear();
-        cy.getById('AdditionalInformation').type(text);
-        return this;
-    }
-
-    public enterSupportingEvidence(text: string): this {
-        cy.getByDataTest('ofsted-supporting-evidence').clear();
-        cy.getByDataTest('ofsted-supporting-evidence').type(text);
         return this;
     }
 

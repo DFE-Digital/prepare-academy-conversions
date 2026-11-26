@@ -3,15 +3,14 @@ import BasePage from './basePage';
 
 class SignificantChangeHqtfConsideration extends BasePage {
     public path = 'hqtf-consideration';
+    public additionalInformationSelector = '[data-test="hqtf-consideration-additional-information"]';
+    public supportingEvidenceSelector = '[data-test="hqtf-consideration-supporting-evidence"]';
 
     public verifyPageLoaded(): this {
-        cy.checkPath(this.path);
-        this.verifyHeading('High Quality Trust Framework (HQTF) consideration');
-        cy.contains(
-            'legend',
+        return this.verifyPageLoadedWithLegend(
+            'High Quality Trust Framework (HQTF) consideration',
             'Have any issues or risks been identified with regards to the High Quality Trust Framework (HQTF) pillars?'
-        ).should('be.visible');
-        return this;
+        );
     }
 
     public verifyHqtfAllOptionsPresent(): this {
@@ -49,18 +48,8 @@ class SignificantChangeHqtfConsideration extends BasePage {
         return this;
     }
 
-    public enterHqtfAdditionalInformation(text: string): this {
-        cy.getByDataTest('hqtf-consideration-additional-information').clear().type(text);
-        return this;
-    }
-
     public clearHqtfAdditionalInformation(): this {
         cy.getByDataTest('hqtf-consideration-additional-information').clear();
-        return this;
-    }
-
-    public enterHqtfSupportingEvidence(text: string): this {
-        cy.getByDataTest('hqtf-consideration-supporting-evidence').clear().type(text);
         return this;
     }
 

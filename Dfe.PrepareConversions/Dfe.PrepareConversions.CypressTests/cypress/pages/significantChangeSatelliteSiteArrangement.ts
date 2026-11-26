@@ -2,14 +2,13 @@
 import BasePage from './basePage';
 
 class SignificantChangeSatelliteSiteArrangement extends BasePage {
+    public path = 'satellite-site-arrangement';
+
     public verifyPageLoaded(): this {
-        cy.checkPath('satellite-site-arrangement');
-        this.verifyHeading('Satellite site arrangement');
-        cy.contains(
-            'legend',
+        return this.verifyPageLoadedWithLegend(
+            'Satellite site arrangement',
             'Is this a genuine expansion of the special school that does not constitute a new school?'
-        ).should('be.visible');
-        return this;
+        );
     }
 
     public selectAnswer(answer: 'yes' | 'no' | 'not-applicable'): this {
@@ -19,16 +18,6 @@ class SignificantChangeSatelliteSiteArrangement extends BasePage {
 
     public verifyAdditionalInformationVisible(visible: boolean): this {
         cy.getByDataTest('additional-information').should(visible ? 'be.visible' : 'not.be.visible');
-        return this;
-    }
-
-    public enterAdditionalInformation(value: string): this {
-        cy.getByDataTest('additional-information').clear().type(value);
-        return this;
-    }
-
-    public enterSupportingEvidence(value: string): this {
-        cy.getByDataTest('supporting-evidence').clear().type(value);
         return this;
     }
 

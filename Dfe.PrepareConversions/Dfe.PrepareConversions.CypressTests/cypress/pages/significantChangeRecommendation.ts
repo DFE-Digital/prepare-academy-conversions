@@ -5,10 +5,7 @@ class SignificantChangeRecommendation extends BasePage {
     public path = 'significant-change-recommendation';
 
     public verifyPageLoaded(): this {
-        cy.checkPath(this.path);
-        this.verifyHeading('Significant change recommendation');
-        cy.contains('legend', 'Recommendation').should('be.visible');
-        return this;
+        return this.verifyPageLoadedWithLegend('Significant change recommendation', 'Recommendation');
     }
 
     public verifyAllOptionsPresent(): this {

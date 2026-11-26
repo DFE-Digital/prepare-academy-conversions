@@ -53,6 +53,7 @@ public interface ISignificantChangeProjectRepository
    Task SetSpecialSchoolSatelliteConsiderations(int id, SetSignificantChangeSpecialSchoolSatelliteConsiderationsCommand command);
    Task SetSatelliteSiteArrangement(int id, SetSignificantChangeSatelliteSiteArrangementCommand command);
    Task SetMainstreamSchoolSatelliteConsiderations(int id, SetSignificantChangeMainstreamSchoolSatelliteConsiderationsCommand command);
+   Task SetTrustExperienceAndGovernance(int id, SetSignificantChangeTrustExperienceAndGovernanceCommand command);
    Task SetImpactOnSenProvision(int id, SetSignificantChangeImpactOnSenProvisionCommand command);
    Task SetLocalSenPlans(int id, SetSignificantChangeLocalSenPlansCommand command);
 }

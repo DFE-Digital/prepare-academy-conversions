@@ -3,12 +3,11 @@ import BasePage from './basePage';
 
 class SignificantChangePlanningPermission extends BasePage {
     public path = 'planning-permission';
+    public additionalInformationSelector = '[data-test="planning-permission-additional-information"]';
+    public supportingEvidenceSelector = '[data-test="planning-permission-supporting-evidence"]';
 
     public verifyPageLoaded(): this {
-        cy.checkPath(this.path);
-        this.verifyHeading('Planning Permission');
-        cy.contains('legend', 'Has planning permission been secured?').should('be.visible');
-        return this;
+        return this.verifyPageLoadedWithLegend('Planning Permission', 'Has planning permission been secured?');
     }
 
     public verifyAllOptionsPresent(): this {
@@ -43,16 +42,6 @@ class SignificantChangePlanningPermission extends BasePage {
 
     public verifyAdditionalInformationVisible(): this {
         cy.getByDataTest('planning-permission-additional-information').should('be.visible');
-        return this;
-    }
-
-    public enterAdditionalInformation(text: string): this {
-        cy.getByDataTest('planning-permission-additional-information').clear().type(text);
-        return this;
-    }
-
-    public enterSupportingEvidence(text: string): this {
-        cy.getByDataTest('planning-permission-supporting-evidence').clear().type(text);
         return this;
     }
 

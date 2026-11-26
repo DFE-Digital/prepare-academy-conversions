@@ -23,6 +23,7 @@ public class SignificantChangeProjectResponse : SignificantChangeProjectSearchRe
    public SignificantChangeSpecialSchoolSatelliteConsiderationsResponse SpecialSchoolSatelliteConsiderations { get; set; } = new();
    public SignificantChangeSatelliteSiteArrangementResponse SatelliteSiteArrangement { get; set; } = new();
    public SignificantChangeMainstreamSchoolSatelliteConsiderationsResponse MainstreamSchoolSatelliteConsiderations { get; set; } = new();
+   public SignificantChangeTrustExperienceAndGovernanceResponse TrustExperienceAndGovernance { get; set; } = new();
    public SignificantChangeImpactOnSenProvisionResponse ImpactOnSenProvision { get; set; } = new();
    public SignificantChangeLocalSenPlansResponse LocalSenPlans { get; set; } = new();
    public SignificantChangeDecisions? Decision { get; set; }
