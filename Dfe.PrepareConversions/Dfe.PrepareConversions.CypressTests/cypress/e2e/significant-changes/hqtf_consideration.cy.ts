@@ -81,8 +81,8 @@ describe('Significant change - HQTF consideration', () => {
 
             significantChangeHqtfConsideration
                 .selectHqtfYes()
-                .enterHqtfAdditionalInformation('Workforce capacity risk identified against HQTF pillars')
-                .enterHqtfSupportingEvidence('https://educationgovuk.sharepoint.com/sites/hqtf/board-minutes')
+                .enterAdditionalInformation('Workforce capacity risk identified against HQTF pillars')
+                .enterSupportingEvidence('https://educationgovuk.sharepoint.com/sites/hqtf/board-minutes')
                 .save();
 
             cy.url().should('match', TASK_LIST_URL);
@@ -97,7 +97,7 @@ describe('Significant change - HQTF consideration', () => {
             significantChangeHqtfConsideration
                 .verifyPageLoaded()
                 .selectHqtfNo()
-                .enterHqtfSupportingEvidence('https://educationgovuk.sharepoint.com/sites/hqtf/no-issues')
+                .enterSupportingEvidence('https://educationgovuk.sharepoint.com/sites/hqtf/no-issues')
                 .save();
 
             cy.url().should('match', TASK_LIST_URL);

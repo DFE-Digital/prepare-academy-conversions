@@ -31,7 +31,7 @@ public class SignificantChangeTaskListBuilderTests
    [InlineData(2, "admissions-variation", "Admissions variation", new[] { "admissions-variation-details" })]
    [InlineData(3, "consultation-details", "Consultation details", new[] { "consultation", "local-authority-objections", "religious-bodies", "other-stakeholder-engagement" })]
    [InlineData(4, "academy-performance", "Academy performance", new[] { "ofsted" })]
-   [InlineData(5, "sen-considerations", "SEN and alternative provision considerations", new[] { "local-sen-plans", "satellite-site-arrangement", "special-school-satellite-site-considerations", "mainstream-school-satellite-considerations" })]
+   [InlineData(5, "sen-considerations", "SEN and alternative provision considerations", new[] { "local-sen-plans", "satellite-site-arrangement", "special-school-satellite-site-considerations", "mainstream-school-satellite-considerations", "trust-experience-and-governance" })]
    [InlineData(6, "public-sector-equality-duty", "Public Sector Equality Duty", new[] { "public-sector-equality-duty" })]
    [InlineData(7, "land-transaction-application-and-planning-permission", "Land transaction application and planning permission", new[] { "planning-permission", "land-transaction-application" })]
    [InlineData(8, "financial-details", "Financial details", new[] { "funding", "fha-risks-or-issues-raised" })]
@@ -78,6 +78,19 @@ public class SignificantChangeTaskListBuilderTests
       Assert.Equal(5, task.DisplayOrder);
       Assert.Equal("Mainstream school satellite considerations", task.Title);
       task.Status.Status.Should().Be(expectedTaskStatus);
+   }
+
+   [Fact]
+   public void Build_maps_trust_experience_and_governance_status_and_order()
+   {
+      var project = BuildProject(p => p.TrustExperienceAndGovernanceStatus = SignificantChangeTaskStatus.InProgress);
+      var result = SignificantChangeTaskListBuilder.Build(project);
+      var section = Assert.Single(result.Sections, s => s.Key == "sen-considerations");
+      var task = Assert.Single(section.Tasks, t => t.Key == "trust-experience-and-governance");
+
+      Assert.Equal(6, task.DisplayOrder);
+      Assert.Equal("Trust experience and governance", task.Title);
+      task.Status.Status.Should().Be(TaskListItemViewModel.InProgress.Status);
    }
 
    [Theory]

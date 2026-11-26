@@ -307,6 +307,34 @@ public class SignificantChangeProjectHelperTests
    }
 
    [Fact]
+   public void Build_Maps_trust_experience_and_governance_and_defaults_missing_section()
+   {
+      var response = BuildSignificantChangeProjectResponse();
+      response.TrustExperienceAndGovernance = new()
+      {
+         Answer = YesNoNotApplicableAnswer.No,
+         AdditionalInformation = "Governance gap",
+         SupportingEvidence = "Evidence",
+         Status = SignificantChangeTaskStatus.InProgress
+      };
+
+      var model = SignificantChangeProjectHelper.Build(response);
+
+      Assert.Equal(YesNoNotApplicableAnswer.No, model.TrustExperienceAndGovernanceAnswer);
+      Assert.Equal("Governance gap", model.TrustExperienceAndGovernanceAdditionalInformation);
+      Assert.Equal("Evidence", model.TrustExperienceAndGovernanceSupportingEvidenceLink);
+      Assert.Equal(SignificantChangeTaskStatus.InProgress, model.TrustExperienceAndGovernanceStatus);
+
+      response.TrustExperienceAndGovernance = null;
+      model = SignificantChangeProjectHelper.Build(response);
+
+      Assert.Null(model.TrustExperienceAndGovernanceAnswer);
+      Assert.Null(model.TrustExperienceAndGovernanceAdditionalInformation);
+      Assert.Equal(string.Empty, model.TrustExperienceAndGovernanceSupportingEvidenceLink);
+      Assert.Equal(SignificantChangeTaskStatus.NotStarted, model.TrustExperienceAndGovernanceStatus);
+   }
+
+   [Fact]
    public void Build_Maps_local_sen_plans_and_defaults_missing_section()
    {
       var response = BuildSignificantChangeProjectResponse();

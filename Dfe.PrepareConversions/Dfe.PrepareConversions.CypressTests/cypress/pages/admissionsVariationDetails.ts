@@ -3,6 +3,7 @@ import BasePage from './basePage';
 
 class AdmissionsVariationDetails extends BasePage {
     public path = 'admissions-variation-details';
+    public supportingEvidenceSelector = '[data-test="admissions-variation-supporting-evidence"]';
 
     public verifyFirstPage(): this {
         cy.checkPath(this.path);
@@ -21,11 +22,6 @@ class AdmissionsVariationDetails extends BasePage {
 
     public chooseYes(): this {
         cy.getByDataTest('admissions-variation-required-yes').check();
-        return this;
-    }
-
-    public enterSupportingEvidence(value: string): this {
-        cy.getByDataTest('admissions-variation-supporting-evidence').clear().type(value);
         return this;
     }
 

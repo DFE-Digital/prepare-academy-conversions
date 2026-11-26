@@ -1,5 +1,7 @@
 export default class BasePage {
     public path: string = '';
+    public additionalInformationSelector: string = '[data-test="additional-information"]';
+    public supportingEvidenceSelector: string = '[data-test="supporting-evidence"]';
 
     public checkPath(): this {
         if (this.path) {
@@ -127,6 +129,28 @@ export default class BasePage {
 
     public verifyHeading(expectedText: string): this {
         cy.get('h1').should('contain.text', expectedText);
+        return this;
+    }
+
+    public verifySupportingEvidencePresent(): this {
+        cy.get(this.supportingEvidenceSelector).should('exist');
+        return this;
+    }
+
+    public enterAdditionalInformation(value: string): this {
+        cy.get(this.additionalInformationSelector).clear().type(value);
+        return this;
+    }
+
+    public enterSupportingEvidence(value: string): this {
+        cy.get(this.supportingEvidenceSelector).clear().type(value);
+        return this;
+    }
+
+    public verifyPageLoadedWithLegend(heading: string, legend: string): this {
+        this.checkPath();
+        this.verifyHeading(heading);
+        cy.contains('legend', legend).should('be.visible');
         return this;
     }
 }

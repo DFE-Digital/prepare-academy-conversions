@@ -6,7 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 
 ## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-11-25.1347...main)
-- 
+- [311062](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/311062) - Add Trust experience and governance task for significant change
+
 NOTE: remember to update unreleased link when making a new release
 
 ---

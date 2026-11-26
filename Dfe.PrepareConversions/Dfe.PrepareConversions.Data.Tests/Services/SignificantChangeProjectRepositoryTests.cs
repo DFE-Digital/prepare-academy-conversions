@@ -1348,6 +1348,45 @@ public class SignificantChangeProjectRepositoryTests
 
    [Theory]
    [AutoMoqData]
+   public async Task SetTrustExperienceAndGovernance_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 82;
+      const string expectedPath = "/significant-change/82/TrustExperienceAndGovernance";
+      HttpClient httpClient = new();
+      SetSignificantChangeTrustExperienceAndGovernanceCommand command = new(
+         YesNoNotApplicableAnswer.No, "Governance gap", "Evidence");
+      httpClientFactory.Setup(x => x.CreateAcademisationClient()).Returns(httpClient);
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeTrustExperienceAndGovernanceCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetTrustExperienceAndGovernance(id, command);
+
+      httpClientService.Verify(x => x.Put<SetSignificantChangeTrustExperienceAndGovernanceCommand, object>(
+         httpClient, expectedPath, command), Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetTrustExperienceAndGovernance_WhenApiCallFails_ShouldThrow(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      SetSignificantChangeTrustExperienceAndGovernanceCommand command = new(
+         YesNoNotApplicableAnswer.Yes, null, null);
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeTrustExperienceAndGovernanceCommand, object>(
+            It.IsAny<HttpClient>(), "/significant-change/82/TrustExperienceAndGovernance", command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetTrustExperienceAndGovernance(82, command));
+   }
+
+   [Theory]
+   [AutoMoqData]
    public async Task SetLocalSenPlans_WhenApiCallSucceeds_ShouldPutToExpectedPath(
       [Frozen] Mock<IHttpClientService> httpClientService,
       [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
