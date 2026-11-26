@@ -53,6 +53,7 @@ public abstract class SignificantChangeDecisionTestBase : BaseIntegrationTests
          SpecialSchoolSatelliteConsiderations = new () { Status = taskStatus },
          SatelliteSiteArrangement = new() { Status = taskStatus },
          MainstreamSchoolSatelliteConsiderations = new() { Status = taskStatus },
+         ImpactOnSenProvision = new() { Status = taskStatus },
          LocalSenPlans = new() { Status = taskStatus }
       };
 

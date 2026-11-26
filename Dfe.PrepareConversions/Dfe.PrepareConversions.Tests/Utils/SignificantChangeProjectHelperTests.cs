@@ -307,6 +307,34 @@ public class SignificantChangeProjectHelperTests
    }
 
    [Fact]
+   public void Build_Maps_impact_on_sen_provision_and_defaults_missing_section()
+   {
+      var response = BuildSignificantChangeProjectResponse();
+      response.ImpactOnSenProvision = new()
+      {
+         Answer = YesNoNotApplicableAnswer.No,
+         AdditionalInformation = "Provision reduced",
+         SupportingEvidence = "Evidence",
+         Status = SignificantChangeTaskStatus.InProgress
+      };
+
+      var model = SignificantChangeProjectHelper.Build(response);
+
+      Assert.Equal(YesNoNotApplicableAnswer.No, model.ImpactOnSenProvisionAnswer);
+      Assert.Equal("Provision reduced", model.ImpactOnSenProvisionAdditionalInformation);
+      Assert.Equal("Evidence", model.ImpactOnSenProvisionSupportingEvidenceLink);
+      Assert.Equal(SignificantChangeTaskStatus.InProgress, model.ImpactOnSenProvisionStatus);
+
+      response.ImpactOnSenProvision = null;
+      model = SignificantChangeProjectHelper.Build(response);
+
+      Assert.Null(model.ImpactOnSenProvisionAnswer);
+      Assert.Null(model.ImpactOnSenProvisionAdditionalInformation);
+      Assert.Equal(string.Empty, model.ImpactOnSenProvisionSupportingEvidenceLink);
+      Assert.Equal(SignificantChangeTaskStatus.NotStarted, model.ImpactOnSenProvisionStatus);
+   }
+
+   [Fact]
    public void Build_Maps_local_sen_plans_and_defaults_missing_section()
    {
       var response = BuildSignificantChangeProjectResponse();

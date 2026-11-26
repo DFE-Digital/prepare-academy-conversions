@@ -122,6 +122,7 @@ public static class Links
       public static readonly LinkItem SpecialSchoolSatelliteConsiderations = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/SpecialSchoolSatelliteConsiderations/Index");
       public static readonly LinkItem SatelliteSiteArrangement = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/SatelliteSiteArrangement/Index");
       public static readonly LinkItem MainstreamSchoolSatelliteConsiderations = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/MainstreamSchoolSatelliteConsiderations/Index");
+      public static readonly LinkItem ImpactOnSenProvision = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/ImpactOnSenProvision/Index");
       public static readonly LinkItem LocalSenPlans = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/LocalSenPlans/Index");
    }
 

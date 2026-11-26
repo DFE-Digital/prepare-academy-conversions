@@ -117,6 +117,12 @@ public static class SignificantChangeTaskListBuilder
          displayOrder,
          [
             new SignificantChangeTaskDefinition(
+               "impact-on-sen-provision",
+               "Impact on SEN provision",
+               1,
+               Links.SignificantChange.ImpactOnSenProvision,
+               project => GetTaskStatus(project.ImpactOnSenProvisionStatus)),
+            new SignificantChangeTaskDefinition(
                "local-sen-plans",
                "Local SEN plans",
                2,

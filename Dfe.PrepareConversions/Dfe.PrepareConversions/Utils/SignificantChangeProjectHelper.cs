@@ -115,7 +115,11 @@ public static class SignificantChangeProjectHelper
          LocalSenPlansStatus = significantChangeProject.LocalSenPlans?.Status ?? SignificantChangeTaskStatus.NotStarted,
          LocalSenPlansAnswer = significantChangeProject.LocalSenPlans?.Answer,
          LocalSenPlansAdditionalInformation = significantChangeProject.LocalSenPlans?.AdditionalInformation,
-         LocalSenPlansSupportingEvidenceLink = significantChangeProject.LocalSenPlans?.SupportingEvidence ?? string.Empty
+         LocalSenPlansSupportingEvidenceLink = significantChangeProject.LocalSenPlans?.SupportingEvidence ?? string.Empty,
+         ImpactOnSenProvisionStatus = significantChangeProject.ImpactOnSenProvision?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         ImpactOnSenProvisionAnswer = significantChangeProject.ImpactOnSenProvision?.Answer,
+         ImpactOnSenProvisionAdditionalInformation = significantChangeProject.ImpactOnSenProvision?.AdditionalInformation,
+         ImpactOnSenProvisionSupportingEvidenceLink = significantChangeProject.ImpactOnSenProvision?.SupportingEvidence ?? string.Empty
 
       };
    }
