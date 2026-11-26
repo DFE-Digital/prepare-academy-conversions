@@ -114,6 +114,10 @@ public class SignificantChangeProjectViewBaseModel
    public YesNoNotApplicableAnswer? TrustExperienceAndGovernanceAnswer { get; set; }
    public string TrustExperienceAndGovernanceAdditionalInformation { get; set; } = string.Empty;
    public string TrustExperienceAndGovernanceSupportingEvidenceLink { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus ImpactOnSenProvisionStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public YesNoNotApplicableAnswer? ImpactOnSenProvisionAnswer { get; set; }
+   public string ImpactOnSenProvisionAdditionalInformation { get; set; } = string.Empty;
+   public string ImpactOnSenProvisionSupportingEvidenceLink { get; set; } = string.Empty;
    public SignificantChangeTaskStatus LocalSenPlansStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public YesNoNotApplicableAnswer? LocalSenPlansAnswer { get; set; }
    public string LocalSenPlansAdditionalInformation { get; set; } = string.Empty;

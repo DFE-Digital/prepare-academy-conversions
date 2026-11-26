@@ -972,7 +972,7 @@ public class SignificantChangeProjectRepositoryTests
 
       exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
    }
-  
+
    [Theory]
    [AutoMoqData]
    public async Task SetConsultationDuration_WhenApiCallSucceeds_ShouldPutToExpectedPath(
@@ -1383,6 +1383,45 @@ public class SignificantChangeProjectRepositoryTests
          .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
 
       await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetTrustExperienceAndGovernance(82, command));
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetImpactOnSenProvision_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 83;
+      const string expectedPath = "/significant-change/83/ImpactOnSenProvision";
+      HttpClient httpClient = new();
+      SetSignificantChangeImpactOnSenProvisionCommand command = new(
+         YesNoNotApplicableAnswer.No, "Provision reduced", "Evidence");
+      httpClientFactory.Setup(x => x.CreateAcademisationClient()).Returns(httpClient);
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeImpactOnSenProvisionCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetImpactOnSenProvision(id, command);
+
+      httpClientService.Verify(x => x.Put<SetSignificantChangeImpactOnSenProvisionCommand, object>(
+         httpClient, expectedPath, command), Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetImpactOnSenProvision_WhenApiCallFails_ShouldThrow(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      SetSignificantChangeImpactOnSenProvisionCommand command = new(
+         YesNoNotApplicableAnswer.Yes, null, null);
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeImpactOnSenProvisionCommand, object>(
+            It.IsAny<HttpClient>(), "/significant-change/83/ImpactOnSenProvision", command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetImpactOnSenProvision(83, command));
    }
 
    [Theory]

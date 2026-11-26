@@ -31,7 +31,7 @@ public class SignificantChangeTaskListBuilderTests
    [InlineData(2, "admissions-variation", "Admissions variation", new[] { "admissions-variation-details" })]
    [InlineData(3, "consultation-details", "Consultation details", new[] { "consultation", "local-authority-objections", "religious-bodies", "other-stakeholder-engagement" })]
    [InlineData(4, "academy-performance", "Academy performance", new[] { "ofsted" })]
-   [InlineData(5, "sen-considerations", "SEN and alternative provision considerations", new[] { "local-sen-plans", "satellite-site-arrangement", "special-school-satellite-site-considerations", "mainstream-school-satellite-considerations", "trust-experience-and-governance" })]
+   [InlineData(5, "sen-considerations", "SEN and alternative provision considerations", new[] { "impact-on-sen-provision", "local-sen-plans", "satellite-site-arrangement", "special-school-satellite-site-considerations", "mainstream-school-satellite-considerations", "trust-experience-and-governance" })]
    [InlineData(6, "public-sector-equality-duty", "Public Sector Equality Duty", new[] { "public-sector-equality-duty" })]
    [InlineData(7, "land-transaction-application-and-planning-permission", "Land transaction application and planning permission", new[] { "planning-permission", "land-transaction-application" })]
    [InlineData(8, "financial-details", "Financial details", new[] { "funding", "fha-risks-or-issues-raised" })]
@@ -91,6 +91,21 @@ public class SignificantChangeTaskListBuilderTests
       Assert.Equal(6, task.DisplayOrder);
       Assert.Equal("Trust experience and governance", task.Title);
       task.Status.Status.Should().Be(TaskListItemViewModel.InProgress.Status);
+   }
+
+   [Theory]
+   [MemberData(nameof(StatusCases))]
+   public void Build_maps_impact_on_sen_provision_status_and_order(SignificantChangeTaskStatus taskStatus, string expectedTaskStatus)
+   {
+      var project = BuildProject(p => p.ImpactOnSenProvisionStatus = taskStatus);
+      var result = SignificantChangeTaskListBuilder.Build(project);
+      var section = Assert.Single(result.Sections, s => s.Key == "sen-considerations");
+      var task = Assert.Single(section.Tasks, t => t.Key == "impact-on-sen-provision");
+
+      Assert.Equal(1, task.DisplayOrder);
+      Assert.Equal("Impact on SEN provision", task.Title);
+      Assert.Equal(Dfe.PrepareConversions.Models.Links.SignificantChange.ImpactOnSenProvision.Page, task.Page);
+      task.Status.Status.Should().Be(expectedTaskStatus);
    }
 
    [Theory]

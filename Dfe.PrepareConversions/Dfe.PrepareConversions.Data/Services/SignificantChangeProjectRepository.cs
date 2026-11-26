@@ -497,6 +497,22 @@ public class SignificantChangeProjectRepository(
       }
    }
 
+   public async Task SetImpactOnSenProvision(int id, SetSignificantChangeImpactOnSenProvisionCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeImpactOnSenProvision, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeImpactOnSenProvisionCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
    public async Task SetLocalSenPlans(int id, SetSignificantChangeLocalSenPlansCommand command)
    {
       HttpClient httpClient = httpClientFactory.CreateAcademisationClient();

@@ -70,6 +70,7 @@ public class PathFor
    public static string SetSignificantChangeSatelliteSiteArrangement => "/significant-change/{0}/SatelliteSiteArrangement";
    public static string SetSignificantChangeMainstreamSchoolSatelliteConsiderations => "/significant-change/{0}/MainstreamSchoolSatelliteConsiderations";
    public static string SetSignificantChangeTrustExperienceAndGovernance => "/significant-change/{0}/TrustExperienceAndGovernance";
+   public static string SetSignificantChangeImpactOnSenProvision => "/significant-change/{0}/ImpactOnSenProvision";
    public static string SetSignificantChangeLocalSenPlans => "/significant-change/{0}/LocalSenPlans";
 
 }
